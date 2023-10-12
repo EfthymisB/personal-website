@@ -2,6 +2,7 @@ body {
     height: 100vh;
     width: 100vw;
     background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     margin: 0rem;
     overflow: hidden;
     -webkit-touch-callout: none;
@@ -10,7 +11,41 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    position: relative;
 }
+
+/* TAB BUTTONS */
+
+.tab {
+    display: none;
+}
+
+.tabs {
+    text-align: center;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 5vh 5vw;
+    font-size: 26px;
+    cursor: pointer;
+    color: #636363;
+    font-weight: bold;
+    transition: color 0.5s;
+}
+
+.tab-button:hover {
+    color: rgb(211, 211, 211);
+}
+
+.tab-button.selected {
+    color: rgb(216, 124, 38);
+}
+
+/* ABOUT TAB */
+
+/* WORK TAB */
 
 #image-track {
     display: flex;
@@ -46,4 +81,40 @@ body {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     letter-spacing: 25px;
+}
+
+/* SOCIAL MEDIA */
+
+.social-icons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 50px 0;
+}
+
+.social-icons a {
+    text-decoration: none;
+    color: #636363;
+    margin: 10px;
+    font-size: 32px;
+    line-height: 32px;
+    transition: color 0.5s;
+}
+
+.social-icons a:hover {
+    color: rgb(216, 124, 38);
+}
+
+.gumroad-icon {
+    width: 34px;
+    height: auto;
+    vertical-align:bottom;
+    filter: grayscale(100%) brightness(60%);
+    transition: filter 0.5s;
+}
+
+.gumroad-icon:hover {
+    filter: grayscale(0%) brightness(100%);
 }

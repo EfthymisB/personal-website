@@ -1,3 +1,19 @@
+function openTab (tabName) {
+  var tabs = document.getElementsByClassName('tab')
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].style.display = 'none'
+  }
+
+  var buttons = document.getElementsByClassName('tab-button')
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove('selected')
+  }
+
+  document.getElementById(tabName).style.display = 'block'
+  document
+    .querySelector('[onclick="openTab(\'' + tabName + '\')"]')
+    .classList.add('selected')
+}
 const movement_margin = 50 // percentage of allowed movement left to right (0-100)
 const track = document.getElementById('image-track')
 
