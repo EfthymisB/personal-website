@@ -12,12 +12,12 @@ document
     showContent('work')
   })
 
-document
-  .getElementById('contact-link')
-  .addEventListener('click', function (event) {
-    event.preventDefault()
-    showContent('contact')
-  })
+// document
+//   .getElementById('contact-link')
+//   .addEventListener('click', function (event) {
+//     event.preventDefault()
+//     showContent('contact')
+//   })
 
 import { metadata } from './media/posters/metadata.js'
 
@@ -79,8 +79,8 @@ function toggleContent (element) {
 function showContent (divId) {
   const divs = [
     document.getElementById('about'),
-    document.getElementById('work'),
-    document.getElementById('contact')
+    document.getElementById('work')
+    // document.getElementById('contact')
   ]
 
   divs.forEach(function (div) {

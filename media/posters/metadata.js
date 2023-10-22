@@ -65,16 +65,5 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: true
-  },
-  '7_napoleon.jpg': {
-    title: 'Napoleon',
-    description:
-      "The film takes a personal look at Napoleon Bonaparte's origins, and his swift, ruthless climb to emperor viewed through the prism of his addictive, and often volatile, relationship with his wife and one true love, Josephine.",
-    stars: ['Joaquin Phoenix', 'Vanessa Kirby', 'Ludivine Sagnier'],
-    imdb_id: 'tt13287846',
-    role: 'Pipeline TD',
-    company: 'One Of Us',
-    location: 'London',
-    credited: true
   }
 }
