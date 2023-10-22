@@ -1,71 +1,95 @@
-function openTab (tabName) {
-  var tabs = document.getElementsByClassName('tab')
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].style.display = 'none'
+document
+  .getElementById('about-link')
+  .addEventListener('click', function (event) {
+    event.preventDefault()
+    showContent('about')
+  })
+
+document
+  .getElementById('work-link')
+  .addEventListener('click', function (event) {
+    event.preventDefault()
+    showContent('work')
+  })
+
+document
+  .getElementById('contact-link')
+  .addEventListener('click', function (event) {
+    event.preventDefault()
+    showContent('contact')
+  })
+
+import { metadata } from './media/posters/metadata.js'
+
+const media_paths = []
+for (const key in metadata) {
+  media_paths.push('media/posters/' + key)
+}
+media_paths.sort().reverse()
+
+const grid_container = document.getElementById('grid-container')
+const template = document.getElementById('grid-item-template')
+
+media_paths.forEach(media_path => {
+  const back_image = media_path.replace(/(\.[^.]+)$/, '_back$1')
+
+  const data = metadata[media_path.split('/').slice(-1)[0]]
+
+  const div = document.createElement('div')
+  div.className = 'grid-item'
+
+  div.innerHTML = template.innerHTML
+  div.innerHTML = div.innerHTML.replace(/FRONT_IMG_PATH/g, media_path)
+  div.innerHTML = div.innerHTML.replace(/TITLE/g, data.title)
+  div.innerHTML = div.innerHTML.replace(/DESCRIPTION/g, data.description)
+  div.innerHTML = div.innerHTML.replace(/STARS/g, data.stars)
+  div.innerHTML = div.innerHTML.replace(/IMDB_ID/g, data.imdb_id)
+  div.innerHTML = div.innerHTML.replace(/ROLE/g, data.role)
+  div.innerHTML = div.innerHTML.replace(/COMPANY/g, data.company)
+  div.innerHTML = div.innerHTML.replace(/LOCATION/g, data.location)
+  if (data.credited) {
+    const uncredited = div.querySelector('.uncredited')
+    uncredited.style.display = 'none'
   }
+  const back_div = div.querySelector('.back')
+  back_div.style.backgroundImage = `url(${back_image})`
 
-  var buttons = document.getElementsByClassName('tab-button')
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].classList.remove('selected')
+  grid_container.appendChild(div)
+})
+
+const backElements = document.getElementsByClassName('back')
+for (const element of backElements) {
+  element.addEventListener('click', function (event) {
+    toggleContent(this)
+  })
+}
+
+const frontElements = document.getElementsByClassName('front')
+for (const element of frontElements) {
+  element.addEventListener('click', function (event) {
+    toggleContent(this)
+  })
+}
+
+function toggleContent (element) {
+  const flipContainer = element.closest('.flip-container')
+  flipContainer.classList.toggle('flipped')
+}
+
+function showContent (divId) {
+  const divs = [
+    document.getElementById('about'),
+    document.getElementById('work'),
+    document.getElementById('contact')
+  ]
+
+  divs.forEach(function (div) {
+    div.style.display = 'none'
+  })
+  const div = document.getElementById(divId)
+  if (div) {
+    div.style.display = 'block'
   }
-
-  document.getElementById(tabName).style.display = 'block'
-  document
-    .querySelector('[onclick="openTab(\'' + tabName + '\')"]')
-    .classList.add('selected')
-}
-const movement_margin = 50 // percentage of allowed movement left to right (0-100)
-const track = document.getElementById('image-track')
-
-function set_data () {
-  track.dataset.mouseDownAt = '0'
-  track.dataset.prevPercentage = track.dataset.percentage
 }
 
-function set_new_percentage (percentage) {
-  const newPercentage = Math.max(
-    Math.min(
-      parseFloat(track.dataset.prevPercentage) + percentage,
-      movement_margin / 2 - 50
-    ),
-    -(movement_margin / 2 + 50)
-  )
-  track.dataset.percentage = newPercentage
-  track.animate(
-    {
-      transform: `translate(${newPercentage}%, -50%)`
-    },
-    { duration: 750, fill: 'forwards' }
-  )
-
-  //   for (const image of track.getElementsByClassName('image')) {
-  //     image.animate(
-  //       {
-  //         objectPosition: `${100 + newPercentage}% center`
-  //       },
-  //       { duration: 750, fill: 'forwards' }
-  //     )
-  //   }
-}
-window.onmousedown = e => {
-  track.dataset.mouseDownAt = e.clientX
-}
-
-window.onmouseup = () => {
-  set_data()
-}
-
-window.onmousemove = e => {
-  if (track.dataset.mouseDownAt === '0') return
-
-  const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX
-  const maxDelta = window.innerWidth / 2
-  const percentage = (mouseDelta / maxDelta) * -100
-  set_new_percentage(percentage)
-}
-
-window.onwheel = e => {
-  const percentage = 5 * Math.sign(e.deltaY)
-  set_new_percentage(percentage)
-  set_data()
-}
+// showContent('work') // to be removed
