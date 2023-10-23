@@ -3,12 +3,16 @@
   <div class="flip-container">
     <div class="flipper">
       <div class="front">
-        <img src="FRONT_IMG_PATH" alt="Image" id="flippable1" />
+        <div class="front-container">
+          <img src="FRONT_IMG_PATH" />
+          <img src="media/website-utils/click.png" id="click" />
+        </div>
       </div>
-      <div class="back" id="flippable2">
+      <div class="back">
         <div class="back-text">
           <div class="project-title"><p>TITLE</p></div>
-
+          <div class="project-year"><p>YEAR</p></div>
+          <div class="project-stars"><p>STARS</p></div>
           <div class="project-description">
             <p>DESCRIPTION</p>
           </div>
@@ -40,6 +44,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="media/website-utils/logo_32x32.ico"
+    />
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat"
@@ -75,8 +84,8 @@
         London. <br /><br />
         I'm passionate about visual effects and love pushing boundaries to
         create innovative and creative solutions. I started my journey in VFX at
-        Escape Studios (Pearson College London), where I studied from 2019 to
-        2022. <br /><br />
+        Escape Studios (Pearson College London), where I studied
+        <i>The Art of Visual Effects</i> from 2019 to 2022. <br /><br />
         A few months before graduating, I landed my dream job at One Of Us,
         where I've been working since February 2022. I'm always looking for new
         ways to bring imagination to life, one frame at a time. So join me on
@@ -119,7 +128,7 @@
 
     <div class="social-icons">
       <div class="social-icons-container">
-        <a href="mailto:efthymisb.vfx@gmail.com" target="_blank">
+        <a href="mailto:efthymisb.vfx[at]gmail.com" target="_blank">
           <img src="media/website-utils/gmail.png" class="social-icon" />
         </a>
 

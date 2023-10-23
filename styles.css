@@ -188,6 +188,36 @@ a:hover {
     position: absolute;
 }
 
+.front-container {
+    position: relative;
+}
+
+.front-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.front-container #click {
+    transform: translate(-45%, 45%) scale(0.075);
+    opacity: 0;
+    transition: transform is ease;
+}
+
+.front-container:hover #click {
+    opacity: 100%;
+    animation: scaleAnimation 500ms infinite alternate;
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: translate(-45%, 45%) scale(0.075);
+    }
+    100% {
+        transform: translate(-45%, 45%) scale(.0825);
+    }
+}
+
 .back {
     backface-visibility: hidden;
     position: absolute;
@@ -220,14 +250,19 @@ a:hover {
 }
 .imdbRatingPlugin {
     background-color: rgb(229, 187, 36);
-    color: #ee0505;
-    
 }
 
 .project-title {
     font-size: 22px;
     font-weight: bold;
     font-style: italic;
+}
+
+.project-year {
+    color: var(--main-colour);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .project-description {

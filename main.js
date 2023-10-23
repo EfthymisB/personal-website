@@ -39,14 +39,16 @@ media_paths.forEach(media_path => {
   div.className = 'grid-item'
 
   div.innerHTML = template.innerHTML
-  div.innerHTML = div.innerHTML.replace(/FRONT_IMG_PATH/g, media_path)
-  div.innerHTML = div.innerHTML.replace(/TITLE/g, data.title)
-  div.innerHTML = div.innerHTML.replace(/DESCRIPTION/g, data.description)
-  div.innerHTML = div.innerHTML.replace(/STARS/g, data.stars)
-  div.innerHTML = div.innerHTML.replace(/IMDB_ID/g, data.imdb_id)
-  div.innerHTML = div.innerHTML.replace(/ROLE/g, data.role)
-  div.innerHTML = div.innerHTML.replace(/COMPANY/g, data.company)
-  div.innerHTML = div.innerHTML.replace(/LOCATION/g, data.location)
+  div.innerHTML = div.innerHTML
+    .replace(/FRONT_IMG_PATH/g, media_path)
+    .replace(/TITLE/g, data.title.split(':').join('<br>'))
+    .replace(/YEAR/g, data.year)
+    .replace(/STARS/g, data.stars.join('<br>'))
+    .replace(/DESCRIPTION/g, data.description)
+    .replace(/IMDB_ID/g, data.imdb_id)
+    .replace(/ROLE/g, data.role)
+    .replace(/COMPANY/g, data.company)
+    .replace(/LOCATION/g, data.location)
   if (data.credited) {
     const uncredited = div.querySelector('.uncredited')
     uncredited.style.display = 'none'

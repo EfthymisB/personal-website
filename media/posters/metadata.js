@@ -13,6 +13,7 @@ export const metadata = {
   },
   '2_johnWick.jpg': {
     title: 'John Wick: Chapter 4',
+    year: '2023',
     description:
       'John Wick uncovers a path to defeating The High Table. But before he can earn his freedom, Wick must face off against a new enemy with powerful alliances across the globe and forces that turn old friends into foes.',
     stars: ['Keanu Reeves', 'Laurence Fishburne', 'George Georgiou'],
@@ -24,6 +25,7 @@ export const metadata = {
   },
   '3_theFlash.jpg': {
     title: 'The Flash',
+    year: '2023',
     description:
       'Barry Allen uses his super speed to change the past, but his attempt to save his family creates a world without super heroes, forcing him to race for his life in order to save the future.',
     stars: ['Ezra Miller', 'Michael Keaton', 'Sasha Calle'],
@@ -34,7 +36,8 @@ export const metadata = {
     credited: false
   },
   '4_missionImpossible7.jpg': {
-    title: 'Mission: Impossible - Dead Reckoning Part One',
+    title: 'Mission Impossible: Dead Reckoning Part One',
+    year: '2023',
     description:
       'Ethan Hunt and his IMF team must track down a dangerous weapon before it falls into the wrong hands.',
     stars: ['Tom Cruise', 'Hayley Atwell', 'Ving Rhames'],
@@ -46,6 +49,7 @@ export const metadata = {
   },
   '5_secretInvasion.jpg': {
     title: 'Secret Invasion',
+    year: '2023',
     description:
       'Fury and Talos try to stop the Skrulls who have infiltrated the highest spheres of the Marvel Universe.',
     stars: ['Samuel L. Jackson', 'Emilia Clarke', 'Don Cheadle'],
@@ -57,6 +61,7 @@ export const metadata = {
   },
   '6_heartOfStone.jpg': {
     title: 'Heart of Stone',
+    year: '2023',
     description:
       'An intelligence operative for a shadowy global peacekeeping agency races to stop a hacker from stealing its most valuable and dangerous weapon.',
     stars: ['Gal Gaddot', 'Jamie Dore', 'Alia Bhatt'],
