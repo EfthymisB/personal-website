@@ -21,7 +21,7 @@ export const metadata = {
     role: 'Pipeline TD',
     company: 'One Of Us',
     location: 'London',
-    credited: true
+    credited: false
   },
   '3_theFlash.jpg': {
     title: 'The Flash',
