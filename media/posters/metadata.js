@@ -70,5 +70,29 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: true
+  },
+  '7_napoleon.jpg': {
+    title: 'Napoleon',
+    year: '2023',
+    description:
+      'An epic that details the checkered rise and fall of French Emperor Napoleon Bonaparte and his relentless journey to power through the prism of his addictive, volatile relationship with his wife, Josephine.',
+    stars: ['Joaquin Phoenix', 'Vanessa Kirby', 'Tahar Rahim'],
+    imdb_id: 'tt13287846',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
+  },
+  '8_zone_of_interest.jpg': {
+    title: 'Zone of Interest',
+    year: '2023',
+    description:
+      'Auschwitz commandant Rudolf Höss and his wife Hedwig strive to build a dream life for their family in a house and garden beside the camp.',
+    stars: ['Sandra Hüller', 'Christian Friedel', 'Freya Kreutzkam'],
+    imdb_id: 'tt7160372',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
   }
 }
