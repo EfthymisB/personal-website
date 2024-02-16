@@ -1,5 +1,5 @@
 export const metadata = {
-  '1_luther.jpg': {
+  '001_luther.jpg': {
     title: 'Luther: the Fallen Sun',
     year: '2023',
     description:
@@ -11,7 +11,7 @@ export const metadata = {
     location: 'London',
     credited: true
   },
-  '2_johnWick.jpg': {
+  '002_johnWick.jpg': {
     title: 'John Wick: Chapter 4',
     year: '2023',
     description:
@@ -23,7 +23,7 @@ export const metadata = {
     location: 'London',
     credited: false
   },
-  '3_theFlash.jpg': {
+  '003_theFlash.jpg': {
     title: 'The Flash',
     year: '2023',
     description:
@@ -35,7 +35,7 @@ export const metadata = {
     location: 'London',
     credited: false
   },
-  '4_missionImpossible7.jpg': {
+  '004_missionImpossible7.jpg': {
     title: 'Mission Impossible: Dead Reckoning Part One',
     year: '2023',
     description:
@@ -47,7 +47,7 @@ export const metadata = {
     location: 'London',
     credited: false
   },
-  '5_secretInvasion.jpg': {
+  '005_secretInvasion.jpg': {
     title: 'Secret Invasion',
     year: '2023',
     description:
@@ -59,7 +59,7 @@ export const metadata = {
     location: 'London',
     credited: true
   },
-  '6_heartOfStone.jpg': {
+  '006_heartOfStone.jpg': {
     title: 'Heart of Stone',
     year: '2023',
     description:
@@ -71,7 +71,7 @@ export const metadata = {
     location: 'London',
     credited: true
   },
-  '7_napoleon.jpg': {
+  '007_napoleon.jpg': {
     title: 'Napoleon',
     year: '2023',
     description:
@@ -83,13 +83,37 @@ export const metadata = {
     location: 'London',
     credited: false
   },
-  '8_zone_of_interest.jpg': {
+  '008_zone_of_interest.jpg': {
     title: 'Zone of Interest',
     year: '2023',
     description:
       'Auschwitz commandant Rudolf Höss and his wife Hedwig strive to build a dream life for their family in a house and garden beside the camp.',
     stars: ['Sandra Hüller', 'Christian Friedel', 'Freya Kreutzkam'],
     imdb_id: 'tt7160372',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
+  },
+  '009_the_book_of_clarence.jpg': {
+    title: 'The Book of Clarence',
+    year: '2024',
+    description:
+      'Struggling to find a better life, Clarence is captivated by the power of the rising Messiah and soon risks everything to carve a path to a divine existence.',
+    stars: ['LaKeith Stanfield', 'Omar Sy', 'Anna Diop'],
+    imdb_id: 'tt22866358',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: true
+  },
+  '010_madam_web.jpg': {
+    title: 'Madam Web',
+    year: '2024',
+    description:
+      'Cassandra Webb is a New York metropolis paramedic who begins to demonstrate signs of clairvoyance. Forced to challenge revelations about her former, she needs to safeguard three young women from a deadly adversary who wants them destroyed.',
+    stars: ['Dakota Johnson', 'Sydney Sweeney', 'Isabela Merced'],
+    imdb_id: 'tt11057302',
     role: 'Pipeline TD',
     company: 'One Of Us',
     location: 'London',
