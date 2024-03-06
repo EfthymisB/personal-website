@@ -130,5 +130,17 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: false
+  },
+  '012_damsel.jpg': {
+    title: 'Damsel',
+    year: '2024',
+    description:
+      'A dutiful damsel agrees to marry a handsome prince, only to find the royal family has recruited her as a sacrifice to repay an ancient debt.',
+    stars: ['Millie Bobby Brown', 'Ray Winstone', 'Angela Bassett'],
+    imdb_id: 'tt13452446',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: true
   }
 }
