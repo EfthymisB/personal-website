@@ -142,5 +142,17 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: true
+  },
+  '013_franklin.jpg': {
+    title: 'Franklin',
+    year: '2024',
+    description:
+      "Explores the story of one of the greatest gambles of Franklin's career. At age 70, Franklin outmaneuvered British spies and French informers while engineering the Franco-American alliance of 1778.",
+    stars: ['Michael Douglas', 'Noah Jupe', 'Marc Duret'],
+    imdb_id: 'tt18351584',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
   }
 }
