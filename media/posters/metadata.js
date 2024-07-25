@@ -154,5 +154,29 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: false
+  },
+  '014_franklin.jpg': {
+    title: 'Franklin',
+    year: '2024',
+    description:
+      "Explores the story of one of the greatest gambles of Franklin's career. At age 70, Franklin outmaneuvered British spies and French informers while engineering the Franco-American alliance of 1778.",
+    stars: ['Michael Douglas', 'Noah Jupe', 'Marc Duret'],
+    imdb_id: 'tt18351584',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
+  },
+  '015_bettlejuice.jpg': {
+    title: 'Beetlejuice Beetlejuice',
+    year: '2024',
+    description:
+      "After a family tragedy, three generations of the Deetz family return home to Winter River. Still haunted by Beetlejuice, Lydia's life is turned upside down when her teenage daughter, Astrid, accidentally opens the portal to the Afterlife.",
+    stars: ['Jenna Ortega', 'Monica Bellucci', 'Winona Ryder'],
+    imdb_id: 'tt2049403',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
   }
 }
