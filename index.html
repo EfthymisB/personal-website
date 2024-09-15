@@ -57,6 +57,14 @@
       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
 
     <title>Efthymios Bairaktaris</title>
   </head>
@@ -86,6 +94,9 @@
         </li>
         <li>
           <a href="#work" id="work-link">work</a>
+        </li>
+        <li>
+          <a href="#photography" id="photography-link">photography</a>
         </li>
       </ul>
     </nav>
@@ -247,6 +258,44 @@
 
     <div class="tab" id="work">
       <div class="grid-container" id="grid-container"></div>
+    </div>
+
+    <div class="tab" id="photography">
+      <section class="photo-gallery">
+        <div class="images"></div>
+      </section>
+    </div>
+
+    <div id="imageModal" class="modal">
+      <span class="close">&times;</span>
+      <div class="modal-content">
+        <img id="modalImg" src="" alt="Enlarged Image" />
+        <div class="info-container">
+          <div>
+            <span class="material-symbols-outlined">camera</span>
+            <span id="fstop">f/7.1</span>
+          </div>
+          <div>
+            <span class="material-symbols-outlined">shutter_speed</span>
+            <span id="shutter_speed">1/125</span>
+          </div>
+          <div>
+            <span class="material-symbols-outlined"> camera_roll </span>
+            <span id="iso">ISO 1000</span>
+          </div>
+          <div>
+            <span class="material-symbols-outlined"> straighten </span>
+            <span id="focal_length">105mm</span>
+          </div>
+          <div>
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span id="date">24.05.2022</span>
+          </div>
+        </div>
+
+        <button class="prev" id="prevBtn">&#10094;</button>
+        <button class="next" id="nextBtn">&#10095;</button>
+      </div>
     </div>
 
     <div class="social-icons">

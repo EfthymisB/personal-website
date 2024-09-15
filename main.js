@@ -1,4 +1,5 @@
 import { metadata } from './media/posters/metadata.js'
+import { photography_metadata } from './media/photography/photography_metadata.js'
 
 const MONTHS = [
   'JAN',
@@ -112,21 +113,74 @@ function setUpCards () {
   }
 }
 
-function showContent (divId) {
-  const divs = [
-    document.getElementById('about'),
-    document.getElementById('work'),
-    document.getElementById('experience')
-  ]
-
-  divs.forEach(function (div) {
-    div.style.display = 'none'
-  })
-  const div = document.getElementById(divId)
-  if (div) {
-    div.style.display = 'block'
+// function that iterates over the media/photograpgy folder and adds a <img> element for each image on the "photo-gallery" class
+function setUpPhotoGallery () {
+  const photo_gallery = document.querySelector('.photo-gallery .images')
+  const media_paths = []
+  for (const key in photography_metadata) {
+    const img = document.createElement('img')
+    img.src = 'media/photography/' + key
+    photo_gallery.appendChild(img)
   }
 }
+
+function showContent (divId) {
+  ;['about', 'work', 'experience', 'photography'].forEach(function (id) {
+    const div = document.getElementById(id)
+    if (!div) {
+      return
+    }
+    div.style.display = divId === id ? 'block' : 'none'
+  })
+}
+
+// MODAL
+var modal = document.getElementById('imageModal')
+var modalImg = document.getElementById('modalImg')
+var imagesContainer = document.querySelector('.photo-gallery .images')
+var currentImageIndex = 0
+var images = []
+
+function openModal (imgElement, index) {
+  modal.style.display = 'block'
+  modalImg.src = imgElement.src // TODO: update with higher res?
+  currentImageIndex = index
+  updateImageMetadata(imgElement)
+}
+
+function updateImageMetadata (imgElement) {
+  var imageName = imgElement.src.split('/').pop()
+  if (photography_metadata[imageName]) {
+    const data = photography_metadata[imageName]
+
+    document.getElementById('fstop').textContent = `f/${data.FNumber}`
+    document.getElementById('shutter_speed').textContent = `1/${Math.round(
+      1 / data.ExposureTime
+    )}`
+    document.getElementById('iso').textContent = `ISO ${data.ISOSpeedRatings}`
+    document.getElementById(
+      'focal_length'
+    ).textContent = `${data.FocalLength}mm`
+    document.getElementById('date').textContent = data.DateTimeOriginal
+  }
+}
+
+imagesContainer.addEventListener('click', function (e) {
+  if (e.target && e.target.tagName === 'IMG') {
+    const clickedImage = e.target
+    images = Array.from(imagesContainer.querySelectorAll('img'))
+    const clickedIndex = images.indexOf(clickedImage)
+    openModal(clickedImage, clickedIndex)
+  }
+})
+
+modal.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = 'none'
+  }
+}
+
+// DOCUMENT EVENT LISTENERS
 
 document
   .getElementById('about-link')
@@ -150,6 +204,50 @@ document
     calculateTimeSpans()
   })
 
+document
+  .getElementById('photography-link')
+  .addEventListener('click', function (event) {
+    event.preventDefault()
+    showContent('photography')
+  })
+
 document.addEventListener('DOMContentLoaded', function () {
   setUpCards()
+  setUpPhotoGallery()
+})
+
+document.querySelector('.close').onclick = function () {
+  modal.style.display = 'none'
+}
+
+document.getElementById('prevBtn').onclick = function () {
+  if (modal.style.display != 'block') {
+    return
+  }
+  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length
+  modalImg.src = images[currentImageIndex].src
+  updateImageMetadata(images[currentImageIndex])
+}
+
+document.getElementById('nextBtn').onclick = function () {
+  if (modal.style.display != 'block') {
+    return
+  }
+  currentImageIndex = (currentImageIndex + 1) % images.length
+  modalImg.src = images[currentImageIndex].src
+  updateImageMetadata(images[currentImageIndex])
+}
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+    modal.style.display = 'none'
+  }
+})
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'ArrowLeft') {
+    document.getElementById('prevBtn').click()
+  } else if (event.key === 'ArrowRight') {
+    document.getElementById('nextBtn').click()
+  }
 })
