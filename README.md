@@ -1,2 +1,1 @@
-# personal-website
-My personal website
+Just me messing with HTML, JS and CSS..

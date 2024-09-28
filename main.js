@@ -113,7 +113,6 @@ function setUpCards () {
   }
 }
 
-// function that iterates over the media/photograpgy folder and adds a <img> element for each image on the "photo-gallery" class
 function setUpPhotoGallery () {
   const photo_gallery = document.querySelector('.photo-gallery .images')
   const media_paths = []
@@ -143,7 +142,7 @@ var images = []
 
 function openModal (imgElement, index) {
   modal.style.display = 'block'
-  modalImg.src = imgElement.src // TODO: update with higher res?
+  modalImg.src = imgElement.src // TODO: update with higher res photo?
   currentImageIndex = index
   updateImageMetadata(imgElement)
 }
