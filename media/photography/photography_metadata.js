@@ -1,4 +1,14 @@
 export const photography_metadata = {
+  "H75A0267_25_cc.jpg": {
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2024-10-09",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.016666666666666666,
+    "FNumber": 7.1
+  },
   "H75A0086_25_cc.jpg": {
     "Make": "Canon",
     "Model": "EOS R6m2",

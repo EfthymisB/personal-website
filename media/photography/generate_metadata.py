@@ -47,14 +47,16 @@ def generate_photography_metadata():
     if not photograph_paths:
         return
 
-    print(f"Found {len(photograph_paths)} images...")
+    print(f"Processing {len(photograph_paths)} images...")
 
     with json_file.open("w", encoding="utf-8") as f:
         f.write(
             f"export const photography_metadata = {json.dumps(photograph_paths, indent=2)};\n"
         )
 
-    print("Successfully saved file names to `photography_metadata.js`")
+    print(
+        f"Successfully extracted metadata for {len(photograph_paths)} images in `photography_metadata.js`"
+    )
 
 
 if __name__ == "__main__":
