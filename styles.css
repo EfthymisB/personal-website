@@ -126,7 +126,6 @@ nav li:hover {
   width: 70vw;
   margin: auto;
   max-width: 800px;
-  /* text-align:justify; */
 }
 
 a {
@@ -138,6 +137,14 @@ a {
 a:hover {
   color: var(--main-colour);
   filter: brightness(1.3);
+}
+
+#about > img {
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }
 
 /* WORK TAB */

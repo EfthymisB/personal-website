@@ -16,12 +16,29 @@ const MONTHS = [
   'DEC'
 ]
 
+function timeLenghtAsString (start, end) {
+  var diff = Math.abs(end - start)
+  var years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
+  var months = Math.floor(
+    (diff - years * 1000 * 60 * 60 * 24 * 365) / (1000 * 60 * 60 * 24 * 30)
+  )
+  var timeSpan = ''
+  if (years > 0) {
+    timeSpan += years + ' yrs '
+  }
+  timeSpan += months + ' mos'
+  timeSpan = '(' + timeSpan + ')'
+  return timeSpan
+}
+
 function calculateTimeSpans () {
-  var periods = document.querySelectorAll('.period')
+  var periods = [...document.querySelectorAll('.period')].reverse()
+  var period_groups = new Map()
 
   periods.forEach(function (period) {
     var [startMonth, endMonth] = period.querySelectorAll('.month')
     var [startYear, endYear] = period.querySelectorAll('.year')
+    var period_group = period.classList[1]
 
     if (endYear.textContent === 'PRESENT') {
       var endDate = new Date()
@@ -37,20 +54,26 @@ function calculateTimeSpans () {
       MONTHS.indexOf(startMonth.textContent)
     )
 
-    var diff = Math.abs(endDate - startDate)
-    var years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
-    var months = Math.floor(
-      (diff - years * 1000 * 60 * 60 * 24 * 365) / (1000 * 60 * 60 * 24 * 30)
-    )
-
-    var timeSpan = ''
-    if (years > 0) {
-      timeSpan += years + ' yrs '
+    if (period_groups.has(period_group)) {
+      let existingPeriod = period_groups.get(period_group)
+      existingPeriod.end = endDate
+    } else {
+      period_groups.set(period_group, { start: startDate, end: endDate })
     }
-    timeSpan += months + ' mos'
-    timeSpan = '(' + timeSpan + ')'
 
-    period.querySelector('.time_span').textContent = timeSpan
+    period.querySelector('.time_span').textContent = timeLenghtAsString(
+      startDate,
+      endDate
+    )
+  })
+
+  var period_sums = [...document.querySelectorAll('.period-sum')]
+  period_sums.forEach(function (period) {
+    var period_group = period.classList[1]
+    var period_sum = period_groups.get(period_group)
+    if (period_sum) {
+      period.textContent = timeLenghtAsString(period_sum.start, period_sum.end)
+    }
   })
 }
 
