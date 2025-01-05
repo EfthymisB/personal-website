@@ -190,5 +190,17 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: false
+  },
+  '017_6888.jpg': {
+    title: 'The Six Tipple Eight',
+    year: '2024',
+    description:
+      'During World War II, 855 women joined the fight to fix the three-year backlog of undelivered mail. Faced with discrimination and a country devastated by war, they managed to sort more than 17 million pieces of mail ahead of time.',
+    stars: ['Kerry Washington', 'Ebony Obsidian', 'Milauna Jackson'],
+    imdb_id: 'tt24458622',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
   }
 }
