@@ -172,7 +172,12 @@ export const metadata = {
     year: '2024',
     description:
       "After a family tragedy, three generations of the Deetz family return home to Winter River. Still haunted by Beetlejuice, Lydia's life is turned upside down when her teenage daughter, Astrid, accidentally opens the portal to the Afterlife.",
-    stars: ['Jenna Ortega', 'Monica Bellucci', 'Winona Ryder'],
+    stars: [
+      'Michael Keaton',
+      'Winona Ryder',
+      'Jenna Ortega',
+      'Monica Bellucci'
+    ],
     imdb_id: 'tt2049403',
     role: 'Pipeline TD',
     company: 'One Of Us',
@@ -198,6 +203,23 @@ export const metadata = {
       'During World War II, 855 women joined the fight to fix the three-year backlog of undelivered mail. Faced with discrimination and a country devastated by war, they managed to sort more than 17 million pieces of mail ahead of time.',
     stars: ['Kerry Washington', 'Ebony Obsidian', 'Milauna Jackson'],
     imdb_id: 'tt24458622',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
+  },
+  '018_the_agency.jpg': {
+    title: 'The Agency',
+    year: '2024',
+    description:
+      'Follows a world of even deeper intrigue and subterfuge, with characters fighting their own battles as they grapple with existential threats to the nation and the world.',
+    stars: [
+      'Michael Fassbender',
+      'Jeffrey Wright',
+      'Jodie Turner-Smith',
+      'Richard Gere'
+    ],
+    imdb_id: 'tt26656917',
     role: 'Pipeline TD',
     company: 'One Of Us',
     location: 'London',
