@@ -141,9 +141,21 @@ function setUpPhotoGallery () {
   const photo_gallery = document.querySelector('.photo-gallery .images')
   const media_paths = []
   for (const key in photography_metadata) {
-    const img = document.createElement('img')
+    var img = document.createElement('img')
     img.src = 'media/photography/' + key
-    photo_gallery.appendChild(img)
+
+    var text = document.createElement('div')
+    text.className = 'gps-info'
+    // text.textContent = photography_metadata[key].GPSInfo.toLowerCase()
+    text.innerHTML =
+      photography_metadata[key].GPSInfo.join('<br>').toLowerCase()
+
+    var div = document.createElement('div')
+    div.className = 'photo'
+    div.appendChild(text)
+    div.appendChild(img)
+
+    photo_gallery.appendChild(div)
   }
 }
 

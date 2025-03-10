@@ -493,7 +493,7 @@ input[type="submit"] {
 }
 
 .photo-gallery > div {
-  columns: 3;
+  columns: 4;
   gap: 1.25rem;
   padding-top: 1.25rem;
 }
@@ -506,13 +506,40 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-@media (max-width: 88rem) {
+.photo-gallery .gps-info {
+  color: white;
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none;
+  opacity: 0;
+  letter-spacing: 0.5rem;
+  text-transform: capitalize;
+}
+
+.photo-gallery .photo {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.photo-gallery .photo:hover .gps-info {
+  opacity: 1;
+}
+
+@media (max-width: 85rem) {
+  .photo-gallery > div {
+    columns: 3;
+  }
+}
+
+@media (max-width: 60rem) {
   .photo-gallery > div {
     columns: 2;
   }
 }
 
-@media (max-width: 32rem) {
+@media (max-width: 40rem) {
   .photo-gallery > div {
     columns: 1;
   }
@@ -540,8 +567,8 @@ input[type="submit"] {
 .modal img {
   margin: auto;
   display: block;
-  max-width: 80%;
-  max-height: 80%;
+  max-width: 85vw;
+  max-height: 85vh;
 }
 
 #caption {
