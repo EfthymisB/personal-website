@@ -1,4 +1,4 @@
-export const metadata = {
+export const show_metadata = {
   '001_luther.jpg': {
     title: 'Luther: the Fallen Sun',
     year: '2023',

@@ -1,4 +1,4 @@
-import { metadata } from './media/posters/metadata.js'
+import { show_metadata } from './media/posters/metadata.js'
 import { photography_metadata } from './media/photography/photography_metadata.js'
 
 const MONTHS = [
@@ -21,6 +21,14 @@ var TABS_INITIALISED = {
   experience: false,
   work: false,
   photography: false
+}
+
+var gallery
+
+function flipCard (element) {
+  console.log(element)
+  const flipContainer = element.closest('.flip-container')
+  flipContainer.classList.toggle('flipped')
 }
 
 function timeLenghtAsString (start, end) {
@@ -86,61 +94,49 @@ function calculateTimeSpans () {
 
 function setUpCards () {
   const media_paths = []
-  for (const key in metadata) {
+  for (const key in show_metadata) {
     media_paths.push('media/posters/' + key)
   }
   media_paths.sort().reverse()
 
   const grid_container = document.getElementById('grid-container')
-  const template = document.getElementById('grid-item-template')
 
-  media_paths.forEach(media_path => {
-    const back_image = media_path.replace(/(\.[^.]+)$/, '_back$1')
+  fetch('html_templates/grid_item_template.html')
+    .then(response => response.text())
+    .then(templateHTML => {
+      media_paths.forEach(media_path => {
+        const back_image = media_path.replace(/(\.[^.]+)$/, '_back$1')
 
-    const data = metadata[media_path.split('/').slice(-1)[0]]
+        const data = show_metadata[media_path.split('/').slice(-1)[0]]
 
-    const div = document.createElement('div')
-    div.className = 'grid-item'
+        const div = document.createElement('div')
+        div.className = 'grid-item'
 
-    div.innerHTML = template.innerHTML
-    div.innerHTML = div.innerHTML
-      .replace(/FRONT_IMG_PATH/g, media_path)
-      .replace(/TITLE/g, data.title.split(':').join('<br>'))
-      .replace(/YEAR/g, data.year)
-      .replace(/STARS/g, data.stars.join('<br>'))
-      .replace(/DESCRIPTION/g, data.description)
-      .replace(/IMDB_ID/g, data.imdb_id)
-      .replace(/ROLE/g, data.role)
-      .replace(/COMPANY/g, data.company)
-      .replace(/LOCATION/g, data.location)
-    if (!data.credited) {
-      const ribbon = div.querySelector('.ribbon-container')
-      ribbon.style.display = 'none'
-    }
-    const back_div = div.querySelector('.back')
-    back_div.style.backgroundImage = `url(${back_image})`
+        div.innerHTML = templateHTML
+          .replace(/FRONT_IMG_PATH/g, media_path)
+          .replace(/TITLE/g, data.title.split(':').join('<br>'))
+          .replace(/YEAR/g, data.year)
+          .replace(/STARS/g, data.stars.join('<br>'))
+          .replace(/DESCRIPTION/g, data.description)
+          .replace(/IMDB_ID/g, data.imdb_id)
+          .replace(/ROLE/g, data.role)
+          .replace(/COMPANY/g, data.company)
+          .replace(/LOCATION/g, data.location)
+        if (!data.credited) {
+          const ribbon = div.querySelector('.ribbon-container')
+          ribbon.style.display = 'none'
+        }
+        const back_div = div.querySelector('.back')
+        back_div.style.backgroundImage = `url(${back_image})`
 
-    grid_container.appendChild(div)
-  })
-
-  const backElements = document.getElementsByClassName('back')
-  for (const element of backElements) {
-    element.addEventListener('click', function (event) {
-      toggleContent(this)
+        grid_container.appendChild(div)
+        ;['.back', '.front'].forEach(selector => {
+          div.querySelector(selector).addEventListener('click', function () {
+            flipCard(this)
+          })
+        })
+      })
     })
-  }
-
-  const frontElements = document.getElementsByClassName('front')
-  for (const element of frontElements) {
-    element.addEventListener('click', function (event) {
-      toggleContent(this)
-    })
-  }
-
-  function toggleContent (element) {
-    const flipContainer = element.closest('.flip-container')
-    flipContainer.classList.toggle('flipped')
-  }
 }
 
 function initialise_photography_map () {
@@ -173,7 +169,7 @@ function initialise_photography_map () {
       .bindPopup(popupContent, { maxWidth: 650 })
       .on('popupopen', () => {
         document.getElementById('popup-img').addEventListener('click', () => {
-          openModal({ index: index })
+          gallery.openGallery(index)
         })
       })
   }
@@ -215,32 +211,71 @@ function fitMapToMarkers (ids = null) {
 // function that iterates over the media/photograpgy folder and adds a <img> element for each image on the "photo-gallery" class
 function setUpPhotoGallery () {
   const photo_gallery = document.querySelector('.photo-gallery .images')
-  for (const [index, [file_name, metadata]] of Object.entries(
-    photography_metadata
-  ).entries()) {
-    var img_element = document.createElement('img')
-    img_element.src = 'media/photography/' + file_name
 
-    var text_element = document.createElement('div')
-    text_element.className = 'gps-info'
-    text_element.innerHTML = metadata.GPSInfo.region.join('<br>').toLowerCase()
+  fetch('html_templates/image_metadata_template.html')
+    .then(response => response.text())
+    .then(templateHTML => {
+      for (const [index, [file_name, metadata]] of Object.entries(
+        photography_metadata
+      ).entries()) {
+        var img_element = document.createElement('img')
+        img_element.src = 'media/photography/' + file_name
 
-    var photo_container = document.createElement('div')
-    photo_container.className = 'photo-container'
-    photo_container.appendChild(text_element)
-    photo_container.appendChild(img_element)
-    photo_container.dataset.index = index
+        var text_element = document.createElement('div')
+        text_element.className = 'gps-info'
+        text_element.innerHTML = metadata.GPSInfo.region
+          .join('<br>')
+          .toLowerCase()
 
-    var button = document.createElement('button')
-    button.textContent = 'View on Map'
-    button.className = 'view-button'
-    button.addEventListener('click', function (event) {
-      fitMapToMarkers([index])
+        var button = document.createElement('button')
+        button.textContent = 'View on Map'
+        button.className = 'view-button'
+        button.addEventListener('click', function (event) {
+          fitMapToMarkers([index])
+          event.stopPropagation()
+        })
+
+        var shutter_speed = Math.round(1 / metadata.ExposureTime)
+        var image_metadata = document.createElement('div')
+        image_metadata.innerHTML = templateHTML
+          .replace(/FSTOP/g, `f/${metadata.FNumber}`)
+          .replace(/SHUTTER_SPEED/g, `1/${shutter_speed}`)
+          .replace(/ISO/g, metadata.ISOSpeedRatings)
+          .replace(/FOCAL_LENGTH/g, `${metadata.FocalLength}mm`)
+          .replace(/DATE/g, metadata.DateTimeOriginal)
+
+        var photo_container = document.createElement('div')
+        photo_container.className = 'photo-container'
+        photo_container.dataset.index = index
+        photo_container.setAttribute('data-src', img_element.src)
+        photo_container.setAttribute('data-sub-html', image_metadata.innerHTML)
+
+        photo_container.appendChild(img_element)
+        photo_container.appendChild(text_element)
+        photo_container.appendChild(button)
+
+        photo_gallery.appendChild(photo_container)
+      }
+      $(document).ready(function () {
+        $('.images')
+          .justifiedGallery({
+            rowHeight: 450,
+            margins: 5,
+            lastRow: 'center',
+            refreshTime: 100,
+            captions: false
+          })
+          .on('jg.complete', function () {
+            gallery = lightGallery(
+              document.querySelector('.photo-gallery .images'),
+              {
+                plugins: [lgThumbnail, lgFullscreen],
+                download: false
+              }
+            )
+          })
+      })
     })
-    photo_container.appendChild(button)
-
-    photo_gallery.appendChild(photo_container)
-  }
 }
 
 function showContent (divId) {
@@ -260,54 +295,10 @@ function showContent (divId) {
       } else if (id === 'photography') {
         initialise_photography_map()
         setUpPhotoGallery()
-        registerModalEvents()
       }
     }
   })
 }
-
-// MODAL
-
-var imagesContainer = document.querySelector('.photo-gallery .images')
-
-function openModal ({ index = null, next = false, prev = false } = {}) {
-  var modal = document.getElementById('imageModal')
-
-  if (index === null) {
-    var images_count = document.getElementsByClassName('photo-container').length
-    if (next) {
-      index = (modal.dataset.index + 1) % images_count
-    } else if (prev) {
-      index = (modal.dataset.index - 1 + images_count) % images_count
-    } else {
-      index = 0
-    }
-  }
-
-  modal.style.display = 'block'
-  modal.dataset.index = index
-  // TODO: update with higher res?
-  var image_name = Object.keys(photography_metadata)[index]
-  var image_metadata = photography_metadata[image_name]
-  modal.querySelector('#modalImg').src = 'media/photography/' + image_name
-  updateImageMetadata(image_metadata)
-}
-
-function updateImageMetadata (metadata) {
-  var modal = document.getElementById('imageModal')
-  var shutter_speed = Math.round(1 / metadata.ExposureTime)
-  modal.querySelector('#fstop').textContent = `f/${metadata.FNumber}`
-  modal.querySelector('#shutter_speed').textContent = `1/${shutter_speed}`
-  modal.querySelector('#iso').textContent = `ISO ${metadata.ISOSpeedRatings}`
-  modal.querySelector('#focal_length').textContent = `${metadata.FocalLength}mm`
-  modal.querySelector('#date').textContent = metadata.DateTimeOriginal
-}
-
-imagesContainer.addEventListener('click', function (e) {
-  if (e.target && e.target.tagName === 'IMG') {
-    openModal(e.target.closest('.photo-container').dataset.index)
-  }
-})
 
 // DOCUMENT EVENT LISTENERS
 
@@ -319,47 +310,3 @@ Object.keys(TABS_INITIALISED).forEach(link => {
       showContent(link)
     })
 })
-
-function registerModalEvents () {
-  var modal = document.getElementById('imageModal')
-  modal.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = 'none'
-    }
-  }
-
-  document.querySelector('.close').onclick = function () {
-    if (modal.style.display === 'block') {
-      modal.style.display = 'none'
-    }
-  }
-
-  document.getElementById('prevBtn').onclick = function () {
-    if (modal.style.display === 'block') {
-      openModal({ prev: true })
-    }
-  }
-
-  document.getElementById('nextBtn').onclick = function () {
-    if (modal.style.display === 'block') {
-      openModal({ next: true })
-    }
-  }
-
-  document.addEventListener('keydown', function (event) {
-    if (modal.style.display === 'block' && event.key === 'Escape') {
-      modal.style.display = 'none'
-    }
-  })
-
-  document.addEventListener('keydown', function (event) {
-    if (modal.style.display !== 'block' && event.key === 'ArrowLeft') {
-      return
-    }
-    if (event.key === 'ArrowLeft') {
-      document.getElementById('prevBtn').click()
-    } else if (event.key === 'ArrowRight') {
-      document.getElementById('nextBtn').click()
-    }
-  })
-}
