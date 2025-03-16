@@ -146,12 +146,9 @@ function setUpCards () {
 function initialise_photography_map () {
   window.PhotographyMap = L.map('photography_map')
 
-  L.tileLayer(
-    'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
-    {
-      attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
-    }
-  ).addTo(window.PhotographyMap)
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(
+    window.PhotographyMap
+  )
 
   for (const [index, [file_name, metadata]] of Object.entries(
     photography_metadata
