@@ -16,104 +16,89 @@ const MONTHS = [
   'DEC'
 ]
 
-var TABS_INITIALISED = {
+const TABS_INITIALISED = {
   about: false,
   experience: false,
   work: false,
   photography: false
 }
 
-var gallery
+let gallery
 
 function flipCard (element) {
-  console.log(element)
   const flipContainer = element.closest('.flip-container')
   flipContainer.classList.toggle('flipped')
 }
 
-function timeLenghtAsString (start, end) {
-  var diff = Math.abs(end - start)
-  var years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
-  var months = Math.floor(
-    (diff - years * 1000 * 60 * 60 * 24 * 365) / (1000 * 60 * 60 * 24 * 30)
+function timeLengthAsString (start, end) {
+  const diff = Math.abs(end - start)
+  const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
+  const months = Math.floor(
+    (diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30)
   )
-  var timeSpan = ''
-  if (years > 0) {
-    timeSpan += years + ' yrs '
-  }
-  timeSpan += months + ' mos'
-  timeSpan = '(' + timeSpan + ')'
-  return timeSpan
+  return `(${years > 0 ? `${years} yrs ` : ''}${months} mos)`
 }
 
 function calculateTimeSpans () {
-  var periods = [...document.querySelectorAll('.period')].reverse()
-  var period_groups = new Map()
+  const periods = [...document.querySelectorAll('.period')].reverse()
+  const periodGroups = new Map()
 
-  periods.forEach(function (period) {
-    var [startMonth, endMonth] = period.querySelectorAll('.month')
-    var [startYear, endYear] = period.querySelectorAll('.year')
-    var period_group = period.classList[1]
+  periods.forEach(period => {
+    const [startMonth, endMonth] = period.querySelectorAll('.month')
+    const [startYear, endYear] = period.querySelectorAll('.year')
+    const periodGroup = period.classList[1]
 
-    if (endYear.textContent === 'PRESENT') {
-      var endDate = new Date()
-    } else {
-      var endDate = new Date(
-        parseInt(endYear.textContent),
-        MONTHS.indexOf(endMonth.textContent)
-      )
-    }
-
-    var startDate = new Date(
+    const endDate =
+      endYear.textContent === 'PRESENT'
+        ? new Date()
+        : new Date(
+            parseInt(endYear.textContent),
+            MONTHS.indexOf(endMonth.textContent)
+          )
+    const startDate = new Date(
       parseInt(startYear.textContent),
       MONTHS.indexOf(startMonth.textContent)
     )
 
-    if (period_groups.has(period_group)) {
-      let existingPeriod = period_groups.get(period_group)
-      existingPeriod.end = endDate
+    if (periodGroups.has(periodGroup)) {
+      periodGroups.get(periodGroup).end = endDate
     } else {
-      period_groups.set(period_group, { start: startDate, end: endDate })
+      periodGroups.set(periodGroup, { start: startDate, end: endDate })
     }
 
-    period.querySelector('.time_span').textContent = timeLenghtAsString(
+    period.querySelector('.time_span').textContent = timeLengthAsString(
       startDate,
       endDate
     )
   })
 
-  var period_sums = [...document.querySelectorAll('.period-sum')]
-  period_sums.forEach(function (period) {
-    var period_group = period.classList[1]
-    var period_sum = period_groups.get(period_group)
-    if (period_sum) {
-      period.textContent = timeLenghtAsString(period_sum.start, period_sum.end)
+  document.querySelectorAll('.period-sum').forEach(period => {
+    const periodGroup = period.classList[1]
+    const periodSum = periodGroups.get(periodGroup)
+    if (periodSum) {
+      period.textContent = timeLengthAsString(periodSum.start, periodSum.end)
     }
   })
 }
 
 function setUpCards () {
-  const media_paths = []
-  for (const key in show_metadata) {
-    media_paths.push('media/posters/' + key)
-  }
-  media_paths.sort().reverse()
-
-  const grid_container = document.getElementById('grid-container')
+  const mediaPaths = Object.keys(show_metadata)
+    .map(key => `media/posters/${key}`)
+    .sort()
+    .reverse()
+  const gridContainer = document.getElementById('grid-container')
 
   fetch('html_templates/grid_item_template.html')
     .then(response => response.text())
     .then(templateHTML => {
-      media_paths.forEach(media_path => {
-        const back_image = media_path.replace(/(\.[^.]+)$/, '_back$1')
-
-        const data = show_metadata[media_path.split('/').slice(-1)[0]]
+      mediaPaths.forEach(mediaPath => {
+        const backImage = mediaPath.replace(/(\.[^.]+)$/, '_back$1')
+        const data = show_metadata[mediaPath.split('/').pop()]
 
         const div = document.createElement('div')
         div.className = 'grid-item'
-
         div.innerHTML = templateHTML
-          .replace(/FRONT_IMG_PATH/g, media_path)
+          .replace(/FRONT_IMG_PATH/g, mediaPath)
           .replace(/TITLE/g, data.title.split(':').join('<br>'))
           .replace(/YEAR/g, data.year)
           .replace(/STARS/g, data.stars.join('<br>'))
@@ -122,141 +107,138 @@ function setUpCards () {
           .replace(/ROLE/g, data.role)
           .replace(/COMPANY/g, data.company)
           .replace(/LOCATION/g, data.location)
-        if (!data.credited) {
-          const ribbon = div.querySelector('.ribbon-container')
-          ribbon.style.display = 'none'
-        }
-        const back_div = div.querySelector('.back')
-        back_div.style.backgroundImage = `url(${back_image})`
 
-        grid_container.appendChild(div)
+        if (!data.credited) {
+          div.querySelector('.ribbon-container').style.display = 'none'
+        }
+
+        div.querySelector('.back').style.backgroundImage = `url(${backImage})`
+        gridContainer.appendChild(div)
         ;['.back', '.front'].forEach(selector => {
-          div.querySelector(selector).addEventListener('click', function () {
-            flipCard(this)
-          })
+          div
+            .querySelector(selector)
+            .addEventListener('click', () =>
+              flipCard(div.querySelector(selector))
+            )
         })
       })
     })
 }
 
-function initialise_photography_map () {
+function initialisePhotographyMap () {
   window.PhotographyMap = L.map('photography_map')
-
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(
     window.PhotographyMap
   )
 
-  for (const [index, [file_name, metadata]] of Object.entries(
-    photography_metadata
-  ).entries()) {
-    var lat_lng = [metadata.GPSInfo.lat, metadata.GPSInfo.lng]
-
-    const popupContent = `
-    <b>${metadata.DateTimeOriginal}</b><br>
-    <img id="popup-img" src="media/photography/${file_name}" height="250" style="cursor:pointer;"/>
-    <br>
-    <b>Lat: ${lat_lng[0].toFixed(6)}</b><br>
-    <b>Lng: ${lat_lng[1].toFixed(6)}</b>
+  Object.entries(photography_metadata).forEach(
+    ([fileName, metadata], index) => {
+      const latLng = [metadata.GPSInfo.lat, metadata.GPSInfo.lng]
+      const popupContent = `
+      <b>${metadata.DateTimeOriginal}</b><br>
+      <img id="popup-img" src="media/photography/${fileName}" height="250" style="cursor:pointer;"/><br>
+      <b>Lat: ${latLng[0].toFixed(6)}</b><br>
+      <b>Lng: ${latLng[1].toFixed(6)}</b>
     `
-    var marker = L.marker(lat_lng, {
-      icon: new L.Icon({
-        iconSize: [50, 50],
-        iconUrl: 'media/website-utils/camera.png'
-      }),
-      photo_id: index
-    })
-      .addTo(window.PhotographyMap)
-      .bindPopup(popupContent, { maxWidth: 650 })
-      .on('popupopen', () => {
-        document.getElementById('popup-img').addEventListener('click', () => {
-          gallery.openGallery(index)
-        })
+
+      const marker = L.marker(latLng, {
+        icon: new L.Icon({
+          iconSize: [50, 50],
+          iconUrl: 'media/website-utils/camera.png'
+        }),
+        photo_id: index
       })
-  }
+        .addTo(window.PhotographyMap)
+        .bindPopup(popupContent, { maxWidth: 650 })
+        .on('popupopen', () => {
+          document
+            .getElementById('popup-img')
+            .addEventListener('click', () => gallery.openGallery(index))
+        })
+    }
+  )
 
-  var resetViewBtn = L.Control.extend({
+  const resetViewBtn = L.Control.extend({
     options: { position: 'topright' },
-
-    onAdd: function (map) {
-      var btn = L.DomUtil.create('button', 'reset-view-button')
+    onAdd: function () {
+      const btn = L.DomUtil.create('button', 'reset-view-button')
       btn.innerHTML = 'Reset View'
-      btn.onclick = function () {
-        fitMapToMarkers()
-      }
+      btn.onclick = fitMapToMarkers
       return btn
     }
   })
-  window.PhotographyMap.addControl(new resetViewBtn())
 
+  window.PhotographyMap.addControl(new resetViewBtn())
   fitMapToMarkers()
 }
 
-function fitMapToMarkers (ids = null) {
-  if (!window.PhotographyMap) {
-    return
-  }
-  var bounds = L.latLngBounds()
-  window.PhotographyMap.eachLayer(function (layer) {
-    if (layer instanceof L.Marker) {
-      if (ids && !ids.includes(layer.options.photo_id)) {
-        return
-      }
+function fitMapToMarkers ({ ids = null } = {}) {
+  if (!window.PhotographyMap) return
+
+  const bounds = L.latLngBounds()
+  window.PhotographyMap.eachLayer(layer => {
+    console.log(ids)
+    if (
+      layer instanceof L.Marker &&
+      (!ids || ids.includes(layer.options.photo_id))
+    ) {
       bounds.extend(layer.getLatLng())
     }
   })
+
   window.PhotographyMap.fitBounds(bounds)
   document.getElementById('navbar').scrollIntoView()
 }
 
-// function that iterates over the media/photograpgy folder and adds a <img> element for each image on the "photo-gallery" class
 function setUpPhotoGallery () {
-  const photo_gallery = document.querySelector('.photo-gallery .images')
+  const photoGallery = document.querySelector('.photo-gallery .images')
 
   fetch('html_templates/image_metadata_template.html')
     .then(response => response.text())
     .then(templateHTML => {
-      for (const [index, [file_name, metadata]] of Object.entries(
-        photography_metadata
-      ).entries()) {
-        var img_element = document.createElement('img')
-        img_element.src = 'media/photography/' + file_name
+      Object.entries(photography_metadata).forEach(
+        ([fileName, metadata], index) => {
+          const imgElement = document.createElement('img')
+          imgElement.src = `media/photography/${fileName}`
 
-        var text_element = document.createElement('div')
-        text_element.className = 'gps-info'
-        text_element.innerHTML = metadata.GPSInfo.region
-          .join('<br>')
-          .toLowerCase()
+          const textElement = document.createElement('div')
+          textElement.className = 'gps-info'
+          textElement.innerHTML = metadata.GPSInfo.region
+            .join('<br>')
+            .toLowerCase()
 
-        var button = document.createElement('button')
-        button.textContent = 'View on Map'
-        button.className = 'view-button'
-        button.addEventListener('click', function (event) {
-          fitMapToMarkers([index])
-          event.stopPropagation()
-        })
+          const button = document.createElement('button')
+          button.textContent = 'View on Map'
+          button.className = 'view-button'
+          button.addEventListener('click', event => {
+            fitMapToMarkers({ ids: [index] })
+            event.stopPropagation()
+          })
 
-        var shutter_speed = Math.round(1 / metadata.ExposureTime)
-        var image_metadata = document.createElement('div')
-        image_metadata.innerHTML = templateHTML
-          .replace(/FSTOP/g, `f/${metadata.FNumber}`)
-          .replace(/SHUTTER_SPEED/g, `1/${shutter_speed}`)
-          .replace(/ISO/g, metadata.ISOSpeedRatings)
-          .replace(/FOCAL_LENGTH/g, `${metadata.FocalLength}mm`)
-          .replace(/DATE/g, metadata.DateTimeOriginal)
+          const shutterSpeed = Math.round(1 / metadata.ExposureTime)
+          const imageMetadata = document.createElement('div')
+          imageMetadata.innerHTML = templateHTML
+            .replace(/FSTOP/g, `f/${metadata.FNumber}`)
+            .replace(/SHUTTER_SPEED/g, `1/${shutterSpeed}`)
+            .replace(/ISO/g, metadata.ISOSpeedRatings)
+            .replace(/FOCAL_LENGTH/g, `${metadata.FocalLength}mm`)
+            .replace(/DATE/g, metadata.DateTimeOriginal)
 
-        var photo_container = document.createElement('div')
-        photo_container.className = 'photo-container'
-        photo_container.dataset.index = index
-        photo_container.setAttribute('data-src', img_element.src)
-        photo_container.setAttribute('data-sub-html', image_metadata.innerHTML)
+          const photoContainer = document.createElement('div')
+          photoContainer.className = 'photo-container'
+          photoContainer.dataset.index = index
+          photoContainer.setAttribute('data-src', imgElement.src)
+          photoContainer.setAttribute('data-sub-html', imageMetadata.innerHTML)
 
-        photo_container.appendChild(img_element)
-        photo_container.appendChild(text_element)
-        photo_container.appendChild(button)
+          photoContainer.appendChild(imgElement)
+          photoContainer.appendChild(textElement)
+          photoContainer.appendChild(button)
 
-        photo_gallery.appendChild(photo_container)
-      }
-      $(document).ready(function () {
+          photoGallery.appendChild(photoContainer)
+        }
+      )
+
+      $(document).ready(() => {
         $('.images')
           .justifiedGallery({
             rowHeight: 450,
@@ -265,7 +247,7 @@ function setUpPhotoGallery () {
             refreshTime: 100,
             captions: false
           })
-          .on('jg.complete', function () {
+          .on('jg.complete', () => {
             gallery = lightGallery(
               document.querySelector('.photo-gallery .images'),
               {
@@ -279,11 +261,10 @@ function setUpPhotoGallery () {
 }
 
 function showContent (divId) {
-  Object.keys(TABS_INITIALISED).forEach(function (id) {
+  Object.keys(TABS_INITIALISED).forEach(id => {
     const div = document.getElementById(id)
-    if (!div) {
-      return
-    }
+    if (!div) return
+
     div.style.display = divId === id ? 'block' : 'none'
 
     if (!TABS_INITIALISED[id] && divId === id) {
@@ -293,7 +274,7 @@ function showContent (divId) {
       } else if (id === 'work') {
         setUpCards()
       } else if (id === 'photography') {
-        initialise_photography_map()
+        initialisePhotographyMap()
         setUpPhotoGallery()
       }
     }
@@ -301,12 +282,9 @@ function showContent (divId) {
 }
 
 // DOCUMENT EVENT LISTENERS
-
 Object.keys(TABS_INITIALISED).forEach(link => {
-  document
-    .getElementById(`${link}-link`)
-    .addEventListener('click', function (event) {
-      event.preventDefault()
-      showContent(link)
-    })
+  document.getElementById(`${link}-link`).addEventListener('click', event => {
+    event.preventDefault()
+    showContent(link)
+  })
 })
