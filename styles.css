@@ -529,6 +529,13 @@ input[type="submit"] {
   margin: 10px auto;
 }
 
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  filter: invert(100%) saturate(0%);
+}
+
 .photo-gallery {
   margin-top: 2rem;
   text-align: center;
