@@ -81,48 +81,86 @@ function calculateTimeSpans () {
   })
 }
 
-function setUpCards () {
+async function fetchTemplate (templatePath) {
+  try {
+    const response = await fetch(templatePath)
+    if (!response.ok) throw new Error('Failed to fetch template')
+    return await response.text()
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
+async function fetchIMDBData (imdbId) {
+  try {
+    const response = await fetch(
+      `https://data.ratings.media-imdb.com/${imdbId}/data.json`
+    )
+    if (!response.ok) throw new Error('Failed to fetch IMDB data')
+    return await response.json()
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
+function createCardElement (templateHTML, mediaPath, data, imdbData) {
+  const div = document.createElement('div')
+  div.className = 'grid-item'
+  div.innerHTML = templateHTML
+    .replace(/FRONT_IMG_PATH/g, mediaPath)
+    .replace(/TITLE/g, data.title.split(':').join('<br>'))
+    .replace(/YEAR/g, data.year)
+    .replace(/STARRING/g, data.starring.join('<br>'))
+    .replace(/DESCRIPTION/g, data.description)
+    .replace(/RATING/g, imdbData ? imdbData.imdbRating[0] : 'N/A')
+    .replace(/VOTES/g, imdbData ? imdbData.imdbRating[1] : 'N/A')
+    .replace(/ROLE/g, data.role)
+    .replace(/COMPANY/g, data.company)
+    .replace(/LOCATION/g, data.location)
+
+  if (!data.credited) {
+    div.querySelector('.ribbon-container').style.display = 'none'
+  }
+
+  ;['.back', '.front'].forEach(selector => {
+    div
+      .querySelector(selector)
+      .addEventListener('click', () => flipCard(div.querySelector(selector)))
+  })
+
+  return div
+}
+
+async function setUpCards () {
   const mediaPaths = Object.keys(show_metadata)
     .map(key => `media/posters/${key}`)
     .sort()
     .reverse()
   const gridContainer = document.getElementById('grid-container')
+  const templateHTML = await fetchTemplate(
+    'html_templates/grid_item_template.html'
+  )
 
-  fetch('html_templates/grid_item_template.html')
-    .then(response => response.text())
-    .then(templateHTML => {
-      mediaPaths.forEach(mediaPath => {
-        const backImage = mediaPath.replace(/(\.[^.]+)$/, '_back$1')
-        const data = show_metadata[mediaPath.split('/').pop()]
+  if (!templateHTML) return
 
-        const div = document.createElement('div')
-        div.className = 'grid-item'
-        div.innerHTML = templateHTML
-          .replace(/FRONT_IMG_PATH/g, mediaPath)
-          .replace(/TITLE/g, data.title.split(':').join('<br>'))
-          .replace(/YEAR/g, data.year)
-          .replace(/STARS/g, data.stars.join('<br>'))
-          .replace(/DESCRIPTION/g, data.description)
-          .replace(/IMDB_ID/g, data.imdb_id)
-          .replace(/ROLE/g, data.role)
-          .replace(/COMPANY/g, data.company)
-          .replace(/LOCATION/g, data.location)
+  const fragment = document.createDocumentFragment()
 
-        if (!data.credited) {
-          div.querySelector('.ribbon-container').style.display = 'none'
-        }
+  for (const mediaPath of mediaPaths) {
+    const data = show_metadata[mediaPath.split('/').pop()]
+    const imdbData = await fetchIMDBData(data.imdb_id)
 
-        div.querySelector('.back').style.backgroundImage = `url(${backImage})`
-        gridContainer.appendChild(div)
-        ;['.back', '.front'].forEach(selector => {
-          div
-            .querySelector(selector)
-            .addEventListener('click', () =>
-              flipCard(div.querySelector(selector))
-            )
-        })
-      })
-    })
+    const cardElement = createCardElement(
+      templateHTML,
+      mediaPath,
+      data,
+      imdbData
+    )
+    fragment.appendChild(cardElement)
+  }
+
+  gridContainer.appendChild(fragment)
 }
 
 function initialisePhotographyMap () {
@@ -190,74 +228,87 @@ function fitMapToMarkers ({ ids = null } = {}) {
   document.getElementById('navbar').scrollIntoView()
 }
 
-function setUpPhotoGallery () {
+function createPhotoElement (templateHTML, fileName, metadata, index) {
+  const imgElement = document.createElement('img')
+  imgElement.src = `media/photography/${fileName}`
+
+  const textElement = document.createElement('div')
+  textElement.className = 'gps-info'
+  textElement.innerHTML = metadata.GPSInfo.region.join('<br>').toLowerCase()
+
+  const button = document.createElement('button')
+  button.textContent = 'View on Map'
+  button.className = 'view-button'
+  button.addEventListener('click', event => {
+    fitMapToMarkers({ ids: [index] })
+    event.stopPropagation()
+  })
+
+  const shutterSpeed = Math.round(1 / metadata.ExposureTime)
+  const imageMetadata = document.createElement('div')
+  imageMetadata.innerHTML = templateHTML
+    .replace(/FSTOP/g, `f/${metadata.FNumber}`)
+    .replace(/SHUTTER_SPEED/g, `1/${shutterSpeed}`)
+    .replace(/ISO/g, metadata.ISOSpeedRatings)
+    .replace(/FOCAL_LENGTH/g, `${metadata.FocalLength}mm`)
+    .replace(/DATE/g, metadata.DateTimeOriginal)
+
+  const photoContainer = document.createElement('div')
+  photoContainer.className = 'photo-container'
+  photoContainer.dataset.index = index
+  photoContainer.setAttribute('data-src', imgElement.src)
+  photoContainer.setAttribute('data-sub-html', imageMetadata.innerHTML)
+
+  photoContainer.appendChild(imgElement)
+  photoContainer.appendChild(textElement)
+  photoContainer.appendChild(button)
+
+  return photoContainer
+}
+
+async function setUpPhotoGallery () {
   const photoGallery = document.querySelector('.photo-gallery .images')
+  const templateHTML = await fetchTemplate(
+    'html_templates/image_metadata_template.html'
+  )
 
-  fetch('html_templates/image_metadata_template.html')
-    .then(response => response.text())
-    .then(templateHTML => {
-      Object.entries(photography_metadata).forEach(
-        ([fileName, metadata], index) => {
-          const imgElement = document.createElement('img')
-          imgElement.src = `media/photography/${fileName}`
+  if (!templateHTML) return
 
-          const textElement = document.createElement('div')
-          textElement.className = 'gps-info'
-          textElement.innerHTML = metadata.GPSInfo.region
-            .join('<br>')
-            .toLowerCase()
+  const fragment = document.createDocumentFragment()
 
-          const button = document.createElement('button')
-          button.textContent = 'View on Map'
-          button.className = 'view-button'
-          button.addEventListener('click', event => {
-            fitMapToMarkers({ ids: [index] })
-            event.stopPropagation()
-          })
-
-          const shutterSpeed = Math.round(1 / metadata.ExposureTime)
-          const imageMetadata = document.createElement('div')
-          imageMetadata.innerHTML = templateHTML
-            .replace(/FSTOP/g, `f/${metadata.FNumber}`)
-            .replace(/SHUTTER_SPEED/g, `1/${shutterSpeed}`)
-            .replace(/ISO/g, metadata.ISOSpeedRatings)
-            .replace(/FOCAL_LENGTH/g, `${metadata.FocalLength}mm`)
-            .replace(/DATE/g, metadata.DateTimeOriginal)
-
-          const photoContainer = document.createElement('div')
-          photoContainer.className = 'photo-container'
-          photoContainer.dataset.index = index
-          photoContainer.setAttribute('data-src', imgElement.src)
-          photoContainer.setAttribute('data-sub-html', imageMetadata.innerHTML)
-
-          photoContainer.appendChild(imgElement)
-          photoContainer.appendChild(textElement)
-          photoContainer.appendChild(button)
-
-          photoGallery.appendChild(photoContainer)
-        }
+  Object.entries(photography_metadata).forEach(
+    ([fileName, metadata], index) => {
+      const photoElement = createPhotoElement(
+        templateHTML,
+        fileName,
+        metadata,
+        index
       )
+      fragment.appendChild(photoElement)
+    }
+  )
 
-      $(document).ready(() => {
-        $('.images')
-          .justifiedGallery({
-            rowHeight: 450,
-            margins: 5,
-            lastRow: 'center',
-            refreshTime: 100,
-            captions: false
-          })
-          .on('jg.complete', () => {
-            gallery = lightGallery(
-              document.querySelector('.photo-gallery .images'),
-              {
-                plugins: [lgThumbnail, lgFullscreen],
-                download: false
-              }
-            )
-          })
+  photoGallery.appendChild(fragment)
+
+  $(document).ready(() => {
+    $('.images')
+      .justifiedGallery({
+        rowHeight: 450,
+        margins: 5,
+        lastRow: 'center',
+        refreshTime: 100,
+        captions: false
       })
-    })
+      .on('jg.complete', () => {
+        gallery = lightGallery(
+          document.querySelector('.photo-gallery .images'),
+          {
+            plugins: [lgThumbnail, lgFullscreen],
+            download: false
+          }
+        )
+      })
+  })
 }
 
 function showContent (divId) {

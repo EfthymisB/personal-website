@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link
@@ -24,6 +21,10 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <!-- justifiedGallery CSS -->
     <link
       rel="stylesheet"
@@ -55,9 +56,11 @@
   <body>
     <script src="main.js" type="module"></script>
     <script src="media/posters/metadata.js" type="module"></script>
-    <script src="imdb-rating.js" type="text/javascript"></script>
 
-    <!-- jQuery (Required) -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Justified Gallery -->
@@ -126,9 +129,7 @@
         </div>
 
         <div class="content flex">
-          <div class="left">
-            <img src="image/e.jpg" alt="" />
-          </div>
+          <div class="left"></div>
           <div class="right">
             <div class="timeline">
               <div class="line"></div>
