@@ -16,6 +16,13 @@ const MONTHS = [
   'DEC'
 ]
 
+var TABS_INITIALISED = {
+  about: false,
+  experience: false,
+  work: false,
+  photography: false
+}
+
 function timeLenghtAsString (start, end) {
   var diff = Math.abs(end - start)
   var years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
@@ -106,9 +113,9 @@ function setUpCards () {
       .replace(/ROLE/g, data.role)
       .replace(/COMPANY/g, data.company)
       .replace(/LOCATION/g, data.location)
-    if (data.credited) {
-      const uncredited = div.querySelector('.uncredited')
-      uncredited.style.display = 'none'
+    if (!data.credited) {
+      const ribbon = div.querySelector('.ribbon-container')
+      ribbon.style.display = 'none'
     }
     const back_div = div.querySelector('.back')
     back_div.style.backgroundImage = `url(${back_image})`
@@ -136,153 +143,228 @@ function setUpCards () {
   }
 }
 
+function initialise_photography_map () {
+  window.PhotographyMap = L.map('photography_map')
+
+  L.tileLayer(
+    'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+    {
+      attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
+    }
+  ).addTo(window.PhotographyMap)
+
+  for (const [index, [file_name, metadata]] of Object.entries(
+    photography_metadata
+  ).entries()) {
+    var lat_lng = [metadata.GPSInfo.lat, metadata.GPSInfo.lng]
+
+    const popupContent = `
+    <b>${metadata.DateTimeOriginal}</b><br>
+    <img id="popup-img" src="media/photography/${file_name}" height="250" style="cursor:pointer;"/>
+    <br>
+    <b>Lat: ${lat_lng[0].toFixed(6)}</b><br>
+    <b>Lng: ${lat_lng[1].toFixed(6)}</b>
+    `
+    var marker = L.marker(lat_lng, {
+      icon: new L.Icon({
+        iconSize: [50, 50],
+        iconUrl: 'media/website-utils/camera.png'
+      }),
+      photo_id: index
+    })
+      .addTo(window.PhotographyMap)
+      .bindPopup(popupContent, { maxWidth: 650 })
+      .on('popupopen', () => {
+        document.getElementById('popup-img').addEventListener('click', () => {
+          console.log('Image clicked:', file_name)
+          // You can call a custom function here, for example:
+          // onImageClicked(file_name);
+        })
+      })
+  }
+
+  var resetViewBtn = L.Control.extend({
+    options: { position: 'topright' },
+
+    onAdd: function (map) {
+      var btn = L.DomUtil.create('button', 'reset-view-button')
+      btn.innerHTML = 'Reset View'
+      btn.onclick = function () {
+        fitMapToMarkers()
+      }
+      return btn
+    }
+  })
+  window.PhotographyMap.addControl(new resetViewBtn())
+
+  fitMapToMarkers()
+}
+
+function fitMapToMarkers (ids = null) {
+  if (!window.PhotographyMap) {
+    return
+  }
+  var bounds = L.latLngBounds()
+  window.PhotographyMap.eachLayer(function (layer) {
+    if (layer instanceof L.Marker) {
+      if (ids && !ids.includes(layer.options.photo_id)) {
+        return
+      }
+      bounds.extend(layer.getLatLng())
+    }
+  })
+  window.PhotographyMap.fitBounds(bounds)
+  document.getElementById('navbar').scrollIntoView()
+}
+
 // function that iterates over the media/photograpgy folder and adds a <img> element for each image on the "photo-gallery" class
 function setUpPhotoGallery () {
   const photo_gallery = document.querySelector('.photo-gallery .images')
-  const media_paths = []
-  for (const key in photography_metadata) {
-    var img = document.createElement('img')
-    img.src = 'media/photography/' + key
+  for (const [index, [file_name, metadata]] of Object.entries(
+    photography_metadata
+  ).entries()) {
+    var img_element = document.createElement('img')
+    img_element.src = 'media/photography/' + file_name
 
-    var text = document.createElement('div')
-    text.className = 'gps-info'
-    // text.textContent = photography_metadata[key].GPSInfo.toLowerCase()
-    text.innerHTML =
-      photography_metadata[key].GPSInfo.join('<br>').toLowerCase()
+    var text_element = document.createElement('div')
+    text_element.className = 'gps-info'
+    text_element.innerHTML = metadata.GPSInfo.region.join('<br>').toLowerCase()
 
-    var div = document.createElement('div')
-    div.className = 'photo'
-    div.appendChild(text)
-    div.appendChild(img)
+    var photo_container = document.createElement('div')
+    photo_container.className = 'photo-container'
+    photo_container.appendChild(text_element)
+    photo_container.appendChild(img_element)
+    photo_container.dataset.index = index
 
-    photo_gallery.appendChild(div)
+    var button = document.createElement('button')
+    button.textContent = 'View on Map'
+    button.className = 'view-button'
+    button.addEventListener('click', function (event) {
+      fitMapToMarkers([index])
+    })
+    photo_container.appendChild(button)
+
+    photo_gallery.appendChild(photo_container)
   }
 }
 
 function showContent (divId) {
-  ;['about', 'work', 'experience', 'photography'].forEach(function (id) {
+  Object.keys(TABS_INITIALISED).forEach(function (id) {
     const div = document.getElementById(id)
     if (!div) {
       return
     }
     div.style.display = divId === id ? 'block' : 'none'
+
+    if (!TABS_INITIALISED[id] && divId === id) {
+      TABS_INITIALISED[id] = true
+      if (id === 'experience') {
+        calculateTimeSpans()
+      } else if (id === 'work') {
+        setUpCards()
+      } else if (id === 'photography') {
+        initialise_photography_map()
+        setUpPhotoGallery()
+        registerModalEvents()
+      }
+    }
   })
 }
 
 // MODAL
-var modal = document.getElementById('imageModal')
-var modalImg = document.getElementById('modalImg')
-var imagesContainer = document.querySelector('.photo-gallery .images')
-var currentImageIndex = 0
-var images = []
 
-function openModal (imgElement, index) {
+var imagesContainer = document.querySelector('.photo-gallery .images')
+
+function openModal ({ index = null, next = false, prev = false } = {}) {
+  var modal = document.getElementById('imageModal')
+
+  if (index === null) {
+    var images_count = document.getElementsByClassName('photo-container').length
+    if (next) {
+      index = (modal.dataset.index + 1) % images_count
+    } else if (prev) {
+      index = (modal.dataset.index - 1 + images_count) % images_count
+    } else {
+      index = 0
+    }
+  }
+
   modal.style.display = 'block'
-  modalImg.src = imgElement.src // TODO: update with higher res?
-  currentImageIndex = index
-  updateImageMetadata(imgElement)
+  modal.dataset.index = index
+  // TODO: update with higher res?
+  var image_name = Object.keys(photography_metadata)[index]
+  var image_metadata = photography_metadata[image_name]
+  modal.querySelector('#modalImg').src = 'media/photography/' + image_name
+  updateImageMetadata(image_metadata)
 }
 
-function updateImageMetadata (imgElement) {
-  var imageName = imgElement.src.split('/').pop()
-  if (photography_metadata[imageName]) {
-    const data = photography_metadata[imageName]
-
-    document.getElementById('fstop').textContent = `f/${data.FNumber}`
-    document.getElementById('shutter_speed').textContent = `1/${Math.round(
-      1 / data.ExposureTime
-    )}`
-    document.getElementById('iso').textContent = `ISO ${data.ISOSpeedRatings}`
-    document.getElementById(
-      'focal_length'
-    ).textContent = `${data.FocalLength}mm`
-    document.getElementById('date').textContent = data.DateTimeOriginal
-  }
+function updateImageMetadata (metadata) {
+  var modal = document.getElementById('imageModal')
+  var shutter_speed = Math.round(1 / metadata.ExposureTime)
+  modal.querySelector('#fstop').textContent = `f/${metadata.FNumber}`
+  modal.querySelector('#shutter_speed').textContent = `1/${shutter_speed}`
+  modal.querySelector('#iso').textContent = `ISO ${metadata.ISOSpeedRatings}`
+  modal.querySelector('#focal_length').textContent = `${metadata.FocalLength}mm`
+  modal.querySelector('#date').textContent = metadata.DateTimeOriginal
 }
 
 imagesContainer.addEventListener('click', function (e) {
   if (e.target && e.target.tagName === 'IMG') {
-    const clickedImage = e.target
-    images = Array.from(imagesContainer.querySelectorAll('img'))
-    const clickedIndex = images.indexOf(clickedImage)
-    openModal(clickedImage, clickedIndex)
+    openModal(e.target.closest('.photo-container').dataset.index)
   }
 })
-
-modal.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = 'none'
-  }
-}
 
 // DOCUMENT EVENT LISTENERS
 
-document
-  .getElementById('about-link')
-  .addEventListener('click', function (event) {
-    event.preventDefault()
-    showContent('about')
-  })
-
-document
-  .getElementById('work-link')
-  .addEventListener('click', function (event) {
-    event.preventDefault()
-    showContent('work')
-  })
-
-document
-  .getElementById('experience-link')
-  .addEventListener('click', function (event) {
-    event.preventDefault()
-    showContent('experience')
-    calculateTimeSpans()
-  })
-
-document
-  .getElementById('photography-link')
-  .addEventListener('click', function (event) {
-    event.preventDefault()
-    showContent('photography')
-  })
-
-document.addEventListener('DOMContentLoaded', function () {
-  setUpCards()
-  setUpPhotoGallery()
+Object.keys(TABS_INITIALISED).forEach(link => {
+  document
+    .getElementById(`${link}-link`)
+    .addEventListener('click', function (event) {
+      event.preventDefault()
+      showContent(link)
+    })
 })
 
-document.querySelector('.close').onclick = function () {
-  modal.style.display = 'none'
+function registerModalEvents () {
+  var modal = document.getElementById('imageModal')
+  modal.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none'
+    }
+  }
+
+  document.querySelector('.close').onclick = function () {
+    if (modal.style.display === 'block') {
+      modal.style.display = 'none'
+    }
+  }
+
+  document.getElementById('prevBtn').onclick = function () {
+    if (modal.style.display === 'block') {
+      openModal({ prev: true })
+    }
+  }
+
+  document.getElementById('nextBtn').onclick = function () {
+    if (modal.style.display === 'block') {
+      openModal({ next: true })
+    }
+  }
+
+  document.addEventListener('keydown', function (event) {
+    if (modal.style.display === 'block' && event.key === 'Escape') {
+      modal.style.display = 'none'
+    }
+  })
+
+  document.addEventListener('keydown', function (event) {
+    if (modal.style.display !== 'block' && event.key === 'ArrowLeft') {
+      return
+    }
+    if (event.key === 'ArrowLeft') {
+      document.getElementById('prevBtn').click()
+    } else if (event.key === 'ArrowRight') {
+      document.getElementById('nextBtn').click()
+    }
+  })
 }
-
-document.getElementById('prevBtn').onclick = function () {
-  if (modal.style.display != 'block') {
-    return
-  }
-  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length
-  modalImg.src = images[currentImageIndex].src
-  updateImageMetadata(images[currentImageIndex])
-}
-
-document.getElementById('nextBtn').onclick = function () {
-  if (modal.style.display != 'block') {
-    return
-  }
-  currentImageIndex = (currentImageIndex + 1) % images.length
-  modalImg.src = images[currentImageIndex].src
-  updateImageMetadata(images[currentImageIndex])
-}
-
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'Escape') {
-    modal.style.display = 'none'
-  }
-})
-
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'ArrowLeft') {
-    document.getElementById('prevBtn').click()
-  } else if (event.key === 'ArrowRight') {
-    document.getElementById('nextBtn').click()
-  }
-})

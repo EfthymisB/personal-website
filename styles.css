@@ -217,6 +217,28 @@ a:hover {
   animation: scaleAnimation 500ms infinite alternate;
 }
 
+.ribbon-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.ribbon {
+  margin: 0;
+  background: bisque;
+  color: black;
+  padding: 5px 25px 5px 25px;
+  position: absolute;
+  font-size: 12;
+  top: 94.3%;
+  right: -7%;
+  transform: translateX(0%) translateY(0%) rotate(-45deg);
+}
+
 @keyframes scaleAnimation {
   0% {
     transform: translate(-45%, 45%) scale(0.075);
@@ -233,7 +255,7 @@ a:hover {
   width: 100%;
   transform: rotateY(180deg);
   z-index: 1;
-  border: 3px solid #a5a5a5;
+  border: 2px solid var(--main-colour);
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -276,10 +298,6 @@ a:hover {
 .project-description {
   font-size: 16px;
   padding: 30px;
-}
-
-.uncredited {
-  font-style: italic;
 }
 
 .container {
@@ -485,6 +503,32 @@ input[type="submit"] {
 
 /* PHOTOGRAPHY */
 
+#photography_map {
+  height: 400px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.reset-view-button,
+.view-button {
+  background-color: gray;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: rgb(50, 50, 50);
+  color: white;
+  border: 1px solid white;
+  text-align: center;
+}
+
+.leaflet-popup-content-wrapper img {
+  margin: 10px auto;
+}
+
 .photo-gallery {
   margin-top: 2rem;
   text-align: center;
@@ -498,12 +542,17 @@ input[type="submit"] {
   padding-top: 1.25rem;
 }
 
-.photo-gallery img {
+.photo-gallery .images img {
   display: block;
   width: 100%;
-  border-radius: 7.5px;
+  border-radius: 10px;
   margin-bottom: 1.25rem;
   cursor: pointer;
+}
+
+.photo-gallery .photo-container {
+  display: flex;
+  justify-content: center;
 }
 
 .photo-gallery .gps-info {
@@ -516,15 +565,19 @@ input[type="submit"] {
   letter-spacing: 0.5rem;
   text-transform: capitalize;
   line-height: 3rem;
+  align-self: center;
 }
 
-.photo-gallery .photo {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+.photo-gallery .photo-container .view-button {
+  position: absolute;
+  cursor: zoom-in;
+  align-self: last baseline;
+  margin-bottom: 40px;
+  opacity: 0;
 }
 
-.photo-gallery .photo:hover .gps-info {
+.photo-gallery .photo-container:hover .gps-info,
+.photo-gallery .photo-container:hover .view-button {
   opacity: 1;
 }
 

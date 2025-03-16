@@ -60,7 +60,11 @@ def get_location_geocode_xyz_from_gps_info(gps_info):
         print("    Failed to get location from Geocode.xyz API.")
         return "Somewhere"
 
-    return list(map(str.strip, data.get("region").split(",")))
+    return {
+        "region": list(map(str.strip, data.get("region").split(","))),
+        "lat": latitude,
+        "lng": longtitude,
+    }
 
 
 def get_metadata(path):

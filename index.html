@@ -8,6 +8,9 @@
           <img src="media/website-utils/click.png" id="click" />
         </div>
       </div>
+      <div class="ribbon-container">
+        <h4 class="ribbon">Credited</h4>
+      </div>
       <div class="back">
         <div class="back-text">
           <div class="project-title"><p>TITLE</p></div>
@@ -32,9 +35,6 @@
           <div class="role-company-location">
             <p>ROLE<br />COMPANY<br />LOCATION<br /></p>
           </div>
-          <div class="uncredited">
-            <p>Uncredited*</p>
-          </div>
         </div>
       </div>
     </div>
@@ -45,6 +45,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <link
@@ -84,7 +87,7 @@
   </script>
   <!-- End of Google analytics -->
   <body>
-    <nav>
+    <nav id="navbar">
       <ul>
         <li>
           <a href="#about" id="about-link">about</a>
@@ -100,8 +103,6 @@
         </li>
       </ul>
     </nav>
-
-    <div id="content"></div>
 
     <div class="tab" id="about">
       <img src="media/eb.jpg" alt="Efthymios Bairaktaris" />
@@ -290,6 +291,7 @@
 
     <div class="tab" id="photography">
       <section class="photo-gallery">
+        <div id="photography_map"></div>
         <div class="images"></div>
       </section>
     </div>

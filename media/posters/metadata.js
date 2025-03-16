@@ -224,5 +224,29 @@ export const metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: false
+  },
+  '019_the_walking_dead.jpg': {
+    title: 'The Walking Dead: Daryl Nixon',
+    year: '2025',
+    description:
+      "Daryl's journey across a broken but resilient France as he hopes to find a way back home.",
+    stars: ['Norman Reedus', 'Louis Puech Scigliuzzi', 'Romain Levi'],
+    imdb_id: 'tt13062500',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
+  },
+  '020_the_wheel_of_time.jpg': {
+    title: 'The Wheel of Time - S3',
+    year: '2025',
+    description:
+      'Set in a high fantasy world where magic exists, but only some can access it, a woman named Moiraine crosses paths with five young men and women. This sparks a dangerous, world-spanning journey. Based on the book series by Robert Jordan.',
+    stars: ['Rosamund Pike', 'Daniel Henney', 'Madeleine Madden'],
+    imdb_id: 'tt7462410',
+    role: 'Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: false
   }
 }
