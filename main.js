@@ -173,9 +173,7 @@ function initialise_photography_map () {
       .bindPopup(popupContent, { maxWidth: 650 })
       .on('popupopen', () => {
         document.getElementById('popup-img').addEventListener('click', () => {
-          console.log('Image clicked:', file_name)
-          // You can call a custom function here, for example:
-          // onImageClicked(file_name);
+          openModal({ index: index })
         })
       })
   }
