@@ -72,6 +72,24 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 7.1
   },
+  "H75A1209_25_cc.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Luxembourg",
+        "Luxembourg"
+      ],
+      "lat": 49.609008333333335,
+      "lng": 6.128938333333333
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-03-21",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 44.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.00625,
+    "FNumber": 7.1
+  },
   "H75A1109_25_cc.jpg": {
     "GPSInfo": {
       "region": [
