@@ -181,7 +181,7 @@ function initialisePhotographyMap () {
 
       const marker = L.marker(latLng, {
         icon: new L.Icon({
-          iconSize: [50, 50],
+          iconSize: [40, 40],
           iconUrl: 'media/website-utils/camera.png'
         }),
         photo_id: index
@@ -234,7 +234,10 @@ function createPhotoElement (templateHTML, fileName, metadata, index) {
 
   const textElement = document.createElement('div')
   textElement.className = 'gps-info'
-  textElement.innerHTML = metadata.GPSInfo.region.join('<br>').toLowerCase()
+  textElement.innerHTML = metadata.GPSInfo.region
+    .reverse()
+    .join('<br>')
+    .toLowerCase()
 
   const button = document.createElement('button')
   button.textContent = 'View on Map'
