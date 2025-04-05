@@ -20,8 +20,7 @@ export const show_metadata = {
     imdb_id: 'tt10366206',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '003_theFlash.jpg': {
     title: 'The Flash',
@@ -32,8 +31,7 @@ export const show_metadata = {
     imdb_id: 'tt0439572',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '004_missionImpossible7.jpg': {
     title: 'Mission Impossible: Dead Reckoning Part One',
@@ -44,8 +42,7 @@ export const show_metadata = {
     imdb_id: 'tt9603212',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '005_secretInvasion.jpg': {
     title: 'Secret Invasion',
@@ -80,8 +77,7 @@ export const show_metadata = {
     imdb_id: 'tt13287846',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '008_zone_of_interest.jpg': {
     title: 'Zone of Interest',
@@ -92,8 +88,7 @@ export const show_metadata = {
     imdb_id: 'tt7160372',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '009_the_book_of_clarence.jpg': {
     title: 'The Book of Clarence',
@@ -116,8 +111,7 @@ export const show_metadata = {
     imdb_id: 'tt11057302',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '011_constellation.jpg': {
     title: 'Constellation',
@@ -128,8 +122,7 @@ export const show_metadata = {
     imdb_id: 'tt19395018',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '012_damsel.jpg': {
     title: 'Damsel',
@@ -152,8 +145,7 @@ export const show_metadata = {
     imdb_id: 'tt12637874',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '014_franklin.jpg': {
     title: 'Franklin',
@@ -164,8 +156,7 @@ export const show_metadata = {
     imdb_id: 'tt18351584',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '015_bettlejuice.jpg': {
     title: 'Beetlejuice Beetlejuice',
@@ -181,8 +172,7 @@ export const show_metadata = {
     imdb_id: 'tt2049403',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '016_joy.jpg': {
     title: 'Joy',
@@ -193,8 +183,7 @@ export const show_metadata = {
     imdb_id: 'tt10243672',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '017_6888.jpg': {
     title: 'The Six Tipple Eight',
@@ -205,8 +194,7 @@ export const show_metadata = {
     imdb_id: 'tt24458622',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '018_the_agency.jpg': {
     title: 'The Agency',
@@ -222,8 +210,7 @@ export const show_metadata = {
     imdb_id: 'tt26656917',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '019_the_walking_dead.jpg': {
     title: 'The Walking Dead: Daryl Nixon',
@@ -234,8 +221,7 @@ export const show_metadata = {
     imdb_id: 'tt13062500',
     role: 'Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '020_the_wheel_of_time.jpg': {
     title: 'The Wheel of Time - S3',
@@ -244,10 +230,9 @@ export const show_metadata = {
       'Set in a high fantasy world where magic exists, but only some can access it, a woman named Moiraine crosses paths with five young men and women. This sparks a dangerous, world-spanning journey. Based on the book series by Robert Jordan.',
     starring: ['Rosamund Pike', 'Daniel Henney', 'Madeleine Madden'],
     imdb_id: 'tt7462410',
-    role: 'Pipeline TD',
+    role: 'Senior Pipeline TD',
     company: 'One Of Us',
-    location: 'London',
-    credited: false
+    location: 'London'
   },
   '021_the_electric_state.jpg': {
     title: 'The Electric State',
@@ -256,9 +241,20 @@ export const show_metadata = {
       'An orphaned teen hits the road with a mysterious robot to find her long-lost brother, teaming up with a smuggler and his wisecracking sidekick.',
     starring: ['Chris Pratt', 'Millie Bobby Brown', 'Woody Harrelson'],
     imdb_id: 'tt7766378',
-    role: 'Pipeline TD',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '022_black_mirror.jpg': {
+    title: 'Black Mirror - S7E5 - Eulogy',
+    year: '2025',
+    description:
+      'An isolated man is introduced to a groundbreaking system that allows its users to literally step inside old photographs - stirring powerful emotions in the process.',
+    starring: ['Paul Giamatti', 'Patsy Ferran', 'Ramesh Nair'],
+    imdb_id: 'tt31790112',
+    role: 'Senior Pipeline TD',
     company: 'One Of Us',
     location: 'London',
-    credited: false
+    credited: true
   }
 }
