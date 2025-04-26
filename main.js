@@ -342,3 +342,15 @@ Object.keys(TABS_INITIALISED).forEach(link => {
     showContent(link)
   })
 })
+
+document
+  .getElementById('show-credited-toggle')
+  .addEventListener('change', function () {
+    const gridItems = document.querySelectorAll('#work .grid-item')
+    gridItems.forEach(gridItem => {
+      const isRibbonHidden =
+        gridItem.querySelector('.ribbon-container').style.display === 'none'
+      const shouldShow = this.checked ? !isRibbonHidden : true
+      gridItem.style.display = shouldShow ? 'block' : 'none'
+    })
+  })
