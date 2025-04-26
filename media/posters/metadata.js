@@ -256,5 +256,16 @@ export const show_metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: true
+  },
+  '023_havoc.jpg': {
+    title: 'Havoc',
+    year: '2025',
+    description:
+      "After a drug deal gone wrong, a bruised detective must fight his way through the criminal underworld to rescue a politician's estranged son, unraveling a deep web of corruption and conspiracy that ensnares his entire city.",
+    starring: ['Tom Harry', 'Jessie Mei Li', 'Justin Cornwell'],
+    imdb_id: 'tt14123284',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
   }
 }
