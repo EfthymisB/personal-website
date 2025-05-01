@@ -33,7 +33,7 @@ export const show_metadata = {
     company: 'One Of Us',
     location: 'London'
   },
-  '004_missionImpossible7.jpg': {
+  '004_mi_dead_reckoning.jpg': {
     title: 'Mission Impossible: Dead Reckoning Part One',
     year: '2023',
     description:
@@ -224,7 +224,7 @@ export const show_metadata = {
     location: 'London'
   },
   '020_the_wheel_of_time.jpg': {
-    title: 'The Wheel of Time - S3',
+    title: 'The Wheel of Time: S3',
     year: '2025',
     description:
       'Set in a high fantasy world where magic exists, but only some can access it, a woman named Moiraine crosses paths with five young men and women. This sparks a dangerous, world-spanning journey. Based on the book series by Robert Jordan.',
@@ -246,7 +246,7 @@ export const show_metadata = {
     location: 'London'
   },
   '022_black_mirror.jpg': {
-    title: 'Black Mirror - S7E5 - Eulogy',
+    title: 'Black Mirror: S7E5: Eulogy',
     year: '2025',
     description:
       'An isolated man is introduced to a groundbreaking system that allows its users to literally step inside old photographs - stirring powerful emotions in the process.',

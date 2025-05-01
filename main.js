@@ -16,6 +16,8 @@ const MONTHS = [
   'DEC'
 ]
 
+const getImdbLink = imdbId => `https://www.imdb.com/title/${imdbId}/`
+
 const TABS_INITIALISED = {
   about: false,
   experience: false,
@@ -119,15 +121,17 @@ function createCardElement (templateHTML, mediaPath, data, imdbData) {
     .replace(/ROLE/g, data.role)
     .replace(/COMPANY/g, data.company)
     .replace(/LOCATION/g, data.location)
+    .replace(/IMDB_LINK/g, getImdbLink(data.imdb_id))
 
   if (!data.credited) {
     div.querySelector('.ribbon-container').style.display = 'none'
   }
 
   ;['.back', '.front'].forEach(selector => {
-    div
-      .querySelector(selector)
-      .addEventListener('click', () => flipCard(div.querySelector(selector)))
+    div.querySelector(selector).addEventListener('click', e => {
+      if (e.target.closest('.imdb-link')) return
+      flipCard(div.querySelector(selector))
+    })
   })
 
   return div
