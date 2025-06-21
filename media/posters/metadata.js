@@ -267,5 +267,27 @@ export const show_metadata = {
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
     location: 'London'
+  },
+  '024_doctor_who.jpg': {
+    title: 'Doctor Who: S2E5: The Story and the Engine',
+    year: '2025',
+    description:
+      'The Time Lord known as the Doctor travels through space and time with his companions, having incredible adventures and facing dangerous enemies.',
+    starring: ['Ncuti Gatwa', 'Millie Gibson', 'Susan Twist'],
+    imdb_id: 'tt31433814',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '025_mi_final_reckoning.jpg': {
+    title: 'Mission Impossible: The Final Reckoning',
+    year: '2025',
+    description:
+      'Our lives are the sum of our choices. Tom Cruise is Ethan Hunt in Mission: Impossible - The Final Reckoning.',
+    starring: ['Tom Cruise', 'Vannessa Kirby', 'Hayley Atwell'],
+    imdb_id: 'tt9603208',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
   }
 }
