@@ -1,5 +1,62 @@
 export const photography_metadata = {
-  "H75A1351_25_cc.jpg": {
+  "H75A1807_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Belgium",
+        "Li\u00e8ge",
+        "Stavelot"
+      ],
+      "lat": 50.434131666666666,
+      "lng": 5.973073333333334
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-07-26",
+    "ISOSpeedRatings": 1000,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0005,
+    "FNumber": 8.0
+  },
+  "H75A1665_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Belgium",
+        "Li\u00e8ge",
+        "Malmedy"
+      ],
+      "lat": 50.43716,
+      "lng": 5.97544
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-07-26",
+    "ISOSpeedRatings": 800,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0008,
+    "FNumber": 8.0
+  },
+  "H75A1548_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Belgium",
+        "Li\u00e8ge",
+        "Aywaille"
+      ],
+      "lat": 50.44099833333333,
+      "lng": 5.64262
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-07-26",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0125,
+    "FNumber": 29.0
+  },
+  "H75A1351_1k.jpg": {
     "GPSInfo": {
       "region": [
         "Germany",
@@ -18,7 +75,7 @@ export const photography_metadata = {
     "ExposureTime": 0.003125,
     "FNumber": 7.1
   },
-  "H75A1261_25_cc.jpg": {
+  "H75A1261_1k.jpg": {
     "GPSInfo": {
       "region": [
         "Luxembourg",
@@ -36,7 +93,7 @@ export const photography_metadata = {
     "ExposureTime": 0.00625,
     "FNumber": 7.1
   },
-  "H75A1257_25_cc.jpg": {
+  "H75A1257_1k.jpg": {
     "GPSInfo": {
       "region": [
         "Luxembourg",
@@ -54,7 +111,7 @@ export const photography_metadata = {
     "ExposureTime": 0.00625,
     "FNumber": 7.1
   },
-  "H75A1244_25_cc.jpg": {
+  "H75A1244_1k.jpg": {
     "GPSInfo": {
       "region": [
         "Luxembourg",
@@ -72,7 +129,7 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 7.1
   },
-  "H75A1209_25_cc.jpg": {
+  "H75A1209_1k.jpg": {
     "GPSInfo": {
       "region": [
         "Luxembourg",
@@ -90,7 +147,7 @@ export const photography_metadata = {
     "ExposureTime": 0.00625,
     "FNumber": 7.1
   },
-  "H75A1109_25_cc.jpg": {
+  "H75A1109_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -109,7 +166,7 @@ export const photography_metadata = {
     "ExposureTime": 0.005,
     "FNumber": 7.1
   },
-  "H75A1091_25_cc.jpg": {
+  "H75A1091_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -128,7 +185,7 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 7.1
   },
-  "H75A0973_25_cc.jpg": {
+  "H75A0973_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -147,7 +204,7 @@ export const photography_metadata = {
     "ExposureTime": 0.01,
     "FNumber": 7.1
   },
-  "H75A0923_25_cc.jpg": {
+  "H75A0923_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -166,7 +223,7 @@ export const photography_metadata = {
     "ExposureTime": 0.01,
     "FNumber": 7.1
   },
-  "H75A0880_25_cc.jpg": {
+  "H75A0880_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -185,7 +242,7 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 8.0
   },
-  "H75A0666_25_cc.jpg": {
+  "H75A0666_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -204,7 +261,7 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 7.1
   },
-  "H75A0267_25_cc.jpg": {
+  "H75A0267_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -223,7 +280,7 @@ export const photography_metadata = {
     "ExposureTime": 0.016666666666666666,
     "FNumber": 7.1
   },
-  "H75A0118_25_cc.jpg": {
+  "H75A0118_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -242,7 +299,7 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 7.1
   },
-  "H75A0086_25_cc.jpg": {
+  "H75A0086_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
@@ -261,7 +318,7 @@ export const photography_metadata = {
     "ExposureTime": 0.008,
     "FNumber": 7.1
   },
-  "H75A0012_25_cc.jpg": {
+  "H75A0012_1k.jpg": {
     "GPSInfo": {
       "region": [
         "United Kingdom",
