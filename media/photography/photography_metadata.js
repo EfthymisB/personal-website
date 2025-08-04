@@ -56,6 +56,25 @@ export const photography_metadata = {
     "ExposureTime": 0.0125,
     "FNumber": 29.0
   },
+  "H75A1431_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Macedonia",
+        "Thessaloniki"
+      ],
+      "lat": 40.626781666666666,
+      "lng": 22.9475
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-06-28",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 54.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0015625,
+    "FNumber": 5.6
+  },
   "H75A1351_1k.jpg": {
     "GPSInfo": {
       "region": [
