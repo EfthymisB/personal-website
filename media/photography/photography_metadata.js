@@ -1,4 +1,99 @@
 export const photography_metadata = {
+  "H75A2529_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Region of Crete",
+        "Agia Roumeli"
+      ],
+      "lat": 35.257186,
+      "lng": 23.967558
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-09-07",
+    "ISOSpeedRatings": 125,
+    "FocalLength": 24.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0125,
+    "FNumber": 4.0
+  },
+  "H75A2395_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Region of Crete",
+        "Chania Regional Unit"
+      ],
+      "lat": 35.30108666666667,
+      "lng": 23.946003333333334
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-09-07",
+    "ISOSpeedRatings": 250,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.00625,
+    "FNumber": 7.1
+  },
+  "H75A2200_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Region of Crete",
+        "Chania Regional Unit"
+      ],
+      "lat": 35.306912,
+      "lng": 23.936083
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-09-07",
+    "ISOSpeedRatings": 250,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.00625,
+    "FNumber": 7.1
+  },
+  "H75A2134_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Region of Crete",
+        "Chania Regional Unit"
+      ],
+      "lat": 35.30757833333333,
+      "lng": 23.918723333333332
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-09-07",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 24.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0025,
+    "FNumber": 7.1
+  },
+  "H75A2000_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Region of Crete",
+        "Chrisoskalitissa"
+      ],
+      "lat": 35.315175999999994,
+      "lng": 23.53377
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-09-05",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 24.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0125,
+    "FNumber": 22.0
+  },
   "H75A1807_1k.jpg": {
     "GPSInfo": {
       "region": [
