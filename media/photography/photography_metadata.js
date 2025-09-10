@@ -75,6 +75,25 @@ export const photography_metadata = {
     "ExposureTime": 0.0025,
     "FNumber": 7.1
   },
+  "H75A2087_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Region of Crete",
+        "Korfalonas"
+      ],
+      "lat": 35.498715,
+      "lng": 23.671753333333335
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-09-06",
+    "ISOSpeedRatings": 800,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.00625,
+    "FNumber": 7.1
+  },
   "H75A2000_1k.jpg": {
     "GPSInfo": {
       "region": [
