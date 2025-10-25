@@ -144,6 +144,8 @@ a:hover {
   border-radius: 15px;
   display: block;
   margin: auto;
+  filter: brightness(1.2);
+  box-shadow: 0 0 20px black;
 }
 
 /* WORK TAB */
