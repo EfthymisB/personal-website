@@ -1,4 +1,132 @@
 export const photography_metadata = {
+  "H75A2872_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Paris"
+      ],
+      "lat": 48.83320666666667,
+      "lng": 2.3635383333333335
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-19",
+    "ISOSpeedRatings": 3200,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.000625,
+    "FNumber": 7.1
+  },
+  "H75A2856_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Ile-de-France",
+        "Paris"
+      ],
+      "lat": 48.85522,
+      "lng": 2.3661916666666665
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-19",
+    "ISOSpeedRatings": 3200,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.000625,
+    "FNumber": 7.1
+  },
+  "H75A2834_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Paris"
+      ],
+      "lat": 48.86013333333333,
+      "lng": 2.294235
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-17",
+    "ISOSpeedRatings": 320,
+    "FocalLength": 30.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.016666666666666666,
+    "FNumber": 7.1
+  },
+  "H75A2768_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Paris"
+      ],
+      "lat": 48.86425333333333,
+      "lng": 2.3133133333333333
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-17",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 76.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.003125,
+    "FNumber": 6.3
+  },
+  "H75A2711_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Ile-de-France",
+        "Paris"
+      ],
+      "lat": 48.860686666666666,
+      "lng": 2.337015
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-16",
+    "ISOSpeedRatings": 25600,
+    "FocalLength": 70.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0125,
+    "FNumber": 6.3
+  },
+  "H75A2650_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Paris"
+      ],
+      "lat": 48.88552833333333,
+      "lng": 2.3415316666666666
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-16",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 63.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.016666666666666666,
+    "FNumber": 7.1
+  },
+  "H75A2632_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "France",
+        "Paris"
+      ],
+      "lat": 48.88552833333333,
+      "lng": 2.3415316666666666
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-10-16",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 90.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.005,
+    "FNumber": 7.1
+  },
   "H75A2529_1k.jpg": {
     "GPSInfo": {
       "region": [

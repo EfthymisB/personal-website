@@ -289,5 +289,49 @@ export const show_metadata = {
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
     location: 'London'
+  },
+  '026_bugonia.jpg': {
+    title: 'Bugonia',
+    year: '2025',
+    description:
+      'Two conspiracy-obsessed young men kidnap the high-powered CEO of a major company, convinced that she is an alien intent on destroying planet Earth..',
+    starring: ['Emma Stone', 'Jesse Plemons', 'Alicia Silverstone'],
+    imdb_id: 'tt12300742',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '027_troll2.jpg': {
+    title: 'Troll 2',
+    year: '2025',
+    description:
+      "Nora, Andreas and Captain Kris leap back into action when a dangerous new troll awakes - and this time they'll need more help to take it down.",
+    starring: ['Ine Marie Wilmann', 'Kim FalckMads', 'Sjøgård Pettersen'],
+    imdb_id: 'tt29232158',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '028_hamnet.jpg': {
+    title: 'Hamnet',
+    year: '2025',
+    description:
+      "A powerful story of love and loss that inspired the creation of Shakespeare's timeless masterpiece, Hamlet.",
+    starring: ['Jessie Buckley', 'Paul Mescal', 'Joe Alwyn'],
+    imdb_id: 'tt14905854',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '029_the_witcher_s4.jpg': {
+    title: 'The Witcher: S4',
+    year: '2025',
+    description:
+      'Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.',
+    starring: ['Freya Allan', 'Liam Hemsworth', 'Yasen Atour'],
+    imdb_id: 'tt23132038',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
   }
 }
