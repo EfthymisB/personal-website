@@ -290,7 +290,18 @@ export const show_metadata = {
     company: 'One Of Us',
     location: 'London'
   },
-  '026_bugonia.jpg': {
+  '026_the_witcher_s4.jpg': {
+    title: 'The Witcher: S4',
+    year: '2025',
+    description:
+      'Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.',
+    starring: ['Freya Allan', 'Liam Hemsworth', 'Yasen Atour'],
+    imdb_id: 'tt23132038',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '027_bugonia.jpg': {
     title: 'Bugonia',
     year: '2025',
     description:
@@ -299,9 +310,21 @@ export const show_metadata = {
     imdb_id: 'tt12300742',
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
+    location: 'London',
+    credited: true
+  },
+  '028_die_my_love.jpg': {
+    title: 'Die My Love',
+    year: '2025',
+    description:
+      'Grace, a writer and young mother, is slowly slipping into madness. Locked away in an old house in and around Montana, we see her acting increasingly agitated and erratic, leaving her companion, Jackson, increasingly worried and helpless.',
+    starring: ['Jennifer Lawrence', 'Robert Pattinson', 'Sissy Spacek'],
+    imdb_id: 'tt9362736',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
     location: 'London'
   },
-  '027_troll2.jpg': {
+  '029_troll2.jpg': {
     title: 'Troll 2',
     year: '2025',
     description:
@@ -312,24 +335,13 @@ export const show_metadata = {
     company: 'One Of Us',
     location: 'London'
   },
-  '028_hamnet.jpg': {
+  '030_hamnet.jpg': {
     title: 'Hamnet',
     year: '2025',
     description:
       "A powerful story of love and loss that inspired the creation of Shakespeare's timeless masterpiece, Hamlet.",
     starring: ['Jessie Buckley', 'Paul Mescal', 'Joe Alwyn'],
     imdb_id: 'tt14905854',
-    role: 'Senior Pipeline TD',
-    company: 'One Of Us',
-    location: 'London'
-  },
-  '029_the_witcher_s4.jpg': {
-    title: 'The Witcher: S4',
-    year: '2025',
-    description:
-      'Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.',
-    starring: ['Freya Allan', 'Liam Hemsworth', 'Yasen Atour'],
-    imdb_id: 'tt23132038',
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
     location: 'London'
