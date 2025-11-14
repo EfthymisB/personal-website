@@ -1,4 +1,23 @@
 export const photography_metadata = {
+  "H75A2937_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Spain",
+        "Community of Madrid",
+        "Madrid"
+      ],
+      "lat": 40.42023833333333,
+      "lng": -3.6959666666666666
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2025-11-08",
+    "ISOSpeedRatings": 800,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.02,
+    "FNumber": 7.1
+  },
   "H75A2872_1k.jpg": {
     "GPSInfo": {
       "region": [
