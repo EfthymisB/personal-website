@@ -1,4 +1,42 @@
 export const photography_metadata = {
+  "H75A3092_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "United Kingdom",
+        "England",
+        "Greater London"
+      ],
+      "lat": 51.486707,
+      "lng": -0.008213
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2026-03-30",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 24.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.005,
+    "FNumber": 7.1
+  },
+  "H75A3063_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "United Kingdom",
+        "England",
+        "Greater London"
+      ],
+      "lat": 51.50252833333333,
+      "lng": -0.20451666666666668
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2026-03-15",
+    "ISOSpeedRatings": 1600,
+    "FocalLength": 76.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.004,
+    "FNumber": 7.1
+  },
   "H75A2937_1k.jpg": {
     "GPSInfo": {
       "region": [

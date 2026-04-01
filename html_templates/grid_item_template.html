@@ -2,39 +2,45 @@
   <div class="flipper">
     <div class="front">
       <div class="front-container">
-        <img src="FRONT_IMG_PATH" loading="lazy" alt="Movie poster" />
         <img
-          src="media/website-utils/click.png"
-          id="click"
+          class="poster"
+          src="FRONT_IMG_PATH"
           loading="lazy"
-          alt="Click to flip"
+          alt="Movie poster"
         />
-      </div>
-    </div>
-    <div class="ribbon-container">
-      <h4 class="ribbon">Credited</h4>
-    </div>
-    <div class="back">
-      <div class="back-text">
-        <div class="project-title"><span>TITLE</span></div>
-        <div class="project-year"><span>YEAR</span></div>
-        <div class="project-stars"><span>STARRING</span></div>
-        <div class="project-description">
-          <span>DESCRIPTION</span>
-        </div>
-
-        <div class="imdb">
-          <!-- add hyperlink when clicked-->
-          <a href="IMDB_LINK" target="_blank" class="imdb-link">
-            <img
-              src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_38x18.png"
-            />
-          </a>
-          <span class="rating">RATING</span>
-          <span class="votes">VOTES votes</span>
-        </div>
-        <div class="role-company-location">
-          <p>ROLE<br />COMPANY<br />LOCATION<br /></p>
+        <div class="poster-footer">
+          <div class="year">
+            <span>YEAR</span>
+          </div>
+          <div class="imdb">
+            <!-- add hyperlink when clicked-->
+            <a href="IMDB_LINK" target="_blank" class="imdb-link">
+              <img
+                src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_38x18.png"
+              />
+            </a>
+            <span class="rating">RATING</span>
+            <span class="votes">VOTES votes</span>
+          </div>
+          <div class="credit-checkmark" title="Credited">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-badge-check-icon lucide-badge-check"
+            >
+              <path
+                d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+              />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
         </div>
       </div>
     </div>

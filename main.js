@@ -28,11 +28,6 @@ const TABS_INITIALISED = {
 
 let gallery
 
-function flipCard (element) {
-  const flipContainer = element.closest('.flip-container')
-  flipContainer.classList.toggle('flipped')
-}
-
 function timeLengthAsString (start, end) {
   const diff = Math.abs(end - start)
   const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
@@ -125,15 +120,8 @@ function createCardElement (templateHTML, mediaPath, data, imdbData) {
     .replace(/IMDB_LINK/g, getImdbLink(data.imdb_id))
 
   if (!data.credited) {
-    div.querySelector('.ribbon-container').style.display = 'none'
+    div.querySelector('.credit-checkmark').style.opacity = '0'
   }
-
-  ;['.back', '.front'].forEach(selector => {
-    div.querySelector(selector).addEventListener('click', e => {
-      if (e.target.closest('.imdb-link')) return
-      flipCard(div.querySelector(selector))
-    })
-  })
 
   return div
 }
@@ -145,7 +133,6 @@ async function setUpCards () {
     .reverse()
   const gridContainer = document.getElementById('grid-container')
 
-  // Show loading state
   gridContainer.innerHTML =
     '<div class="loading-skeleton">Loading projects...</div>'
 
@@ -155,7 +142,6 @@ async function setUpCards () {
 
   if (!templateHTML) return
 
-  // Clear loading state
   gridContainer.innerHTML = ''
 
   const fragment = document.createDocumentFragment()
@@ -195,7 +181,8 @@ function initialisePhotographyMap () {
       const marker = L.marker(latLng, {
         icon: new L.Icon({
           iconSize: [40, 40],
-          iconUrl: 'media/website-utils/camera.png'
+          iconAnchor: [20, 40],
+          iconUrl: 'media/website-utils/map_pin.png'
         }),
         photo_id: index
       })
@@ -228,7 +215,6 @@ function fitMapToMarkers ({ ids = null } = {}) {
 
   const bounds = L.latLngBounds()
   window.PhotographyMap.eachLayer(layer => {
-    console.log(ids)
     if (
       layer instanceof L.Marker &&
       (!ids || ids.includes(layer.options.photo_id))
@@ -330,7 +316,6 @@ async function setUpPhotoGallery () {
 }
 
 function showContent (divId) {
-  // Hide hero section when navigating to any tab
   const hero = document.getElementById('hero')
   if (hero) {
     hero.style.display = 'none'
@@ -343,7 +328,6 @@ function showContent (divId) {
 
     div.style.display = divId === id ? 'block' : 'none'
 
-    // Update active state on nav links
     if (link) {
       if (divId === id) {
         link.classList.add('active')
@@ -365,56 +349,45 @@ function showContent (divId) {
     }
   })
 
-  // Scroll to top when changing tabs
   window.scrollTo({ top: 0, behavior: 'smooth' })
 
-  // Update URL hash without scrolling
   if (window.location.hash !== `#${divId}`) {
     history.pushState(null, null, `#${divId}`)
   }
 }
 
-// Handle initial page load and hash changes
 function handleRouting () {
   const hash = window.location.hash.slice(1)
   const hero = document.getElementById('hero')
 
   if (!hash) {
-    // No hash means we're on the landing page - show hero
     if (hero) {
       hero.style.display = 'flex'
     }
-    // Hide all tabs
     Object.keys(TABS_INITIALISED).forEach(id => {
       const div = document.getElementById(id)
       if (div) div.style.display = 'none'
     })
-    // Clear all active nav states
     Object.keys(TABS_INITIALISED).forEach(id => {
       const link = document.getElementById(`${id}-link`)
       if (link) link.classList.remove('active')
     })
   } else {
-    // We have a hash - navigate to that tab
     const validTabs = Object.keys(TABS_INITIALISED)
     const tab = validTabs.includes(hash) ? hash : 'about'
     showContent(tab)
   }
 }
 
-// Listen for hash changes (browser back/forward)
 window.addEventListener('hashchange', handleRouting)
 
-// VFX Render Loading Animation
 function startRenderAnimation () {
   const renderGrid = document.getElementById('render-grid')
   const renderProgress = document.getElementById('render-progress')
   const renderBarFill = document.getElementById('render-bar-fill')
   const tilesRendered = document.getElementById('tiles-rendered')
-  const renderLoading = document.getElementById('render-loading')
-  const renderInfo = document.querySelector('.render-info')
 
-  // Create 700 tiles (35x20 grid)
+  // create 700 tiles (35x20 grid)
   const tiles = []
   for (let i = 0; i < 700; i++) {
     const tile = document.createElement('div')
@@ -423,9 +396,9 @@ function startRenderAnimation () {
     tiles.push(tile)
   }
 
-  // Wait for all staggered animations to complete (0.8s + 1s animation = 1.8s)
+  // wait for all staggered animations to complete (0.8s + 1s animation = 1.8s)
   setTimeout(() => {
-    // Shuffle tiles for random rendering order
+    // shuffle tiles for random rendering order
     const shuffledIndices = tiles
       .map((_, i) => i)
       .sort(() => Math.random() - 0.5)
@@ -435,12 +408,10 @@ function startRenderAnimation () {
     const renderDuration = 3000 // 3 seconds
     const tileDelay = renderDuration / totalTiles
 
-    // Render tiles progressively
     shuffledIndices.forEach((index, i) => {
       setTimeout(() => {
         const tile = tiles[index]
 
-        // Add rendering state briefly
         tile.classList.add('rendering')
 
         setTimeout(() => {
@@ -448,13 +419,11 @@ function startRenderAnimation () {
           tile.classList.add('rendered')
           renderedCount++
 
-          // Update progress
           const progress = Math.round((renderedCount / totalTiles) * 100)
           renderProgress.textContent = `${progress}%`
           renderBarFill.style.width = `${progress}%`
           tilesRendered.textContent = `Tiles: ${renderedCount}/${totalTiles}`
 
-          // When complete, start grid-to-button transformation
           if (renderedCount === totalTiles) {
             setTimeout(() => {
               transformGridToButton()
@@ -463,7 +432,7 @@ function startRenderAnimation () {
         }, 200)
       }, i * tileDelay)
     })
-  }, 1800) // Wait for staggered animations to complete
+  }, 1800) // wait for staggered animations to complete
 }
 
 function transformGridToButton () {
@@ -479,15 +448,12 @@ function transformGridToButton () {
 
   // Step 2: After a brief delay, fade out hero and scale down the grid
   setTimeout(() => {
-    // Fade out hero text
     hero.style.opacity = '0'
     hero.style.transition = 'opacity 0.5s ease'
 
-    // Get grid dimensions and center position
     const gridRect = renderGrid.getBoundingClientRect()
     const gridCenterY = gridRect.top + gridRect.height / 2
 
-    // Create a replacement div that matches grid size
     const replacement = document.createElement('div')
     replacement.style.position = 'absolute'
     replacement.style.left = '50%'
@@ -499,7 +465,6 @@ function transformGridToButton () {
     replacement.style.borderRadius = '5px'
     replacement.style.transition = 'all 0.8s ease'
 
-    // Replace grid with single element
     renderGrid.style.display = 'none'
     renderLoading.appendChild(replacement)
 
@@ -509,7 +474,6 @@ function transformGridToButton () {
 
     // Step 4: Scale down to button size after a brief moment
     setTimeout(() => {
-      // Button dimensions
       const buttonWidth = 200
       const buttonHeight = 54
 
@@ -518,7 +482,6 @@ function transformGridToButton () {
 
       // Step 5: After scale animation, replace with actual button
       setTimeout(() => {
-        // Create "Dive In" button positioned exactly where replacement is
         const diveInButton = document.createElement('button')
         diveInButton.className = 'dive-in-button'
         diveInButton.textContent = 'Dive In'
@@ -529,57 +492,45 @@ function transformGridToButton () {
         diveInButton.style.width = `${buttonWidth}px`
         diveInButton.style.height = `${buttonHeight}px`
 
-        // Add click handler
         diveInButton.addEventListener('click', () => {
-          // Fade out entire render loading overlay
           renderLoading.style.opacity = '0'
 
           setTimeout(() => {
             renderLoading.remove()
-            // Navigate to About page
             window.location.hash = '#about'
             handleRouting()
           }, 800)
         })
 
-        // Remove replacement and render info, add button
         renderInfo.remove()
         hero.remove()
         renderLoading.appendChild(diveInButton)
 
-        // Seamlessly swap: set button visible first, then remove replacement
         diveInButton.style.opacity = '1'
         replacement.remove()
 
-        // Trigger fade in animation
         setTimeout(() => {
           diveInButton.classList.add('visible')
         }, 50)
-      }, 800) // Wait for scale animation
+      }, 800) // wait for scale animation
     }, 100)
-  }, 300) // Brief delay after completion state
+  }, 300) // brief delay after completion state
 }
 
-// Handle initial page load
 window.addEventListener('DOMContentLoaded', () => {
-  // Check if user has already seen the loading animation in this session
   const hasSeenLoading = sessionStorage.getItem('hasSeenLoading')
 
   if (hasSeenLoading) {
-    // Skip loading animation, go straight to routing
     document.getElementById('render-loading').remove()
     document.getElementById('hero').style.opacity = '1'
     handleRouting()
   } else {
-    // Show loading animation
-    // sessionStorage.setItem('hasSeenLoading', 'true')
     startRenderAnimation()
   }
 
   initScrollAnimations()
 })
 
-// Scroll animations using Intersection Observer
 function initScrollAnimations () {
   const observerOptions = {
     threshold: 0.1,
@@ -594,7 +545,6 @@ function initScrollAnimations () {
     })
   }, observerOptions)
 
-  // Observe elements for animation
   document
     .querySelectorAll('.grid-item, .timeline .content, .contact-item, .skills')
     .forEach(el => {
@@ -603,7 +553,6 @@ function initScrollAnimations () {
     })
 }
 
-// Scroll progress indicator & navbar background
 window.addEventListener('scroll', () => {
   const windowHeight =
     document.documentElement.scrollHeight -
@@ -611,7 +560,6 @@ window.addEventListener('scroll', () => {
   const scrolled = (window.scrollY / windowHeight) * 100
   document.getElementById('scroll-progress').style.width = scrolled + '%'
 
-  // Add background to navbar when scrolled past hero
   const navbar = document.getElementById('navbar')
   const hero = document.getElementById('hero')
   const heroHeight = hero ? hero.offsetHeight : 100
@@ -623,15 +571,20 @@ window.addEventListener('scroll', () => {
   }
 })
 
-// Developer Easter Eggs
 console.log(
   '%c' +
     `
- _____ _____ _   _ ______   ____
-|  ___|_   _| | | |  _ \\ \\ / /  _ \\
-| |_    | | | |_| | | | \\ V /| |_) |
-|  _|   | | |  _  | |_| || | |  __/
-|_|     |_| |_| |_|____/ |_| |_|
+'||''''|  '||''''| |''||''| '||'  '||' '||' '|' '||    ||' '||'  ..|''||    .|'''.| 
+ ||  .     ||  .      ||     ||    ||    || |    |||  |||   ||  .|'    ||   ||..  ' 
+ ||''|     ||''|      ||     ||''''||     ||     |'|..'||   ||  ||      ||   ''|||. 
+ ||        ||         ||     ||    ||     ||     | '|' ||   ||  '|.     || .     '||
+.||.....| .||.       .||.   .||.  .||.   .||.   .|. | .||. .||.  ''|...|'  |'....|' 
+
+'||''|.       |     '||' '||''|.       |     '||'  |'  |''||''|     |     '||''|.   '||'  .|'''.|  
+ ||   ||     |||     ||   ||   ||     |||     || .'       ||       |||     ||   ||   ||   ||..  '  
+ ||'''|.    |  ||    ||   ||''|'     |  ||    ||'|.       ||      |  ||    ||''|'    ||    ''|||.  
+ ||    ||  .''''|.   ||   ||   |.   .''''|.   ||  ||      ||     .''''|.   ||   |.   ||  .     '|| 
+.||...|'  .|.  .||. .||. .||.  '|' .|.  .||. .||.  ||.   .||.   .|.  .||. .||.  '|' .||. |'....|'  
 
 Pipeline Technical Director
 Efthymios Bairaktaris
@@ -656,7 +609,6 @@ console.log(
   'color: #888; font-style: italic;'
 )
 
-// Easter egg function available in console
 window.help = function () {
   console.clear()
   console.log(
@@ -664,10 +616,8 @@ window.help = function () {
     'color: #d16239; font-size: 1.2rem; font-weight: bold;'
   )
   console.log('%cabout()', 'color: #ff8c5a;', '- Learn about me')
-  console.log('%cskills()', 'color: #ff8c5a;', '- View my technical skills')
   console.log('%cprojects()', 'color: #ff8c5a;', '- List all projects')
   console.log('%ccontact()', 'color: #ff8c5a;', '- Get contact information')
-  console.log('%csecret()', 'color: #ff8c5a;', '- ???')
 }
 
 window.about = function () {
@@ -682,22 +632,6 @@ window.about = function () {
   console.log(
     'Specializing in Python, pipeline automation, and workflow optimization.'
   )
-}
-
-window.skills = function () {
-  const skills = {
-    Languages: ['Python', 'JavaScript', 'Bash'],
-    'VFX Software': ['Maya', 'Houdini', 'Nuke', 'Mari', 'RV'],
-    Tools: [
-      'Git',
-      'CI/CD',
-      'ShotGrid Toolkit',
-      'Qt (PySide/PyQt5)',
-      'EasyBuild'
-    ],
-    'Soft Skills': ['Problem Solving', 'Team Collaboration', 'Self Motivation']
-  }
-  console.table(skills)
 }
 
 window.projects = function () {
@@ -721,65 +655,6 @@ window.contact = function () {
   console.log('🎬 IMDB: https://www.imdb.com/name/nm13296515')
 }
 
-window.secret = function () {
-  console.log(
-    '%c🎉 You found the secret!',
-    'color: #d16239; font-size: 2rem; font-weight: bold;'
-  )
-  console.log("%cHere's a little secret:", 'color: #ff8c5a; font-size: 1.2rem;')
-  console.log(
-    'The first VFX shot I ever worked on was a simple object removal.'
-  )
-  console.log('It took me 3 days. Now I can do it in 30 minutes.')
-  console.log(
-    "The difference? Better tools and a solid pipeline. That's why I do what I do."
-  )
-  console.log(
-    '\n%cThanks for exploring! 🚀',
-    'color: #d16239; font-weight: bold;'
-  )
-}
-
-// Konami code easter egg
-let konamiCode = []
-const konamiPattern = [
-  'ArrowUp',
-  'ArrowUp',
-  'ArrowDown',
-  'ArrowDown',
-  'ArrowLeft',
-  'ArrowRight',
-  'ArrowLeft',
-  'ArrowRight',
-  'b',
-  'a'
-]
-
-window.addEventListener('keydown', e => {
-  konamiCode.push(e.key)
-  konamiCode = konamiCode.slice(-10)
-
-  if (konamiCode.join('') === konamiPattern.join('')) {
-    document.body.style.animation = 'rainbow 2s infinite'
-    setTimeout(() => {
-      document.body.style.animation = ''
-      alert(
-        '🎮 Konami Code Activated! You are now a certified VFX pipeline ninja! 🥷'
-      )
-    }, 100)
-  }
-})
-
-// Add rainbow animation to CSS via JavaScript
-const style = document.createElement('style')
-style.textContent = `
-  @keyframes rainbow {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
-  }
-`
-document.head.appendChild(style)
-
 // DOCUMENT EVENT LISTENERS
 Object.keys(TABS_INITIALISED).forEach(link => {
   document.getElementById(`${link}-link`).addEventListener('click', event => {
@@ -794,7 +669,7 @@ document
     const gridItems = document.querySelectorAll('#work .grid-item')
     gridItems.forEach(gridItem => {
       const isRibbonHidden =
-        gridItem.querySelector('.ribbon-container').style.display === 'none'
+        gridItem.querySelector('.credit-checkmark').style.opacity === '0'
       const shouldShow = this.checked ? !isRibbonHidden : true
       gridItem.style.display = shouldShow ? 'block' : 'none'
     })
