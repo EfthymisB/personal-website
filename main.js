@@ -22,15 +22,11 @@ const TABS_INITIALISED = {
   about: false,
   experience: false,
   work: false,
-  photography: false
+  photography: false,
+  contact: false
 }
 
 let gallery
-
-function flipCard (element) {
-  const flipContainer = element.closest('.flip-container')
-  flipContainer.classList.toggle('flipped')
-}
 
 function timeLengthAsString (start, end) {
   const diff = Math.abs(end - start)
@@ -124,15 +120,8 @@ function createCardElement (templateHTML, mediaPath, data, imdbData) {
     .replace(/IMDB_LINK/g, getImdbLink(data.imdb_id))
 
   if (!data.credited) {
-    div.querySelector('.ribbon-container').style.display = 'none'
+    div.querySelector('.credit-checkmark').style.opacity = '0'
   }
-
-  ;['.back', '.front'].forEach(selector => {
-    div.querySelector(selector).addEventListener('click', e => {
-      if (e.target.closest('.imdb-link')) return
-      flipCard(div.querySelector(selector))
-    })
-  })
 
   return div
 }
@@ -143,11 +132,17 @@ async function setUpCards () {
     .sort()
     .reverse()
   const gridContainer = document.getElementById('grid-container')
+
+  gridContainer.innerHTML =
+    '<div class="loading-skeleton">Loading projects...</div>'
+
   const templateHTML = await fetchTemplate(
     'html_templates/grid_item_template.html'
   )
 
   if (!templateHTML) return
+
+  gridContainer.innerHTML = ''
 
   const fragment = document.createDocumentFragment()
 
@@ -169,9 +164,9 @@ async function setUpCards () {
 
 function initialisePhotographyMap () {
   window.PhotographyMap = L.map('photography_map')
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(
-    window.PhotographyMap
-  )
+  L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(window.PhotographyMap)
 
   Object.entries(photography_metadata).forEach(
     ([fileName, metadata], index) => {
@@ -186,7 +181,8 @@ function initialisePhotographyMap () {
       const marker = L.marker(latLng, {
         icon: new L.Icon({
           iconSize: [40, 40],
-          iconUrl: 'media/website-utils/camera.png'
+          iconAnchor: [20, 40],
+          iconUrl: 'media/website-utils/map_pin.png'
         }),
         photo_id: index
       })
@@ -219,7 +215,6 @@ function fitMapToMarkers ({ ids = null } = {}) {
 
   const bounds = L.latLngBounds()
   window.PhotographyMap.eachLayer(layer => {
-    console.log(ids)
     if (
       layer instanceof L.Marker &&
       (!ids || ids.includes(layer.options.photo_id))
@@ -235,6 +230,8 @@ function fitMapToMarkers ({ ids = null } = {}) {
 function createPhotoElement (templateHTML, fileName, metadata, index) {
   const imgElement = document.createElement('img')
   imgElement.src = `media/photography/${fileName}`
+  imgElement.loading = 'lazy'
+  imgElement.alt = `Photo from ${metadata.GPSInfo.region.join(', ')}`
 
   const textElement = document.createElement('div')
   textElement.className = 'gps-info'
@@ -319,11 +316,31 @@ async function setUpPhotoGallery () {
 }
 
 function showContent (divId) {
+  const isCurrentTab = window.location.hash === `#${divId}`
+  document.body.scrollTo({
+    top: 0,
+    behavior: isCurrentTab ? 'smooth' : 'instant'
+  })
+
+  const hero = document.getElementById('hero')
+  if (hero) {
+    hero.style.display = 'none'
+  }
+
   Object.keys(TABS_INITIALISED).forEach(id => {
     const div = document.getElementById(id)
+    const link = document.getElementById(`${id}-link`)
     if (!div) return
 
     div.style.display = divId === id ? 'block' : 'none'
+
+    if (link) {
+      if (divId === id) {
+        link.classList.add('active')
+      } else {
+        link.classList.remove('active')
+      }
+    }
 
     if (!TABS_INITIALISED[id] && divId === id) {
       TABS_INITIALISED[id] = true
@@ -337,6 +354,309 @@ function showContent (divId) {
       }
     }
   })
+
+  if (window.location.hash !== `#${divId}`) {
+    history.pushState(null, null, `#${divId}`)
+  }
+}
+
+function handleRouting () {
+  const hash = window.location.hash.slice(1)
+  const hero = document.getElementById('hero')
+
+  if (!hash) {
+    if (hero) {
+      hero.style.display = 'flex'
+    }
+    Object.keys(TABS_INITIALISED).forEach(id => {
+      const div = document.getElementById(id)
+      if (div) div.style.display = 'none'
+    })
+    Object.keys(TABS_INITIALISED).forEach(id => {
+      const link = document.getElementById(`${id}-link`)
+      if (link) link.classList.remove('active')
+    })
+  } else {
+    const validTabs = Object.keys(TABS_INITIALISED)
+    const tab = validTabs.includes(hash) ? hash : 'about'
+    showContent(tab)
+  }
+}
+
+window.addEventListener('hashchange', handleRouting)
+
+function startRenderAnimation () {
+  const renderGrid = document.getElementById('render-grid')
+  const renderProgress = document.getElementById('render-progress')
+  const renderBarFill = document.getElementById('render-bar-fill')
+  const tilesRendered = document.getElementById('tiles-rendered')
+
+  // create 700 tiles (35x20 grid)
+  const tiles = []
+  for (let i = 0; i < 700; i++) {
+    const tile = document.createElement('div')
+    tile.className = 'render-tile'
+    renderGrid.appendChild(tile)
+    tiles.push(tile)
+  }
+
+  // wait for all staggered animations to complete (0.8s + 1s animation = 1.8s)
+  setTimeout(() => {
+    // shuffle tiles for random rendering order
+    const shuffledIndices = tiles
+      .map((_, i) => i)
+      .sort(() => Math.random() - 0.5)
+
+    let renderedCount = 0
+    const totalTiles = tiles.length
+    const renderDuration = 3000 // 3 seconds
+    const tileDelay = renderDuration / totalTiles
+
+    shuffledIndices.forEach((index, i) => {
+      setTimeout(() => {
+        const tile = tiles[index]
+
+        tile.classList.add('rendering')
+
+        setTimeout(() => {
+          tile.classList.remove('rendering')
+          tile.classList.add('rendered')
+          renderedCount++
+
+          const progress = Math.round((renderedCount / totalTiles) * 100)
+          renderProgress.textContent = `${progress}%`
+          renderBarFill.style.width = `${progress}%`
+          tilesRendered.textContent = `Tiles: ${renderedCount}/${totalTiles}`
+
+          if (renderedCount === totalTiles) {
+            setTimeout(() => {
+              transformGridToButton()
+            }, 500)
+          }
+        }, 200)
+      }, i * tileDelay)
+    })
+  }, 1800) // wait for staggered animations to complete
+}
+
+function transformGridToButton () {
+  const renderGrid = document.getElementById('render-grid')
+  const renderInfo = document.querySelector('.render-info')
+  const renderLoading = document.getElementById('render-loading')
+  const tiles = document.querySelectorAll('.render-tile')
+  const hero = document.getElementById('hero')
+
+  // Step 1: Remove gap and make borders match fill
+  renderGrid.classList.add('complete')
+  tiles.forEach(tile => tile.classList.add('complete'))
+
+  // Step 2: After a brief delay, fade out hero and scale down the grid
+  setTimeout(() => {
+    hero.style.opacity = '0'
+    hero.style.transition = 'opacity 0.5s ease'
+
+    const gridRect = renderGrid.getBoundingClientRect()
+    const gridCenterY = gridRect.top + gridRect.height / 2
+
+    const replacement = document.createElement('div')
+    replacement.style.position = 'absolute'
+    replacement.style.left = '50%'
+    replacement.style.top = '50%'
+    replacement.style.transform = 'translate(-50%, -50%)'
+    replacement.style.width = `${gridRect.width}px`
+    replacement.style.height = `${gridRect.height}px`
+    replacement.style.background = 'var(--main-colour)'
+    replacement.style.borderRadius = '5px'
+    replacement.style.transition = 'all 0.8s ease'
+
+    renderGrid.style.display = 'none'
+    renderLoading.appendChild(replacement)
+
+    // Step 3: Fade out render info
+    renderInfo.style.opacity = '0'
+    renderInfo.style.transition = 'opacity 0.5s ease'
+
+    // Step 4: Scale down to button size after a brief moment
+    setTimeout(() => {
+      const buttonWidth = 200
+      const buttonHeight = 54
+
+      replacement.style.width = `${buttonWidth}px`
+      replacement.style.height = `${buttonHeight}px`
+
+      // Step 5: After scale animation, replace with actual button
+      setTimeout(() => {
+        const diveInButton = document.createElement('button')
+        diveInButton.className = 'dive-in-button'
+        diveInButton.textContent = 'Dive In'
+        diveInButton.style.position = 'absolute'
+        diveInButton.style.left = '50%'
+        diveInButton.style.top = '50%'
+        diveInButton.style.transform = 'translate(-50%, -50%)'
+        diveInButton.style.width = `${buttonWidth}px`
+        diveInButton.style.height = `${buttonHeight}px`
+
+        diveInButton.addEventListener('click', () => {
+          renderLoading.style.opacity = '0'
+
+          setTimeout(() => {
+            renderLoading.remove()
+            window.location.hash = '#about'
+            handleRouting()
+          }, 800)
+        })
+
+        renderInfo.remove()
+        hero.remove()
+        renderLoading.appendChild(diveInButton)
+
+        diveInButton.style.opacity = '1'
+        replacement.remove()
+
+        setTimeout(() => {
+          diveInButton.classList.add('visible')
+        }, 50)
+      }, 800) // wait for scale animation
+    }, 100)
+  }, 300) // brief delay after completion state
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const hasSeenLoading = sessionStorage.getItem('hasSeenLoading')
+
+  if (hasSeenLoading) {
+    document.getElementById('render-loading').remove()
+    document.getElementById('hero').style.opacity = '1'
+    handleRouting()
+  } else {
+    startRenderAnimation()
+  }
+
+  initScrollAnimations()
+})
+
+function initScrollAnimations () {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in')
+      }
+    })
+  }, observerOptions)
+
+  document
+    .querySelectorAll('.grid-item, .timeline .content, .contact-item, .skills')
+    .forEach(el => {
+      el.classList.add('animate-on-scroll')
+      observer.observe(el)
+    })
+}
+
+window.addEventListener('scroll', () => {
+  const windowHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight
+  const scrolled = (window.scrollY / windowHeight) * 100
+  document.getElementById('scroll-progress').style.width = scrolled + '%'
+
+  const navbar = document.getElementById('navbar')
+  const hero = document.getElementById('hero')
+  const heroHeight = hero ? hero.offsetHeight : 100
+
+  if (window.scrollY > heroHeight - 100) {
+    navbar.classList.add('scrolled')
+  } else {
+    navbar.classList.remove('scrolled')
+  }
+})
+
+console.log(
+  '%c' +
+    `
+'||''''|  '||''''| |''||''| '||'  '||' '||' '|' '||    ||' '||'  ..|''||    .|'''.| 
+ ||  .     ||  .      ||     ||    ||    || |    |||  |||   ||  .|'    ||   ||..  ' 
+ ||''|     ||''|      ||     ||''''||     ||     |'|..'||   ||  ||      ||   ''|||. 
+ ||        ||         ||     ||    ||     ||     | '|' ||   ||  '|.     || .     '||
+.||.....| .||.       .||.   .||.  .||.   .||.   .|. | .||. .||.  ''|...|'  |'....|' 
+
+'||''|.       |     '||' '||''|.       |     '||'  |'  |''||''|     |     '||''|.   '||'  .|'''.|  
+ ||   ||     |||     ||   ||   ||     |||     || .'       ||       |||     ||   ||   ||   ||..  '  
+ ||'''|.    |  ||    ||   ||''|'     |  ||    ||'|.       ||      |  ||    ||''|'    ||    ''|||.  
+ ||    ||  .''''|.   ||   ||   |.   .''''|.   ||  ||      ||     .''''|.   ||   |.   ||  .     '|| 
+.||...|'  .|.  .||. .||. .||.  '|' .|.  .||. .||.  ||.   .||.   .|.  .||. .||.  '|' .||. |'....|'  
+
+Pipeline Technical Director
+Efthymios Bairaktaris
+`,
+  'color: #d16239; font-family: monospace; font-weight: bold;'
+)
+
+console.log(
+  '%cWelcome to my portfolio!',
+  'color: #d16239; font-size: 1.2rem; font-weight: bold;'
+)
+console.log(
+  '%cInterested in the tech stack? This site uses:',
+  'color: #ff8c5a; font-size: 1rem;'
+)
+console.log('%c• Vanilla JavaScript (ES6+)', 'color: #f0db4f;')
+console.log('%c• CSS3 with CSS Variables', 'color: #264de4;')
+console.log('%c• Leaflet.js for maps', 'color: #199900;')
+console.log('%c• lightGallery for photo viewer', 'color: #d16239;')
+console.log(
+  "%c\nWant to see something cool? Try typing 'help()' in the console!",
+  'color: #888; font-style: italic;'
+)
+
+window.help = function () {
+  console.clear()
+  console.log(
+    '%c=== Available Commands ===',
+    'color: #d16239; font-size: 1.2rem; font-weight: bold;'
+  )
+  console.log('%cabout()', 'color: #ff8c5a;', '- Learn about me')
+  console.log('%cprojects()', 'color: #ff8c5a;', '- List all projects')
+  console.log('%ccontact()', 'color: #ff8c5a;', '- Get contact information')
+}
+
+window.about = function () {
+  console.log(
+    '%cEfthymios Bairaktaris',
+    'color: #d16239; font-size: 1.5rem; font-weight: bold;'
+  )
+  console.log('Senior Pipeline Technical Director @ One Of Us, London')
+  console.log(
+    '\nI build tools and systems that empower VFX artists to create amazing work.'
+  )
+  console.log(
+    'Specializing in Python, pipeline automation, and workflow optimization.'
+  )
+}
+
+window.projects = function () {
+  const projectList = Object.values(show_metadata).map(p => ({
+    Title: p.title,
+    Year: p.year,
+    Role: p.role,
+    Credited: p.credited ? 'Yes' : 'No'
+  }))
+  console.table(projectList)
+}
+
+window.contact = function () {
+  console.log(
+    '%cContact Information',
+    'color: #d16239; font-size: 1.2rem; font-weight: bold;'
+  )
+  console.log('📧 Email: efthymisb.vfx@gmail.com')
+  console.log('💼 LinkedIn: https://www.linkedin.com/in/efthymios-bairaktaris/')
+  console.log('🐙 GitHub: https://github.com/EfthymisB')
+  console.log('🎬 IMDB: https://www.imdb.com/name/nm13296515')
 }
 
 // DOCUMENT EVENT LISTENERS
@@ -353,7 +673,7 @@ document
     const gridItems = document.querySelectorAll('#work .grid-item')
     gridItems.forEach(gridItem => {
       const isRibbonHidden =
-        gridItem.querySelector('.ribbon-container').style.display === 'none'
+        gridItem.querySelector('.credit-checkmark').style.opacity === '0'
       const shouldShow = this.checked ? !isRibbonHidden : true
       gridItem.style.display = shouldShow ? 'block' : 'none'
     })

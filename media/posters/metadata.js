@@ -345,5 +345,27 @@ export const show_metadata = {
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
     location: 'London'
+  },
+  '031_the_bride.jpg': {
+    title: 'The Bride!',
+    year: '2026',
+    description:
+      'In 1930s Chicago, Frankenstein asks Dr. Euphronius to help create a companion. They give life to a murdered woman as the Bride, sparking romance, police interest, and radical social change.',
+    starring: ['Jessie Buckley', 'Christian Bale', 'Annette Bening'],
+    imdb_id: 'tt30851137',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
+  },
+  '032_peaky_blinders_the_immortal_man.jpg': {
+    title: 'Peaky Blinders: The Imortal Man',
+    year: '2026',
+    description:
+      'During World War II, Tommy Shelby returns to a bombed Birmingham and becomes involved in secret wartime missions based on true events, facing new threats as he reckons with his past and rising national stakes.',
+    starring: ['Cilian Murphy', 'Rebecca Ferguson', 'Barry Keoghan'],
+    imdb_id: 'tt15574124',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
   }
 }
