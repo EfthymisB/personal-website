@@ -316,6 +316,12 @@ async function setUpPhotoGallery () {
 }
 
 function showContent (divId) {
+  const isCurrentTab = window.location.hash === `#${divId}`
+  document.body.scrollTo({
+    top: 0,
+    behavior: isCurrentTab ? 'smooth' : 'instant'
+  })
+
   const hero = document.getElementById('hero')
   if (hero) {
     hero.style.display = 'none'
@@ -348,8 +354,6 @@ function showContent (divId) {
       }
     }
   })
-
-  window.scrollTo({ top: 0, behavior: 'smooth' })
 
   if (window.location.hash !== `#${divId}`) {
     history.pushState(null, null, `#${divId}`)
