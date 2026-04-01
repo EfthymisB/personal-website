@@ -143,23 +143,26 @@ async function setUpCards () {
   if (!templateHTML) return
 
   gridContainer.innerHTML = ''
-
   const fragment = document.createDocumentFragment()
 
+  const cardElements = []
   for (const mediaPath of mediaPaths) {
     const data = show_metadata[mediaPath.split('/').pop()]
-    const imdbData = await fetchIMDBData(data.imdb_id)
-
-    const cardElement = createCardElement(
-      templateHTML,
-      mediaPath,
-      data,
-      imdbData
-    )
+    const cardElement = createCardElement(templateHTML, mediaPath, data, null)
     fragment.appendChild(cardElement)
+    cardElements.push({ cardElement, data })
   }
-
   gridContainer.appendChild(fragment)
+
+  cardElements.forEach(({ cardElement, data }) => {
+    fetchIMDBData(data.imdb_id).then(imdbData => {
+      if (!imdbData) return
+      const ratingEl = cardElement.querySelector('.rating')
+      const votesEl = cardElement.querySelector('.votes')
+      if (ratingEl) ratingEl.textContent = imdbData.imdbRating[0]
+      if (votesEl) votesEl.textContent = `${imdbData.imdbRating[1]} votes`
+    })
+  })
 }
 
 function initialisePhotographyMap () {
