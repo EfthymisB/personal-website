@@ -367,5 +367,17 @@ export const show_metadata = {
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
     location: 'London'
+  },
+  '033_citadel_s2.jpg': {
+    title: 'Citadel S2',
+    year: '2026',
+    description:
+      "Global spy agency Citadel has fallen, and its agents' memories were wiped clean. Now the powerful syndicate, Manticore, is rising in the void. Can the Citadel agents recollect their past and summon the strength to fight back?.",
+    starring: ['Richard Madden', 'Priyanka Chopra Jonas', 'Stanley Tucci'],
+    imdb_id: 'tt9794044',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London',
+    credited: true
   }
 }
