@@ -1,4 +1,80 @@
 export const photography_metadata = {
+  "H75A4429_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Thessaly",
+        "Steni Vala"
+      ],
+      "lat": 39.201633333333334,
+      "lng": 23.929551666666665
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2026-07-02",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 57.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.002,
+    "FNumber": 7.1
+  },
+  "H75A4163_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Thessaly",
+        "Votsi"
+      ],
+      "lat": 39.168888333333335,
+      "lng": 23.90061
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2026-07-02",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 80.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.004,
+    "FNumber": 7.1
+  },
+  "H75A4159_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Thessaly",
+        "Votsi"
+      ],
+      "lat": 39.168861666666665,
+      "lng": 23.900726666666667
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2026-07-02",
+    "ISOSpeedRatings": 100,
+    "FocalLength": 105.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.0025,
+    "FNumber": 7.1
+  },
+  "H75A3171_1k.jpg": {
+    "GPSInfo": {
+      "region": [
+        "Greece",
+        "Thessaly",
+        "Achladias"
+      ],
+      "lat": 39.1596,
+      "lng": 23.479293333333334
+    },
+    "Make": "Canon",
+    "Model": "EOS R6m2",
+    "DateTimeOriginal": "2026-06-28",
+    "ISOSpeedRatings": 125,
+    "FocalLength": 97.0,
+    "LensModel": "RF24-105mm F4-7.1 IS STM",
+    "ExposureTime": 0.00625,
+    "FNumber": 7.1
+  },
   "H75A3092_1k.jpg": {
     "GPSInfo": {
       "region": [
