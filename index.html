@@ -15,7 +15,7 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://efthymisb.gitlab.io/" />
+    <meta property="og:url" content="https://www.efthymiosbairaktaris.com/" />
     <meta property="og:title" content="Efthymios Bairaktaris - Pipeline TD" />
     <meta
       property="og:description"
@@ -23,12 +23,15 @@
     />
     <meta
       property="og:image"
-      content="https://efthymisb.gitlab.io/media/eb.jpg"
+      content="https://www.efthymiosbairaktaris.com/media/eb.jpg"
     />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://efthymisb.gitlab.io/" />
+    <meta
+      property="twitter:url"
+      content="https://www.efthymiosbairaktaris.com/"
+    />
     <meta
       property="twitter:title"
       content="Efthymios Bairaktaris - Pipeline TD"
@@ -39,13 +42,16 @@
     />
     <meta
       property="twitter:image"
-      content="https://efthymisb.gitlab.io/media/eb.jpg"
+      content="https://www.efthymiosbairaktaris.com/media/eb.jpg"
     />
+    <meta name="theme-color" content="#0b0f17" />
 
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link
@@ -113,487 +119,568 @@
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/zoom/lg-zoom.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/fullscreen/lg-fullscreen.umd.min.js"></script>
 
-    <div id="render-loading" class="render-loading">
-      <div id="hero" class="hero">
-        <div class="hero-content">
-          <div class="hero-glitch-wrapper">
-            <h2 class="hero-name" data-text="EFTHYMIOS BAIRAKTARIS">
-              EFTHYMIOS BAIRAKTARIS
-            </h2>
-          </div>
-          <p class="hero-title">
-            <span class="terminal-prompt">$</span>
-            <span class="typed-text">Senior Pipeline Technical Director</span>
-            <span class="cursor">_</span>
-          </p>
-          <p class="hero-subtitle">
-            Building scalable workflows for visual effects
-          </p>
-        </div>
-      </div>
+    <!-- Ambient background layers -->
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-glow" aria-hidden="true"></div>
 
-      <div class="render-grid" id="render-grid"></div>
-      <div class="render-info">
-        <div class="render-status">
-          <span class="render-label">Rendering Page</span>
-          <span class="render-progress" id="render-progress">0%</span>
+    <!-- ============ BOOT / INTRO ============ -->
+    <div id="boot" class="boot">
+      <div class="boot-window">
+        <div class="boot-titlebar">
+          <span class="boot-dot boot-dot--red"></span>
+          <span class="boot-dot boot-dot--amber"></span>
+          <span class="boot-dot boot-dot--green"></span>
+          <span class="boot-titlebar-label">efb@portfolio: ~</span>
         </div>
-        <div class="render-bar">
-          <div class="render-bar-fill" id="render-bar-fill"></div>
-        </div>
-        <div class="render-details">
-          <span class="mono">Frame: 2026</span>
-          <span class="mono">Resolution: 1920x1080</span>
-          <span class="mono" id="tiles-rendered">Tiles: 0/64</span>
+        <div class="boot-body">
+          <pre class="boot-log" id="boot-log"></pre>
+          <div class="boot-progress">
+            <div class="boot-progress-track">
+              <div class="boot-progress-fill" id="boot-progress-fill"></div>
+            </div>
+            <span class="boot-progress-value mono" id="boot-progress-value"
+              >0%</span
+            >
+          </div>
+          <div class="boot-enter" id="boot-enter">
+            <button class="btn btn--primary" id="boot-enter-btn">
+              <span class="terminal-prompt">$</span>&nbsp;enter --portfolio
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
     <div id="scroll-progress"></div>
 
+    <!-- ============ NAV ============ -->
     <nav id="navbar">
-      <ul>
-        <li>
-          <a href="#about" id="about-link">about</a>
-        </li>
-        <li>
-          <a href="#experience" id="experience-link">experience</a>
-        </li>
-        <li>
-          <a href="#work" id="work-link">work</a>
-        </li>
-        <li>
-          <a href="#photography" id="photography-link">photography</a>
-        </li>
-        <li>
-          <a href="#contact" id="contact-link">contact</a>
-        </li>
+      <a class="nav-brand" href="#about" id="brand-link">
+        <span class="nav-brand-mark">&lt;/&gt;</span>
+        <span class="nav-brand-name"
+          >efthymios<span class="accent">.b</span></span
+        >
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" id="about-link">about</a></li>
+        <li><a href="#experience" id="experience-link">experience</a></li>
+        <li><a href="#work" id="work-link">work</a></li>
+        <li><a href="#photography" id="photography-link">photography</a></li>
+        <li><a href="#contact" id="contact-link">contact</a></li>
       </ul>
     </nav>
 
-    <div class="tab" id="about">
-      <div class="about-container">
-        <div class="image-container">
-          <img src="media/eb.jpg" alt="Efthymios Bairaktaris" loading="lazy" />
+    <!-- ============ HERO ============ -->
+    <div class="tab" id="hero-tab">
+      <section class="hero">
+        <div class="hero-inner">
+          <!-- <p class="hero-eyebrow mono">
+            <span class="status-dot"></span> available for interesting problems
+          </p> -->
+          <h1 class="hero-name">
+            Efthymios<br /><span class="hero-name-accent">Bairaktaris</span>
+          </h1>
+          <p class="hero-role mono">
+            <span class="terminal-prompt">$</span>
+            <span class="typed-text" id="hero-typed"></span
+            ><span class="cursor">&#9608;</span>
+          </p>
+          <p class="hero-blurb">
+            Senior Pipeline Technical Director building scalable tools and
+            workflows that let VFX artists focus on the shot - not the plumbing.
+          </p>
+          <div class="hero-cta">
+            <a href="#work" class="btn btn--primary" id="hero-work">
+              view work
+            </a>
+            <a href="#contact" class="btn btn--ghost" id="hero-contact">
+              get in touch
+            </a>
+          </div>
+          <div class="hero-stack mono">
+            <span>python</span>
+            <span>agentic ai</span>
+            <span>houdini</span><span>nuke</span> <span>maya</span
+            ><span>usd</span><span>qt</span><span>ci/cd</span>
+          </div>
         </div>
-        <div class="about-header">
-          <span>
-            I'm Efthymios Bairaktaris, originally from Greece, now working in
-            the Visual Effects industry as a Senior Pipeline Technical Director
-            at
-            <a href="https://www.weacceptyou.com" target="_blank">One Of Us</a>,
-            London. <br />
+      </section>
+    </div>
 
+    <!-- ============ ABOUT ============ -->
+    <div class="tab" id="about">
+      <div class="section-head">
+        <span class="section-index mono">01</span>
+        <h3 class="section-title">
+          <span class="terminal-prompt">$</span> whoami
+        </h3>
+      </div>
+      <div class="about-container">
+        <div class="about-photo">
+          <div class="about-photo-frame">
+            <img
+              src="media/eb.jpg"
+              alt="Efthymios Bairaktaris"
+              loading="lazy"
+            />
+          </div>
+          <div class="about-badge mono">
+            <span class="status-dot"></span> London, UK
+          </div>
+        </div>
+        <div class="about-body">
+          <p>
+            I'm <strong>Efthymios Bairaktaris</strong>, originally from Greece,
+            now working in the Visual Effects industry as a Senior Pipeline
+            Technical Director at
+            <a href="https://www.weacceptyou.com" target="_blank" rel="noopener"
+              >One Of Us</a
+            >, London.
+          </p>
+          <p>
             As a Pipeline TD, I specialize in creating efficient, scalable
             workflows for visual effects production. With expertise in coding,
             VFX processes, and a deep passion for the craft, I build tools and
             systems that push the boundaries of what's possible while keeping
-            everything running smoothly, allowing artists to focus on delivering
-            their best work.
-          </span>
+            everything running smoothly - allowing artists to focus on
+            delivering their best work.
+          </p>
+          <div class="about-facts mono">
+            <div class="about-fact">
+              <span class="about-fact-key">role</span>
+              <span class="about-fact-val"
+                >Senior Pipeline Technical Director</span
+              >
+            </div>
+            <div class="about-fact">
+              <span class="about-fact-key">studio</span>
+              <span class="about-fact-val">One Of Us</span>
+            </div>
+            <div class="about-fact">
+              <span class="about-fact-key">focus</span>
+              <span class="about-fact-val">Tools &amp; Automation</span>
+            </div>
+            <div class="about-fact">
+              <span class="about-fact-key">base</span>
+              <span class="about-fact-val">London, UK</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- ============ EXPERIENCE ============ -->
     <div class="tab" id="experience">
+      <div class="section-head">
+        <span class="section-index mono">02</span>
+        <h3 class="section-title">
+          <span class="terminal-prompt">$</span> cat skills.json
+        </h3>
+      </div>
+
       <div class="experience-container">
-        <div class="skill_container">
-          <div class="skills">
-            <div class="experience_heading">
-              <h2><span>Skills</span></h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i class="fas fa-code"></i> Programming Languages
+            </h3>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Python</span>
+                <span class="skill-level">9/10</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 90%"></div>
+              </div>
             </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Bash</span>
+                <span class="skill-level">7/10</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 70%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">JavaScript / React</span>
+                <span class="skill-level">4/10</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 40%"></div>
+              </div>
+            </div>
+          </div>
 
-            <div class="skills-grid">
-              <div class="skill-category">
-                <h3 class="skill-category-title">
-                  <i class="fas fa-code"></i> Programming Languages
-                </h3>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span class="skill-name">Python</span>
-                    <span class="skill-level">9/10</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress" style="width: 90%"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span class="skill-name">Bash</span>
-                    <span class="skill-level">7/10</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress" style="width: 70%"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span class="skill-name">JavaScript / React</span>
-                    <span class="skill-level">4/10</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress" style="width: 40%"></div>
-                  </div>
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i class="fas fa-film"></i> VFX Software APIs
+            </h3>
+            <div class="skill-badges">
+              <div class="skill-badge expert">
+                <span class="badge-label">Extensive</span>
+                <div class="badge-list">
+                  Maya, Nuke, Houdini, ShotGrid Toolkit, RV
                 </div>
               </div>
-
-              <div class="skill-category">
-                <h3 class="skill-category-title">
-                  <i class="fas fa-film"></i> VFX Software APIs
-                </h3>
-                <div class="skill-badges">
-                  <div class="skill-badge expert">
-                    <span class="badge-label">Extensive</span>
-                    <div class="badge-list">
-                      Maya, Nuke, Houdini, ShotGrid Toolkit, RV
-                    </div>
-                  </div>
-                  <div class="skill-badge intermediate">
-                    <span class="badge-label">Good</span>
-                    <div class="badge-list">Mari, Substance Painter</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="skill-category">
-                <h3 class="skill-category-title">
-                  <i class="fas fa-tools"></i> Frameworks & Tools
-                </h3>
-                <div class="skill-badges">
-                  <div class="skill-badge expert">
-                    <span class="badge-label">Expert</span>
-                    <div class="badge-list">Qt Frameworks (PySide, PyQt5)</div>
-                  </div>
-                  <div class="skill-badge expert">
-                    <span class="badge-label">Proficient</span>
-                    <div class="badge-list">Git, CI/CD, EasyBuild</div>
-                  </div>
-                  <div class="skill-badge expert">
-                    <span class="badge-label">Good</span>
-                    <div class="badge-list">USD</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="skill-category">
-                <h3 class="skill-category-title">
-                  <i class="fas fa-lightbulb"></i> Soft Skills
-                </h3>
-                <div class="soft-skills">
-                  <span class="soft-skill-tag">Problem Framing / Solving</span>
-                  <span class="soft-skill-tag">Decision Making</span>
-                  <span class="soft-skill-tag">Team Collaboration</span>
-                  <span class="soft-skill-tag">Technical Communication</span>
-                  <span class="soft-skill-tag">Self Motivation</span>
-                  <span class="soft-skill-tag"
-                    >Mentorship & Knowledge Transfer</span
-                  >
-                  <span class="soft-skill-tag"
-                    >Ownership and Accountability</span
-                  >
-                  <span class="soft-skill-tag"
-                    >Curiosity & Continuous Learning</span
-                  >
-                </div>
+              <div class="skill-badge intermediate">
+                <span class="badge-label">Good</span>
+                <div class="badge-list">Mari, Substance Painter</div>
               </div>
             </div>
           </div>
         </div>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i class="fas fa-tools"></i> Frameworks &amp; Tools
+            </h3>
+            <div class="skill-badges">
+              <div class="skill-badge expert">
+                <span class="badge-label">Expert</span>
+                <div class="badge-list">Qt Frameworks (PySide, PyQt5)</div>
+              </div>
+              <div class="skill-badge expert">
+                <span class="badge-label">Proficient</span>
+                <div class="badge-list">Git, CI/CD, EasyBuild</div>
+              </div>
+              <div class="skill-badge expert">
+                <span class="badge-label">Good</span>
+                <div class="badge-list">USD</div>
+              </div>
+            </div>
+          </div>
 
-        <div class="heading center">
-          <div class="experience_heading">
-            <h2><span>Employment & Education</span></h2>
+          <div class="skill-category">
+            <h3 class="skill-category-title">
+              <i class="fas fa-lightbulb"></i> Soft Skills
+            </h3>
+            <div class="soft-skills">
+              <span class="soft-skill-tag">Problem Framing / Solving</span>
+              <span class="soft-skill-tag">Decision Making</span>
+              <span class="soft-skill-tag">Team Collaboration</span>
+              <span class="soft-skill-tag">Technical Communication</span>
+              <span class="soft-skill-tag">Self Motivation</span>
+              <span class="soft-skill-tag"
+                >Mentorship &amp; Knowledge Transfer</span
+              >
+              <span class="soft-skill-tag">Ownership and Accountability</span>
+              <span class="soft-skill-tag"
+                >Curiosity &amp; Continuous Learning</span
+              >
+            </div>
           </div>
         </div>
 
-        <div class="content flex">
-          <div class="right">
-            <div class="timeline">
-              <div class="line"></div>
+        <div class="subsection-head">
+          <h3 class="subsection-title mono">
+            <span class="terminal-prompt">$</span> git log --employment
+          </h3>
+        </div>
 
-              <div class="content content-1">
-                <section>
-                  <i class="icon fas fa-briefcase"></i>
+        <div class="timeline">
+          <div class="line"></div>
 
-                  <h3>
-                    ONE OF US
-                    <span class="period-sum oou"></span>
-                  </h3>
-
-                  <div class="details">
-                    <h3>Senior Pipeline Technical Director</h3>
-                    <span class="period oou">
-                      <p>
-                        <span class="month">OCT</span>
-                        <span class="year">2024</span>
-                        -
-                        <span class="month"></span>
-                        <span class="year">PRESENT</span>
-                        <span class="time_span"></span>
-                      </p>
-                    </span>
-                  </div>
+          <div class="content content-1">
+            <section>
+              <i class="icon fas fa-briefcase"></i>
+              <h3>
+                ONE OF US
+                <span class="period-sum oou"></span>
+              </h3>
+              <div class="details">
+                <h3>Senior Pipeline Technical Director</h3>
+                <span class="period oou">
                   <p>
-                    In October 2024, I stepped into the role of Senior Pipeline
-                    Technical Director, taking on increased responsibilities
-                    within the company. In this capacity, I led the design and
-                    implementation of core pipeline services (including
-                    exporting and publishing). I also mentored and provided
-                    technical guidance to Junior and Mid Pipeline TDs through
-                    code reviews and system design, while acting as one of the
-                    primary escalation points for cross-department pipeline
-                    issues during active productions.
+                    <span class="month">OCT</span>
+                    <span class="year">2024</span>
+                    -
+                    <span class="month"></span>
+                    <span class="year">PRESENT</span>
+                    <span class="time_span"></span>
                   </p>
-                </section>
+                </span>
               </div>
+              <p>
+                In October 2024, I stepped into the role of Senior Pipeline
+                Technical Director, taking on increased responsibilities within
+                the company. In this capacity, I led the design and
+                implementation of core pipeline services (including exporting
+                and publishing). I also mentored and provided technical guidance
+                to Junior and Mid Pipeline TDs through code reviews and system
+                design, while acting as one of the primary escalation points for
+                cross-department pipeline issues during active productions.
+              </p>
+            </section>
+          </div>
 
-              <div class="content content-1">
-                <section>
-                  <i class="icon hidden"></i>
-                  <div class="details">
-                    <h3>Mid Pipeline Technical Director</h3>
-                    <span class="period oou">
-                      <p>
-                        <span class="month">FEB</span>
-                        <span class="year">2023</span>
-                        -
-                        <span class="month">SEP</span>
-                        <span class="year">2024</span>
-                        <span class="time_span"></span>
-                      </p>
-                    </span>
-                  </div>
+          <div class="content content-1">
+            <section>
+              <i class="icon hidden"></i>
+              <div class="details">
+                <h3>Mid Pipeline Technical Director</h3>
+                <span class="period oou">
                   <p>
-                    In February 2023, I progressed to Mid Pipeline Technical
-                    Director, building on my experience and contributing to the
-                    company's pipeline development. In this role, I developed
-                    and maintained pipeline tools for Houdini, Maya, Nuke, RV,
-                    and internal DCCs, and designed Python-based, Qt-driven UIs
-                    for artist-facing applications. I also built and maintained
-                    CI/CD pipelines and source builds, integrated pipeline tools
-                    with ShotGrid (Shotgun) APIs and workflows, and developed
-                    bash-based utilities for studio-wide automation.
-                    Additionally, I implemented color-managed workflows
-                    leveraging OpenImageIO and OpenColorIO.
+                    <span class="month">FEB</span>
+                    <span class="year">2023</span>
+                    -
+                    <span class="month">SEP</span>
+                    <span class="year">2024</span>
+                    <span class="time_span"></span>
                   </p>
-                </section>
+                </span>
               </div>
+              <p>
+                In February 2023, I progressed to Mid Pipeline Technical
+                Director, building on my experience and contributing to the
+                company's pipeline development. In this role, I developed and
+                maintained pipeline tools for Houdini, Maya, Nuke, RV, and
+                internal DCCs, and designed Python-based, Qt-driven UIs for
+                artist-facing applications. I also built and maintained CI/CD
+                pipelines and source builds, integrated pipeline tools with
+                ShotGrid (Shotgun) APIs and workflows, and developed bash-based
+                utilities for studio-wide automation. Additionally, I
+                implemented color-managed workflows leveraging OpenImageIO and
+                OpenColorIO.
+              </p>
+            </section>
+          </div>
 
-              <div class="content content-1">
-                <section>
-                  <i class="icon hidden"></i>
-                  <div class="details">
-                    <h3>Pipeline Technical Director</h3>
-                    <span class="period oou">
-                      <p>
-                        <span class="month">MAY</span>
-                        <span class="year">2022</span>
-                        -
-                        <span class="month">FEB</span>
-                        <span class="year">2023</span>
-                        <span class="time_span"></span>
-                      </p>
-                    </span>
-                  </div>
+          <div class="content content-1">
+            <section>
+              <i class="icon hidden"></i>
+              <div class="details">
+                <h3>Pipeline Technical Director</h3>
+                <span class="period oou">
                   <p>
-                    After obtaining my degree, I transitioned to working
-                    full-time at One Of Us, continuing in my role as a Pipeline
-                    Technical Director.
+                    <span class="month">MAY</span>
+                    <span class="year">2022</span>
+                    -
+                    <span class="month">FEB</span>
+                    <span class="year">2023</span>
+                    <span class="time_span"></span>
                   </p>
-                </section>
+                </span>
               </div>
+              <p>
+                After obtaining my degree, I transitioned to working full-time
+                at One Of Us, continuing in my role as a Pipeline Technical
+                Director.
+              </p>
+            </section>
+          </div>
 
-              <div class="content content-1">
-                <section>
-                  <i class="icon hidden"></i>
-                  <div class="details">
-                    <h3>Pipeline Technical Director (part time)</h3>
-                    <span class="period oou">
-                      <p>
-                        <span class="month">FEB</span>
-                        <span class="year">2022</span>
-                        -
-                        <span class="month">MAY</span>
-                        <span class="year">2022</span>
-                        <span class="time_span"></span>
-                      </p>
-                    </span>
-                  </div>
+          <div class="content content-1">
+            <section>
+              <i class="icon hidden"></i>
+              <div class="details">
+                <h3>Pipeline Technical Director (part time)</h3>
+                <span class="period oou">
                   <p>
-                    Before graduating, I secured my first industry position as a
-                    part-time Pipeline Technical Director, laying the foundation
-                    for my career in VFX pipeline development.
+                    <span class="month">FEB</span>
+                    <span class="year">2022</span>
+                    -
+                    <span class="month">MAY</span>
+                    <span class="year">2022</span>
+                    <span class="time_span"></span>
                   </p>
-                </section>
+                </span>
               </div>
+              <p>
+                Before graduating, I secured my first industry position as a
+                part-time Pipeline Technical Director, laying the foundation for
+                my career in VFX pipeline development.
+              </p>
+            </section>
+          </div>
 
-              <div class="content content-1">
-                <section>
-                  <i class="icon fas fa-graduation-cap"></i>
-                  <div class="details">
-                    <h3>The Art of Visual Effects | Escape Studios</h3>
-                    <span class="period">
-                      <p>
-                        <span class="month">SEP</span>
-                        <span class="year">2019</span>
-                        -
-                        <span class="month">MAY</span>
-                        <span class="year">2022</span>
-                        <span class="time_span"></span>
-                      </p>
-                    </span>
-                  </div>
+          <div class="content content-1">
+            <section>
+              <i class="icon fas fa-graduation-cap"></i>
+              <div class="details">
+                <h3>The Art of Visual Effects | Escape Studios</h3>
+                <span class="period">
                   <p>
-                    I earned a degree in The Art of Visual Effects from Escape
-                    Studios, Pearson College London in 2022. Throughout my
-                    tenure, I gained comprehensive exposure to the entirety of
-                    the VFX Pipeline, spanning from concept art and modeling to
-                    lighting, rendering and compositing. I graduated with
-                    first-class honors.
+                    <span class="month">SEP</span>
+                    <span class="year">2019</span>
+                    -
+                    <span class="month">MAY</span>
+                    <span class="year">2022</span>
+                    <span class="time_span"></span>
                   </p>
-                </section>
+                </span>
               </div>
-            </div>
+              <p>
+                I earned a degree in The Art of Visual Effects from Escape
+                Studios, Pearson College London in 2022. Throughout my tenure, I
+                gained comprehensive exposure to the entirety of the VFX
+                Pipeline, spanning from concept art and modeling to lighting,
+                rendering and compositing. I graduated with first-class honors.
+              </p>
+            </section>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ============ WORK ============ -->
     <div class="tab" id="work">
-      <div class="work-header">
-        <h2><span class="terminal-prompt">$</span> ls -la ./projects</h2>
-        <p class="work-subtitle">
-          Visual effects projects I've contributed to as a Pipeline TD
-        </p>
+      <div class="section-head">
+        <span class="section-index mono">03</span>
+        <h3 class="section-title">
+          <span class="terminal-prompt">$</span> ls -la ./projects
+        </h3>
       </div>
+      <p class="section-subtitle">
+        Feature films and series I've contributed to as a Pipeline TD.
+      </p>
 
       <div class="work-controls">
-        <div class="filter-group">
-          <label class="filter-label">Filter:</label>
-          <div class="toggle-container">
-            <label class="toggle-option">All</label>
-            <label class="switch">
-              <input type="checkbox" id="show-credited-toggle" />
-              <span class="slider round"></span>
-            </label>
-            <label class="toggle-option">Credited Only</label>
-          </div>
+        <div class="toggle-container">
+          <label class="toggle-option">All</label>
+          <label class="switch">
+            <input type="checkbox" id="show-credited-toggle" />
+            <span class="slider round"></span>
+          </label>
+          <label class="toggle-option">Credited only</label>
         </div>
       </div>
 
       <div class="grid-container" id="grid-container"></div>
     </div>
 
+    <!-- ============ PHOTOGRAPHY ============ -->
     <div class="tab" id="photography">
+      <div class="section-head">
+        <span class="section-index mono">04</span>
+        <h3 class="section-title">
+          <span class="terminal-prompt">$</span> open ./photography
+        </h3>
+      </div>
+      <p class="section-subtitle">
+        Frames from the road, mapped to where they were shot. Click a pin, or an
+        image, to explore.
+      </p>
       <section class="photo-gallery">
         <div id="photography_map"></div>
         <div class="images"></div>
       </section>
     </div>
 
+    <!-- ============ CONTACT ============ -->
     <div class="tab" id="contact">
-      <div class="contact-container">
-        <div class="contact-header">
-          <h2><span class="terminal-prompt">$</span> get_in_touch()</h2>
-          <p class="contact-subtitle"></p>
+      <div class="section-head">
+        <span class="section-index mono">05</span>
+        <h3 class="section-title">
+          <span class="terminal-prompt">$</span> get_in_touch()
+        </h3>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <h3>Email</h3>
+              <a href="mailto:efthymisb.vfx@gmail.com" class="email-contact"
+                >efthymisb.vfx@gmail.com</a
+              >
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h3>Location</h3>
+              <p>London, United Kingdom</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <i class="fas fa-briefcase"></i>
+            <div>
+              <h3>Current Position</h3>
+              <p>
+                Senior Pipeline TD at
+                <a
+                  href="https://www.weacceptyou.com"
+                  target="_blank"
+                  rel="noopener"
+                  >One Of Us</a
+                >
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="contact-content">
-          <div class="contact-info">
-            <div class="contact-item">
-              <i class="fas fa-envelope"></i>
-              <div>
-                <h3>Email</h3>
-                <a href="mailto:efthymisb.vfx@gmail.com" class="email-contact"
-                  >efthymisb.vfx@gmail.com</a
-                >
-              </div>
+        <div class="contact-form-wrapper">
+          <form
+            id="contact-form"
+            action="https://formspree.io/f/xkogddvo"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Your name"
+              />
             </div>
 
-            <div class="contact-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <div>
-                <h3>Location</h3>
-                <p>London, United Kingdom</p>
-              </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="your.email@example.com"
+              />
             </div>
 
-            <div class="contact-item">
-              <i class="fas fa-briefcase"></i>
-              <div>
-                <h3>Current Position</h3>
-                <p>
-                  Senior Pipeline TD at
-                  <a href="https://www.weacceptyou.com" target="_blank"
-                    >One Of Us</a
-                  >
-                </p>
-              </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                required
+                placeholder="Your message..."
+              ></textarea>
             </div>
-          </div>
 
-          <div class="contact-form-wrapper">
-            <form
-              id="contact-form"
-              action="https://formspree.io/f/xkogddvo"
-              method="POST"
-            >
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="6"
-                  required
-                  placeholder="Your message..."
-                ></textarea>
-              </div>
-
-              <button type="submit" class="cta-button primary">
-                Send Message
-              </button>
-            </form>
-          </div>
+            <button type="submit" class="btn btn--primary btn--block">
+              Send Message
+            </button>
+          </form>
         </div>
       </div>
     </div>
 
+    <!-- ============ FOOTER ============ -->
     <footer class="site-footer">
       <div class="social-icons">
         <div class="social-icons-container">
-          <a href="mailto:efthymisb.vfx@gmail.com" target="_blank">
+          <a
+            href="mailto:efthymisb.vfx@gmail.com"
+            target="_blank"
+            aria-label="Email"
+          >
             <img
               src="media/website-utils/gmail.png"
               class="social-icon"
               alt="Email"
             />
           </a>
-
           <a
             href="https://www.linkedin.com/in/efthymios-bairaktaris/"
             target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
           >
             <img
               src="media/website-utils/linkedin.png"
@@ -601,24 +688,36 @@
               alt="LinkedIn"
             />
           </a>
-
-          <a href="https://github.com/EfthymisB" target="_blank">
+          <a
+            href="https://github.com/EfthymisB"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub"
+          >
             <img
               src="media/website-utils/github.png"
               class="social-icon"
               alt="GitHub"
             />
           </a>
-
-          <a href="https://efthymisb.gumroad.com/" target="_blank">
+          <a
+            href="https://efthymisb.gumroad.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Gumroad"
+          >
             <img
               src="media/website-utils/gumroad.png"
               class="social-icon"
               alt="Gumroad"
             />
           </a>
-
-          <a href="https://www.imdb.com/name/nm13296515" target="_blank">
+          <a
+            href="https://www.imdb.com/name/nm13296515"
+            target="_blank"
+            rel="noopener"
+            aria-label="IMDB"
+          >
             <img
               src="media/website-utils/imdb.png"
               class="social-icon"
@@ -629,11 +728,11 @@
       </div>
       <div class="footer-content">
         <p class="footer-built">
-          <span class="terminal-prompt">$</span> Built with
-          <span class="tech-stack">Vanilla JS, CSS3 & Passion</span>
+          <span class="terminal-prompt">$</span> built with
+          <span class="tech-stack">vanilla js · css3 · caffeine</span>
         </p>
         <p class="footer-copyright">
-          &copy; 2024 Efthymios Bairaktaris | All rights reserved
+          &copy; 2026 Efthymios Bairaktaris - all rights reserved
         </p>
       </div>
     </footer>

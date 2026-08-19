@@ -1,48 +1,52 @@
-<div class="flip-container">
-  <div class="flipper">
-    <div class="front">
-      <div class="front-container">
-        <img
-          class="poster"
-          src="FRONT_IMG_PATH"
-          loading="lazy"
-          alt="Movie poster"
+<article class="card">
+  <div class="card-media">
+    <img
+      class="poster"
+      src="FRONT_IMG_PATH"
+      loading="lazy"
+      alt="TITLE poster"
+    />
+
+    <div class="credit-checkmark" title="Credited on this production">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-badge-check"
+      >
+        <path
+          d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
         />
-        <div class="poster-footer">
-          <div class="year">
-            <span>YEAR</span>
-          </div>
-          <div class="imdb">
-            <!-- add hyperlink when clicked-->
-            <a href="IMDB_LINK" target="_blank" class="imdb-link">
-              <img
-                src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_38x18.png"
-              />
-            </a>
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+      <!-- <span>credited</span> -->
+    </div>
+
+    <div class="card-overlay">
+      <div class="card-overlay-top">
+        <span class="card-year mono">YEAR</span>
+        <span class="card-role mono">ROLE</span>
+      </div>
+      <div class="card-overlay-main">
+        <h3 class="card-title">TITLE</h3>
+        <p class="card-cast">STARRING</p>
+        <div class="card-footer">
+          <a href="IMDB_LINK" target="_blank" rel="noopener" class="imdb-link">
+            <img
+              src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_38x18.png"
+              alt="IMDb"
+            />
             <span class="rating">RATING</span>
             <span class="votes">VOTES votes</span>
-          </div>
-          <div class="credit-checkmark" title="Credited">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-badge-check-icon lucide-badge-check"
-            >
-              <path
-                d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
-              />
-              <path d="m9 12 2 2 4-4" />
-            </svg>
-          </div>
+          </a>
         </div>
       </div>
     </div>
   </div>
-</div>
+</article>
