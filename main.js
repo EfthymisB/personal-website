@@ -440,7 +440,7 @@ function typeHeroRole () {
    ============================================================ */
 function showView (divId) {
   const isCurrentTab = window.location.hash === `#${divId}`
-  document.body.scrollTo({
+  window.scrollTo({
     top: 0,
     behavior: isCurrentTab ? 'smooth' : 'instant'
   })
@@ -473,6 +473,8 @@ function showView (divId) {
   if (window.location.hash !== targetHash) {
     history.pushState(null, null, targetHash || window.location.pathname)
   }
+
+  updateScrollProgress()
 }
 
 function handleRouting () {
@@ -582,17 +584,20 @@ function initScrollAnimations () {
     })
 }
 
-window.addEventListener('scroll', () => {
-  const windowHeight =
+function updateScrollProgress () {
+  const scrollableHeight =
     document.documentElement.scrollHeight -
     document.documentElement.clientHeight
-  const scrolled = (window.scrollY / windowHeight) * 100
+  const scrolled =
+    scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0
   const progressEl = document.getElementById('scroll-progress')
   if (progressEl) progressEl.style.width = scrolled + '%'
 
   const navbar = document.getElementById('navbar')
   if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 40)
-})
+}
+
+window.addEventListener('scroll', updateScrollProgress)
 
 /* ============================================================
    Console easter eggs
