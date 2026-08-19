@@ -1,3 +1,9 @@
 *.vscode
 *node_modules
 *package*.json
+
+media/photography/write_gps_info_to_image.py
+media/photography/notes.txt
+media/photography/generate_metadata.py
+
+.claude/

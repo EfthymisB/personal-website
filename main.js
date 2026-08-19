@@ -18,6 +18,7 @@ const MONTHS = [
 
 const getImdbLink = imdbId => `https://www.imdb.com/title/${imdbId}/`
 
+// Nav tabs (drive nav highlight + lazy init). Hero is a separate landing view.
 const TABS_INITIALISED = {
   about: false,
   experience: false,
@@ -26,8 +27,14 @@ const TABS_INITIALISED = {
   contact: false
 }
 
-let gallery
+const ALL_VIEWS = ['hero-tab', ...Object.keys(TABS_INITIALISED)]
 
+let gallery
+let heroTyped = false
+
+/* ============================================================
+   EXPERIENCE - timeline duration maths
+   ============================================================ */
 function timeLengthAsString (start, end) {
   const diff = Math.abs(end - start)
   const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365))
@@ -79,6 +86,9 @@ function calculateTimeSpans () {
   })
 }
 
+/* ============================================================
+   Shared helpers
+   ============================================================ */
 async function fetchTemplate (templatePath) {
   try {
     const response = await fetch(templatePath)
@@ -103,6 +113,9 @@ async function fetchIMDBData (imdbId) {
   }
 }
 
+/* ============================================================
+   WORK - project cards
+   ============================================================ */
 function createCardElement (templateHTML, mediaPath, data, imdbData) {
   const div = document.createElement('div')
   div.className = 'grid-item'
@@ -110,7 +123,7 @@ function createCardElement (templateHTML, mediaPath, data, imdbData) {
     .replace(/FRONT_IMG_PATH/g, mediaPath)
     .replace(/TITLE/g, data.title.split(':').join('<br>'))
     .replace(/YEAR/g, data.year)
-    .replace(/STARRING/g, data.starring.join('<br>'))
+    .replace(/STARRING/g, data.starring.join(' · '))
     .replace(/DESCRIPTION/g, data.description)
     .replace(/RATING/g, imdbData ? imdbData.imdbRating[0] : 'N/A')
     .replace(/VOTES/g, imdbData ? imdbData.imdbRating[1] : 'N/A')
@@ -120,7 +133,8 @@ function createCardElement (templateHTML, mediaPath, data, imdbData) {
     .replace(/IMDB_LINK/g, getImdbLink(data.imdb_id))
 
   if (!data.credited) {
-    div.querySelector('.credit-checkmark').style.opacity = '0'
+    const badge = div.querySelector('.credit-checkmark')
+    if (badge) badge.style.opacity = '0'
   }
 
   return div
@@ -165,6 +179,9 @@ async function setUpCards () {
   })
 }
 
+/* ============================================================
+   PHOTOGRAPHY - map + justified gallery + lightGallery
+   ============================================================ */
 function initialisePhotographyMap () {
   window.PhotographyMap = L.map('photography_map')
   L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -176,12 +193,12 @@ function initialisePhotographyMap () {
       const latLng = [metadata.GPSInfo.lat, metadata.GPSInfo.lng]
       const popupContent = `
       <b>${metadata.DateTimeOriginal}</b><br>
-      <img id="popup-img" src="media/photography/${fileName}" height="250" style="cursor:pointer;"/><br>
+      <img class="photography-popup-img" id="popup-img" src="media/photography/${fileName}" height="250" style="cursor:pointer;"/><br>
       <b>Lat: ${latLng[0].toFixed(6)}</b><br>
       <b>Lng: ${latLng[1].toFixed(6)}</b>
     `
 
-      const marker = L.marker(latLng, {
+      L.marker(latLng, {
         icon: new L.Icon({
           iconSize: [40, 40],
           iconAnchor: [20, 40],
@@ -203,31 +220,111 @@ function initialisePhotographyMap () {
     options: { position: 'topright' },
     onAdd: function () {
       const btn = L.DomUtil.create('button', 'reset-view-button')
+      btn.type = 'button'
       btn.innerHTML = 'Reset View'
-      btn.onclick = fitMapToMarkers
+      L.DomEvent.disableClickPropagation(btn)
+      btn.onclick = () => fitMapToMarkers()
+      return btn
+    }
+  })
+
+  const fullscreenBtn = L.Control.extend({
+    options: { position: 'topright' },
+    onAdd: function () {
+      const btn = L.DomUtil.create(
+        'button',
+        'reset-view-button map-fullscreen-button'
+      )
+      btn.type = 'button'
+      btn.title = 'Toggle fullscreen'
+      btn.innerHTML = '⛶ Fullscreen'
+      L.DomEvent.disableClickPropagation(btn)
+      btn.onclick = toggleMapFullscreen
       return btn
     }
   })
 
   window.PhotographyMap.addControl(new resetViewBtn())
+  window.PhotographyMap.addControl(new fullscreenBtn())
+
+  document.addEventListener('fullscreenchange', onMapFullscreenChange)
+  document.addEventListener('webkitfullscreenchange', onMapFullscreenChange)
+
   fitMapToMarkers()
+}
+
+function toggleMapFullscreen () {
+  const map = window.PhotographyMap
+  if (!map) return
+  const el = map.getContainer()
+  const fsElement =
+    document.fullscreenElement || document.webkitFullscreenElement
+
+  if (!fsElement) {
+    const request =
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.msRequestFullscreen
+    if (request) request.call(el)
+  } else {
+    const exit =
+      document.exitFullscreen ||
+      document.webkitExitFullscreen ||
+      document.msExitFullscreen
+    if (exit) exit.call(document)
+  }
+}
+
+function onMapFullscreenChange () {
+  const map = window.PhotographyMap
+  if (!map) return
+  const container = map.getContainer()
+  const fsElement =
+    document.fullscreenElement || document.webkitFullscreenElement
+  const isFs = fsElement === container
+
+  container.classList.toggle('is-fullscreen', isFs)
+  const btn = container.querySelector('.map-fullscreen-button')
+  if (btn) btn.innerHTML = isFs ? '⛶ Exit' : '⛶ Fullscreen'
+
+  // Give the browser a beat to resize the container, then re-measure.
+  setTimeout(() => map.invalidateSize(), 150)
 }
 
 function fitMapToMarkers ({ ids = null } = {}) {
   if (!window.PhotographyMap) return
 
-  const bounds = L.latLngBounds()
-  window.PhotographyMap.eachLayer(layer => {
+  const map = window.PhotographyMap
+  const matched = []
+  map.eachLayer(layer => {
     if (
       layer instanceof L.Marker &&
       (!ids || ids.includes(layer.options.photo_id))
     ) {
-      bounds.extend(layer.getLatLng())
+      matched.push(layer)
     }
   })
+  if (!matched.length) return
 
-  window.PhotographyMap.fitBounds(bounds)
-  document.getElementById('navbar').scrollIntoView()
+  // Bring the map itself into view (centred) rather than jumping to the top.
+  const mapEl = document.getElementById('photography_map')
+  if (mapEl) mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+  // Leaflet needs a beat after the smooth scroll to recompute sizing.
+  setTimeout(() => {
+    map.invalidateSize()
+    if (ids && matched.length === 1) {
+      // Focused on a single photo: centre on it and open its pin automatically.
+      const marker = matched[0]
+      map.setView(marker.getLatLng(), 12, { animate: true })
+      marker.openPopup()
+    } else {
+      const bounds = L.latLngBounds()
+      matched.forEach(m => bounds.extend(m.getLatLng()))
+      map.fitBounds(bounds)
+      map.closePopup()
+    }
+  }, 300)
 }
 
 function createPhotoElement (templateHTML, fileName, metadata, index) {
@@ -300,8 +397,8 @@ async function setUpPhotoGallery () {
   $(document).ready(() => {
     $('.images')
       .justifiedGallery({
-        rowHeight: 450,
-        margins: 5,
+        rowHeight: 420,
+        margins: 8,
         lastRow: 'center',
         refreshTime: 100,
         captions: false
@@ -318,32 +415,44 @@ async function setUpPhotoGallery () {
   })
 }
 
-function showContent (divId) {
+/* ============================================================
+   HERO - typing effect
+   ============================================================ */
+function typeHeroRole () {
+  if (heroTyped) return
+  heroTyped = true
+  const target = document.getElementById('hero-typed')
+  if (!target) return
+  const text = 'Senior Pipeline Technical Director'
+  let i = 0
+  const tick = () => {
+    if (i <= text.length) {
+      target.textContent = text.slice(0, i)
+      i++
+      setTimeout(tick, 45)
+    }
+  }
+  tick()
+}
+
+/* ============================================================
+   ROUTING - tabbed SPA
+   ============================================================ */
+function showView (divId) {
   const isCurrentTab = window.location.hash === `#${divId}`
-  document.body.scrollTo({
+  window.scrollTo({
     top: 0,
     behavior: isCurrentTab ? 'smooth' : 'instant'
   })
 
-  const hero = document.getElementById('hero')
-  if (hero) {
-    hero.style.display = 'none'
-  }
+  ALL_VIEWS.forEach(id => {
+    const div = document.getElementById(id)
+    if (div) div.style.display = divId === id ? 'block' : 'none'
+  })
 
   Object.keys(TABS_INITIALISED).forEach(id => {
-    const div = document.getElementById(id)
     const link = document.getElementById(`${id}-link`)
-    if (!div) return
-
-    div.style.display = divId === id ? 'block' : 'none'
-
-    if (link) {
-      if (divId === id) {
-        link.classList.add('active')
-      } else {
-        link.classList.remove('active')
-      }
-    }
+    if (link) link.classList.toggle('active', divId === id)
 
     if (!TABS_INITIALISED[id] && divId === id) {
       TABS_INITIALISED[id] = true
@@ -358,181 +467,94 @@ function showContent (divId) {
     }
   })
 
-  if (window.location.hash !== `#${divId}`) {
-    history.pushState(null, null, `#${divId}`)
+  if (divId === 'hero-tab') typeHeroRole()
+
+  const targetHash = divId === 'hero-tab' ? '' : `#${divId}`
+  if (window.location.hash !== targetHash) {
+    history.pushState(null, null, targetHash || window.location.pathname)
   }
+
+  updateScrollProgress()
 }
 
 function handleRouting () {
   const hash = window.location.hash.slice(1)
-  const hero = document.getElementById('hero')
-
   if (!hash) {
-    if (hero) {
-      hero.style.display = 'flex'
-    }
-    Object.keys(TABS_INITIALISED).forEach(id => {
-      const div = document.getElementById(id)
-      if (div) div.style.display = 'none'
-    })
-    Object.keys(TABS_INITIALISED).forEach(id => {
-      const link = document.getElementById(`${id}-link`)
-      if (link) link.classList.remove('active')
-    })
-  } else {
-    const validTabs = Object.keys(TABS_INITIALISED)
-    const tab = validTabs.includes(hash) ? hash : 'about'
-    showContent(tab)
+    showView('hero-tab')
+    return
   }
+  const validTabs = Object.keys(TABS_INITIALISED)
+  showView(validTabs.includes(hash) ? hash : 'hero-tab')
 }
 
 window.addEventListener('hashchange', handleRouting)
 
-function startRenderAnimation () {
-  const renderGrid = document.getElementById('render-grid')
-  const renderProgress = document.getElementById('render-progress')
-  const renderBarFill = document.getElementById('render-bar-fill')
-  const tilesRendered = document.getElementById('tiles-rendered')
+/* ============================================================
+   BOOT / INTRO - terminal boot sequence
+   ============================================================ */
+const BOOT_LINES = [
+  '$ ./boot --portfolio',
+  '> loading modules ............ ok',
+  '> mounting pipeline .......... ok',
+  '> resolving dependencies ..... ok',
+  '> compiling shaders .......... ok',
+  '> rendering interface ........ ok',
+  '',
+  '[ system ready ]'
+]
 
-  // create 700 tiles (35x20 grid)
-  const tiles = []
-  for (let i = 0; i < 700; i++) {
-    const tile = document.createElement('div')
-    tile.className = 'render-tile'
-    renderGrid.appendChild(tile)
-    tiles.push(tile)
+function runBootSequence () {
+  const logEl = document.getElementById('boot-log')
+  const fillEl = document.getElementById('boot-progress-fill')
+  const valueEl = document.getElementById('boot-progress-value')
+  const enterEl = document.getElementById('boot-enter')
+
+  let lineIndex = 0
+  const totalLines = BOOT_LINES.length
+
+  const printLine = () => {
+    if (lineIndex < totalLines) {
+      logEl.textContent += (lineIndex === 0 ? '' : '\n') + BOOT_LINES[lineIndex]
+      lineIndex++
+
+      const progress = Math.round((lineIndex / totalLines) * 100)
+      fillEl.style.width = `${progress}%`
+      valueEl.textContent = `${progress}%`
+
+      setTimeout(printLine, 260)
+    } else {
+      fillEl.style.width = '100%'
+      valueEl.textContent = '100%'
+      setTimeout(() => enterEl.classList.add('visible'), 350)
+    }
   }
 
-  // wait for all staggered animations to complete (0.8s + 1s animation = 1.8s)
-  setTimeout(() => {
-    // shuffle tiles for random rendering order
-    const shuffledIndices = tiles
-      .map((_, i) => i)
-      .sort(() => Math.random() - 0.5)
-
-    let renderedCount = 0
-    const totalTiles = tiles.length
-    const renderDuration = 3000 // 3 seconds
-    const tileDelay = renderDuration / totalTiles
-
-    shuffledIndices.forEach((index, i) => {
-      setTimeout(() => {
-        const tile = tiles[index]
-
-        tile.classList.add('rendering')
-
-        setTimeout(() => {
-          tile.classList.remove('rendering')
-          tile.classList.add('rendered')
-          renderedCount++
-
-          const progress = Math.round((renderedCount / totalTiles) * 100)
-          renderProgress.textContent = `${progress}%`
-          renderBarFill.style.width = `${progress}%`
-          tilesRendered.textContent = `Tiles: ${renderedCount}/${totalTiles}`
-
-          if (renderedCount === totalTiles) {
-            setTimeout(() => {
-              transformGridToButton()
-            }, 500)
-          }
-        }, 200)
-      }, i * tileDelay)
-    })
-  }, 1800) // wait for staggered animations to complete
+  setTimeout(printLine, 400)
 }
 
-function transformGridToButton () {
-  const renderGrid = document.getElementById('render-grid')
-  const renderInfo = document.querySelector('.render-info')
-  const renderLoading = document.getElementById('render-loading')
-  const tiles = document.querySelectorAll('.render-tile')
-  const hero = document.getElementById('hero')
-
-  // Step 1: Remove gap and make borders match fill
-  renderGrid.classList.add('complete')
-  tiles.forEach(tile => tile.classList.add('complete'))
-
-  // Step 2: After a brief delay, fade out hero and scale down the grid
-  setTimeout(() => {
-    hero.style.opacity = '0'
-    hero.style.transition = 'opacity 0.5s ease'
-
-    const gridRect = renderGrid.getBoundingClientRect()
-    const gridCenterY = gridRect.top + gridRect.height / 2
-
-    const replacement = document.createElement('div')
-    replacement.style.position = 'absolute'
-    replacement.style.left = '50%'
-    replacement.style.top = '50%'
-    replacement.style.transform = 'translate(-50%, -50%)'
-    replacement.style.width = `${gridRect.width}px`
-    replacement.style.height = `${gridRect.height}px`
-    replacement.style.background = 'var(--main-colour)'
-    replacement.style.borderRadius = '5px'
-    replacement.style.transition = 'all 0.8s ease'
-
-    renderGrid.style.display = 'none'
-    renderLoading.appendChild(replacement)
-
-    // Step 3: Fade out render info
-    renderInfo.style.opacity = '0'
-    renderInfo.style.transition = 'opacity 0.5s ease'
-
-    // Step 4: Scale down to button size after a brief moment
-    setTimeout(() => {
-      const buttonWidth = 200
-      const buttonHeight = 54
-
-      replacement.style.width = `${buttonWidth}px`
-      replacement.style.height = `${buttonHeight}px`
-
-      // Step 5: After scale animation, replace with actual button
-      setTimeout(() => {
-        const diveInButton = document.createElement('button')
-        diveInButton.className = 'dive-in-button'
-        diveInButton.textContent = 'Dive In'
-        diveInButton.style.position = 'absolute'
-        diveInButton.style.left = '50%'
-        diveInButton.style.top = '50%'
-        diveInButton.style.transform = 'translate(-50%, -50%)'
-        diveInButton.style.width = `${buttonWidth}px`
-        diveInButton.style.height = `${buttonHeight}px`
-
-        diveInButton.addEventListener('click', () => {
-          renderLoading.style.opacity = '0'
-
-          setTimeout(() => {
-            renderLoading.remove()
-            window.location.hash = '#about'
-            handleRouting()
-          }, 800)
-        })
-
-        renderInfo.remove()
-        hero.remove()
-        renderLoading.appendChild(diveInButton)
-
-        diveInButton.style.opacity = '1'
-        replacement.remove()
-
-        setTimeout(() => {
-          diveInButton.classList.add('visible')
-        }, 50)
-      }, 800) // wait for scale animation
-    }, 100)
-  }, 300) // brief delay after completion state
+function dismissBoot () {
+  const boot = document.getElementById('boot')
+  if (!boot) return
+  sessionStorage.setItem('hasSeenLoading', '1')
+  boot.classList.add('hidden')
+  setTimeout(() => boot.remove(), 700)
+  handleRouting()
 }
 
+/* ============================================================
+   Bootstrap
+   ============================================================ */
 window.addEventListener('DOMContentLoaded', () => {
+  const boot = document.getElementById('boot')
   const hasSeenLoading = sessionStorage.getItem('hasSeenLoading')
 
   if (hasSeenLoading) {
-    document.getElementById('render-loading').remove()
-    document.getElementById('hero').style.opacity = '1'
+    if (boot) boot.remove()
     handleRouting()
   } else {
-    startRenderAnimation()
+    runBootSequence()
+    const enterBtn = document.getElementById('boot-enter-btn')
+    if (enterBtn) enterBtn.addEventListener('click', dismissBoot)
   }
 
   initScrollAnimations()
@@ -553,84 +575,77 @@ function initScrollAnimations () {
   }, observerOptions)
 
   document
-    .querySelectorAll('.grid-item, .timeline .content, .contact-item, .skills')
+    .querySelectorAll(
+      '.grid-item, .timeline .content, .contact-item, .skill-category, .about-body, .about-photo'
+    )
     .forEach(el => {
       el.classList.add('animate-on-scroll')
       observer.observe(el)
     })
 }
 
-window.addEventListener('scroll', () => {
-  const windowHeight =
+function updateScrollProgress () {
+  const scrollableHeight =
     document.documentElement.scrollHeight -
     document.documentElement.clientHeight
-  const scrolled = (window.scrollY / windowHeight) * 100
-  document.getElementById('scroll-progress').style.width = scrolled + '%'
+  const scrolled =
+    scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0
+  const progressEl = document.getElementById('scroll-progress')
+  if (progressEl) progressEl.style.width = scrolled + '%'
 
   const navbar = document.getElementById('navbar')
-  const hero = document.getElementById('hero')
-  const heroHeight = hero ? hero.offsetHeight : 100
+  if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 40)
+}
 
-  if (window.scrollY > heroHeight - 100) {
-    navbar.classList.add('scrolled')
-  } else {
-    navbar.classList.remove('scrolled')
-  }
-})
+window.addEventListener('scroll', updateScrollProgress)
 
+/* ============================================================
+   Console easter eggs
+   ============================================================ */
 console.log(
   '%c' +
     `
-'||''''|  '||''''| |''||''| '||'  '||' '||' '|' '||    ||' '||'  ..|''||    .|'''.| 
- ||  .     ||  .      ||     ||    ||    || |    |||  |||   ||  .|'    ||   ||..  ' 
- ||''|     ||''|      ||     ||''''||     ||     |'|..'||   ||  ||      ||   ''|||. 
+'||''''|  '||''''| |''||''| '||'  '||' '||' '|' '||    ||' '||'  ..|''||    .|'''.|
+ ||  .     ||  .      ||     ||    ||    || |    |||  |||   ||  .|'    ||   ||..  '
+ ||''|     ||''|      ||     ||''''||     ||     |'|..'||   ||  ||      ||   ''|||.
  ||        ||         ||     ||    ||     ||     | '|' ||   ||  '|.     || .     '||
-.||.....| .||.       .||.   .||.  .||.   .||.   .|. | .||. .||.  ''|...|'  |'....|' 
-
-'||''|.       |     '||' '||''|.       |     '||'  |'  |''||''|     |     '||''|.   '||'  .|'''.|  
- ||   ||     |||     ||   ||   ||     |||     || .'       ||       |||     ||   ||   ||   ||..  '  
- ||'''|.    |  ||    ||   ||''|'     |  ||    ||'|.       ||      |  ||    ||''|'    ||    ''|||.  
- ||    ||  .''''|.   ||   ||   |.   .''''|.   ||  ||      ||     .''''|.   ||   |.   ||  .     '|| 
-.||...|'  .|.  .||. .||. .||.  '|' .|.  .||. .||.  ||.   .||.   .|.  .||. .||.  '|' .||. |'....|'  
-
-Pipeline Technical Director
-Efthymios Bairaktaris
+.||.....| .||.       .||.   .||.  .||.   .||.   .|. | .||. .||.  ''|...|'  |'....|'
 `,
-  'color: #d16239; font-family: monospace; font-weight: bold;'
+  'color: #38bdf8; font-family: monospace; font-weight: bold;'
 )
 
 console.log(
   '%cWelcome to my portfolio!',
-  'color: #d16239; font-size: 1.2rem; font-weight: bold;'
+  'color: #38bdf8; font-size: 1.2rem; font-weight: bold;'
 )
 console.log(
   '%cInterested in the tech stack? This site uses:',
-  'color: #ff8c5a; font-size: 1rem;'
+  'color: #818cf8; font-size: 1rem;'
 )
 console.log('%c• Vanilla JavaScript (ES6+)', 'color: #f0db4f;')
-console.log('%c• CSS3 with CSS Variables', 'color: #264de4;')
-console.log('%c• Leaflet.js for maps', 'color: #199900;')
-console.log('%c• lightGallery for photo viewer', 'color: #d16239;')
+console.log('%c• CSS3 with CSS Variables', 'color: #38bdf8;')
+console.log('%c• Leaflet.js for maps', 'color: #56d364;')
+console.log('%c• lightGallery for photo viewer', 'color: #818cf8;')
 console.log(
   "%c\nWant to see something cool? Try typing 'help()' in the console!",
-  'color: #888; font-style: italic;'
+  'color: #8b9bb4; font-style: italic;'
 )
 
 window.help = function () {
   console.clear()
   console.log(
     '%c=== Available Commands ===',
-    'color: #d16239; font-size: 1.2rem; font-weight: bold;'
+    'color: #38bdf8; font-size: 1.2rem; font-weight: bold;'
   )
-  console.log('%cabout()', 'color: #ff8c5a;', '- Learn about me')
-  console.log('%cprojects()', 'color: #ff8c5a;', '- List all projects')
-  console.log('%ccontact()', 'color: #ff8c5a;', '- Get contact information')
+  console.log('%cabout()', 'color: #818cf8;', '- Learn about me')
+  console.log('%cprojects()', 'color: #818cf8;', '- List all projects')
+  console.log('%ccontact()', 'color: #818cf8;', '- Get contact information')
 }
 
 window.about = function () {
   console.log(
     '%cEfthymios Bairaktaris',
-    'color: #d16239; font-size: 1.5rem; font-weight: bold;'
+    'color: #38bdf8; font-size: 1.5rem; font-weight: bold;'
   )
   console.log('Senior Pipeline Technical Director @ One Of Us, London')
   console.log(
@@ -654,7 +669,7 @@ window.projects = function () {
 window.contact = function () {
   console.log(
     '%cContact Information',
-    'color: #d16239; font-size: 1.2rem; font-weight: bold;'
+    'color: #38bdf8; font-size: 1.2rem; font-weight: bold;'
   )
   console.log('📧 Email: efthymisb.vfx@gmail.com')
   console.log('💼 LinkedIn: https://www.linkedin.com/in/efthymios-bairaktaris/')
@@ -662,22 +677,28 @@ window.contact = function () {
   console.log('🎬 IMDB: https://www.imdb.com/name/nm13296515')
 }
 
-// DOCUMENT EVENT LISTENERS
+/* ============================================================
+   Nav + control event listeners
+   ============================================================ */
 Object.keys(TABS_INITIALISED).forEach(link => {
-  document.getElementById(`${link}-link`).addEventListener('click', event => {
-    event.preventDefault()
-    showContent(link)
-  })
+  const el = document.getElementById(`${link}-link`)
+  if (el) {
+    el.addEventListener('click', event => {
+      event.preventDefault()
+      showView(link)
+    })
+  }
 })
 
-document
-  .getElementById('show-credited-toggle')
-  .addEventListener('change', function () {
+const creditToggle = document.getElementById('show-credited-toggle')
+if (creditToggle) {
+  creditToggle.addEventListener('change', function () {
     const gridItems = document.querySelectorAll('#work .grid-item')
     gridItems.forEach(gridItem => {
-      const isRibbonHidden =
-        gridItem.querySelector('.credit-checkmark').style.opacity === '0'
+      const badge = gridItem.querySelector('.credit-checkmark')
+      const isRibbonHidden = badge && badge.style.opacity === '0'
       const shouldShow = this.checked ? !isRibbonHidden : true
       gridItem.style.display = shouldShow ? 'block' : 'none'
     })
   })
+}
