@@ -556,9 +556,29 @@ a:hover {
 }
 .hero-cta {
   display: flex;
+  align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 2.6rem;
+}
+.hero-cta-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: var(--text-secondary);
+  text-transform: lowercase;
+  padding: 0.4rem 0.3rem;
+  transition: color 0.25s ease;
+}
+.hero-cta-link span {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.hero-cta-link:hover {
+  color: var(--accent);
+}
+.hero-cta-link:hover span {
+  transform: translateX(3px);
 }
 .hero-stack {
   display: flex;
@@ -784,6 +804,11 @@ a:hover {
   border-radius: 999px;
   color: var(--text-secondary);
   transition: all 0.2s ease;
+}
+.soft-skill-tag i {
+  margin-right: 0.4rem;
+  color: var(--accent);
+  font-size: 0.85em;
 }
 .soft-skill-tag:hover {
   color: var(--accent);
@@ -1594,6 +1619,10 @@ input:checked + .slider:before {
   }
   .hero-cta .btn {
     width: 100%;
+  }
+  .hero-cta-link {
+    align-self: center;
+    padding-top: 0.2rem;
   }
 
   /* Photo EXIF caption: compact chips + icons on small screens */
