@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photography · Efthymios Bairaktaris</title>
+    <meta
+      name="description"
+      content="Landscape and travel photography by Efthymios Bairaktaris, mapped to where each photo was taken."
+    />
+    <meta name="author" content="Efthymios Bairaktaris" />
+    <link
+      rel="canonical"
+      href="https://www.efthymiosbairaktaris.com/photography.html"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://www.efthymiosbairaktaris.com/photography.html"
+    />
+    <meta property="og:title" content="Photography · Efthymios Bairaktaris" />
+    <meta
+      property="og:description"
+      content="Landscape and travel photography, mapped to where each photo was taken."
+    />
+    <meta
+      property="og:image"
+      content="https://www.efthymiosbairaktaris.com/media/photography/H75A5472_1k.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0d0d0c" />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XXDD468X50"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', 'G-XXDD468X50')
+    </script>
+
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+    ></script>
+    <script type="module" src="js/photography.js"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap wrap--wide site-header__inner">
+        <a class="wordmark" href="./" aria-label="Efthymios Bairaktaris, home"
+          >Efthymios Bairaktaris</a
+        >
+        <nav class="site-nav" aria-label="Primary">
+          <a href="./#experience">Experience</a>
+          <a href="./#credits">Credits</a>
+          <a href="photography.html" aria-current="page">Photography</a>
+          <a href="./#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="wrap wrap--wide">
+      <div class="page-head">
+        <h1>Photography</h1>
+        <p>
+          Mostly landscapes, shot while travelling. Each photo is pinned to
+          where it was taken: pick a place on the map or a frame below.
+        </p>
+        <p class="meta" id="photo-summary"></p>
+      </div>
+
+      <div
+        class="filters"
+        role="group"
+        aria-label="Filter by country"
+        id="filters"
+      ></div>
+
+      <div
+        class="map"
+        id="map"
+        role="region"
+        aria-label="Map of photo locations"
+      ></div>
+      <p class="map-hint">Click the map to enable scroll-zoom.</p>
+
+      <div class="gallery" id="gallery" aria-label="Photos"></div>
+    </main>
+
+    <!-- Viewer -->
+    <div
+      class="lightbox"
+      id="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo viewer"
+      hidden
+    >
+      <div class="lightbox__stage" id="lightbox-stage">
+        <img class="lightbox__img" id="lightbox-img" alt="" />
+        <button
+          type="button"
+          class="lb-btn lb-btn--close"
+          id="lightbox-close"
+          aria-label="Close viewer"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="lb-btn lb-btn--prev"
+          id="lightbox-prev"
+          aria-label="Previous photo"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="lb-btn lb-btn--next"
+          id="lightbox-next"
+          aria-label="Next photo"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+      <div class="lightbox__bar">
+        <div>
+          <p class="lightbox__place" id="lightbox-place"></p>
+          <p class="lightbox__exif" id="lightbox-exif"></p>
+        </div>
+        <div class="lightbox__actions">
+          <span class="lightbox__counter" id="lightbox-counter"></span>
+          <button type="button" class="text-button" id="lightbox-map">
+            Show on map
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="to-top" id="to-top" aria-label="Back to top">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
+
+    <footer class="site-footer">
+      <div class="wrap wrap--wide site-footer__inner">
+        <span>© <span data-year>2026</span> Efthymios Bairaktaris</span>
+        <a class="muted" href="./">Home</a>
+      </div>
+    </footer>
+  </body>
+</html>
