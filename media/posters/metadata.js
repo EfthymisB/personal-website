@@ -61,7 +61,7 @@ export const show_metadata = {
     year: '2023',
     description:
       'An intelligence operative for a shadowy global peacekeeping agency races to stop a hacker from stealing its most valuable and dangerous weapon.',
-    starring: ['Gal Gaddot', 'Jamie Dore', 'Alia Bhatt'],
+    starring: ['Gal Gadot', 'Jamie Dore', 'Alia Bhatt'],
     imdb_id: 'tt13603966',
     role: 'Pipeline TD',
     company: 'One Of Us',
@@ -80,7 +80,7 @@ export const show_metadata = {
     location: 'London'
   },
   '008_zone_of_interest.jpg': {
-    title: 'Zone of Interest',
+    title: 'The Zone of Interest',
     year: '2023',
     description:
       'Auschwitz commandant Rudolf Höss and his wife Hedwig strive to build a dream life for their family in a house and garden beside the camp.',
@@ -186,7 +186,7 @@ export const show_metadata = {
     location: 'London'
   },
   '017_6888.jpg': {
-    title: 'The Six Tipple Eight',
+    title: 'The Six Triple Eight',
     year: '2024',
     description:
       'During World War II, 855 women joined the fight to fix the three-year backlog of undelivered mail. Faced with discrimination and a country devastated by war, they managed to sort more than 17 million pieces of mail ahead of time.',
@@ -213,7 +213,7 @@ export const show_metadata = {
     location: 'London'
   },
   '019_the_walking_dead.jpg': {
-    title: 'The Walking Dead: Daryl Nixon',
+    title: 'The Walking Dead: Daryl Dixon',
     year: '2025',
     description:
       "Daryl's journey across a broken but resilient France as he hopes to find a way back home.",
@@ -358,7 +358,7 @@ export const show_metadata = {
     location: 'London'
   },
   '032_peaky_blinders_the_immortal_man.jpg': {
-    title: 'Peaky Blinders: The Imortal Man',
+    title: 'Peaky Blinders: The Immortal Man',
     year: '2026',
     description:
       'During World War II, Tommy Shelby returns to a bombed Birmingham and becomes involved in secret wartime missions based on true events, facing new threats as he reckons with his past and rising national stakes.',

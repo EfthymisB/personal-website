@@ -12,7 +12,9 @@ export const photography_metadata = {
     FocalLength: 63.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 5.6
+    FNumber: 5.6,
+    Width: 1500,
+    Height: 1000
   },
   'H75A4429_1k.jpg': {
     GPSInfo: {
@@ -27,7 +29,9 @@ export const photography_metadata = {
     FocalLength: 57.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.002,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 2247
   },
   'H75A4163_1k.jpg': {
     GPSInfo: {
@@ -42,7 +46,9 @@ export const photography_metadata = {
     FocalLength: 80.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.004,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A4159_1k.jpg': {
     GPSInfo: {
@@ -57,7 +63,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0025,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A3171_1k.jpg': {
     GPSInfo: {
@@ -72,7 +80,9 @@ export const photography_metadata = {
     FocalLength: 97.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A3092_1k.jpg': {
     GPSInfo: {
@@ -87,7 +97,9 @@ export const photography_metadata = {
     FocalLength: 24.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.005,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A3063_1k.jpg': {
     GPSInfo: {
@@ -102,7 +114,9 @@ export const photography_metadata = {
     FocalLength: 76.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.004,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A2937_1k.jpg': {
     GPSInfo: {
@@ -117,7 +131,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.02,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1498,
+    Height: 1000
   },
   'H75A2872_1k.jpg': {
     GPSInfo: {
@@ -132,7 +148,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.000625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A2856_1k.jpg': {
     GPSInfo: {
@@ -147,7 +165,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.000625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1002
   },
   'H75A2834_1k.jpg': {
     GPSInfo: {
@@ -162,7 +182,9 @@ export const photography_metadata = {
     FocalLength: 30.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.016666666666666666,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A2768_1k.jpg': {
     GPSInfo: {
@@ -177,7 +199,9 @@ export const photography_metadata = {
     FocalLength: 76.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.003125,
-    FNumber: 6.3
+    FNumber: 6.3,
+    Width: 1500,
+    Height: 1000
   },
   'H75A2711_1k.jpg': {
     GPSInfo: {
@@ -192,7 +216,9 @@ export const photography_metadata = {
     FocalLength: 70.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0125,
-    FNumber: 6.3
+    FNumber: 6.3,
+    Width: 1500,
+    Height: 1000
   },
   'H75A2650_1k.jpg': {
     GPSInfo: {
@@ -207,7 +233,9 @@ export const photography_metadata = {
     FocalLength: 63.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.016666666666666666,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A2632_1k.jpg': {
     GPSInfo: {
@@ -222,7 +250,9 @@ export const photography_metadata = {
     FocalLength: 90.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.005,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A2529_1k.jpg': {
     GPSInfo: {
@@ -237,7 +267,9 @@ export const photography_metadata = {
     FocalLength: 24.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0125,
-    FNumber: 4.0
+    FNumber: 4.0,
+    Width: 1000,
+    Height: 1500
   },
   'H75A2395_1k.jpg': {
     GPSInfo: {
@@ -252,7 +284,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1000
   },
   'H75A2200_1k.jpg': {
     GPSInfo: {
@@ -267,7 +301,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1000,
+    Height: 1500
   },
   'H75A2134_1k.jpg': {
     GPSInfo: {
@@ -282,7 +318,9 @@ export const photography_metadata = {
     FocalLength: 24.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0025,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A2087_1k.jpg': {
     GPSInfo: {
@@ -297,7 +335,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1000
   },
   'H75A2000_1k.jpg': {
     GPSInfo: {
@@ -312,11 +352,13 @@ export const photography_metadata = {
     FocalLength: 24.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0125,
-    FNumber: 22.0
+    FNumber: 22.0,
+    Width: 1500,
+    Height: 1001
   },
   'H75A1807_1k.jpg': {
     GPSInfo: {
-      region: ['Belgium', 'Li\u00e8ge', 'Stavelot'],
+      region: ['Belgium', 'Liège', 'Stavelot'],
       lat: 50.434131666666666,
       lng: 5.973073333333334
     },
@@ -327,11 +369,13 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0005,
-    FNumber: 8.0
+    FNumber: 8.0,
+    Width: 1498,
+    Height: 1000
   },
   'H75A1665_1k.jpg': {
     GPSInfo: {
-      region: ['Belgium', 'Li\u00e8ge', 'Malmedy'],
+      region: ['Belgium', 'Liège', 'Malmedy'],
       lat: 50.43716,
       lng: 5.97544
     },
@@ -342,11 +386,13 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0008,
-    FNumber: 8.0
+    FNumber: 8.0,
+    Width: 1498,
+    Height: 1000
   },
   'H75A1548_1k.jpg': {
     GPSInfo: {
-      region: ['Belgium', 'Li\u00e8ge', 'Aywaille'],
+      region: ['Belgium', 'Liège', 'Aywaille'],
       lat: 50.44099833333333,
       lng: 5.64262
     },
@@ -357,7 +403,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0125,
-    FNumber: 29.0
+    FNumber: 29.0,
+    Width: 1498,
+    Height: 1000
   },
   'H75A1431_1k.jpg': {
     GPSInfo: {
@@ -372,7 +420,9 @@ export const photography_metadata = {
     FocalLength: 54.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.0015625,
-    FNumber: 5.6
+    FNumber: 5.6,
+    Width: 1000,
+    Height: 1498
   },
   'H75A1351_1k.jpg': {
     GPSInfo: {
@@ -387,7 +437,9 @@ export const photography_metadata = {
     FocalLength: 24.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.003125,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1498,
+    Height: 1000
   },
   'H75A1261_1k.jpg': {
     GPSInfo: {
@@ -402,7 +454,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A1257_1k.jpg': {
     GPSInfo: {
@@ -417,7 +471,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1498,
+    Height: 1000
   },
   'H75A1244_1k.jpg': {
     GPSInfo: {
@@ -432,7 +488,9 @@ export const photography_metadata = {
     FocalLength: 88.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 668,
+    Height: 1000
   },
   'H75A1209_1k.jpg': {
     GPSInfo: {
@@ -447,7 +505,9 @@ export const photography_metadata = {
     FocalLength: 44.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.00625,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1498,
+    Height: 1000
   },
   'H75A1109_1k.jpg': {
     GPSInfo: {
@@ -462,7 +522,9 @@ export const photography_metadata = {
     FocalLength: 50.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.005,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A1091_1k.jpg': {
     GPSInfo: {
@@ -477,7 +539,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A0973_1k.jpg': {
     GPSInfo: {
@@ -492,7 +556,9 @@ export const photography_metadata = {
     FocalLength: 95.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.01,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1001
   },
   'H75A0923_1k.jpg': {
     GPSInfo: {
@@ -507,7 +573,9 @@ export const photography_metadata = {
     FocalLength: 85.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.01,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1001,
+    Height: 1500
   },
   'H75A0880_1k.jpg': {
     GPSInfo: {
@@ -522,7 +590,9 @@ export const photography_metadata = {
     FocalLength: 76.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 8.0
+    FNumber: 8.0,
+    Width: 1498,
+    Height: 1000
   },
   'H75A0666_1k.jpg': {
     GPSInfo: {
@@ -537,7 +607,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1000
   },
   'H75A0267_1k.jpg': {
     GPSInfo: {
@@ -552,7 +624,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.016666666666666666,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1000
   },
   'H75A0118_1k.jpg': {
     GPSInfo: {
@@ -567,7 +641,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1500,
+    Height: 1000
   },
   'H75A0086_1k.jpg': {
     GPSInfo: {
@@ -582,7 +658,9 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.008,
-    FNumber: 7.1
+    FNumber: 7.1,
+    Width: 1504,
+    Height: 1004
   },
   'H75A0012_1k.jpg': {
     GPSInfo: {
@@ -597,6 +675,8 @@ export const photography_metadata = {
     FocalLength: 105.0,
     LensModel: 'RF24-105mm F4-7.1 IS STM',
     ExposureTime: 0.005,
-    FNumber: 9.0
+    FNumber: 9.0,
+    Width: 1500,
+    Height: 1000
   }
 }
