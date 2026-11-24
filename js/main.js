@@ -85,7 +85,13 @@ function renderCredits () {
     ext.setAttribute('aria-hidden', 'true')
     title.append(ext)
 
-    link.append(poster, title, el('span', 'credit__year', data.year))
+    const text = el('span', 'credit__text')
+    text.append(title)
+    if (data.starring?.length) {
+      text.append(el('span', 'credit__cast', data.starring.join(', ')))
+    }
+
+    link.append(poster, text, el('span', 'credit__year', data.year))
     li.append(link)
     return li
   })

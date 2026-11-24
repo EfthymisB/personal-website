@@ -560,8 +560,26 @@ a:hover .ext {
   filter: none;
 }
 
+.credit__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
 .credit__title {
   min-width: 0;
+}
+
+.credit__cast {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--fg-faint);
+  transition: color 0.15s ease;
+}
+
+.credit__link:hover .credit__cast {
+  color: var(--fg-muted);
 }
 
 .credit__title .ext {

@@ -61,7 +61,7 @@ export const show_metadata = {
     year: '2023',
     description:
       'An intelligence operative for a shadowy global peacekeeping agency races to stop a hacker from stealing its most valuable and dangerous weapon.',
-    starring: ['Gal Gadot', 'Jamie Dore', 'Alia Bhatt'],
+    starring: ['Gal Gadot', 'Jamie Dornan', 'Alia Bhatt'],
     imdb_id: 'tt13603966',
     role: 'Pipeline TD',
     company: 'One Of Us',
@@ -262,7 +262,7 @@ export const show_metadata = {
     year: '2025',
     description:
       "After a drug deal gone wrong, a bruised detective must fight his way through the criminal underworld to rescue a politician's estranged son, unraveling a deep web of corruption and conspiracy that ensnares his entire city.",
-    starring: ['Tom Harry', 'Jessie Mei Li', 'Justin Cornwell'],
+    starring: ['Tom Hardy', 'Jessie Mei Li', 'Justin Cornwell'],
     imdb_id: 'tt14123284',
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
@@ -284,7 +284,7 @@ export const show_metadata = {
     year: '2025',
     description:
       'Our lives are the sum of our choices. Tom Cruise is Ethan Hunt in Mission: Impossible - The Final Reckoning.',
-    starring: ['Tom Cruise', 'Vannessa Kirby', 'Hayley Atwell'],
+    starring: ['Tom Cruise', 'Vanessa Kirby', 'Hayley Atwell'],
     imdb_id: 'tt9603208',
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
@@ -329,7 +329,7 @@ export const show_metadata = {
     year: '2025',
     description:
       "Nora, Andreas and Captain Kris leap back into action when a dangerous new troll awakes - and this time they'll need more help to take it down.",
-    starring: ['Ine Marie Wilmann', 'Kim FalckMads', 'Sjøgård Pettersen'],
+    starring: ['Ine Marie Wilmann', 'Kim Falck', 'Mads Sjøgård Pettersen'],
     imdb_id: 'tt29232158',
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
@@ -362,7 +362,7 @@ export const show_metadata = {
     year: '2026',
     description:
       'During World War II, Tommy Shelby returns to a bombed Birmingham and becomes involved in secret wartime missions based on true events, facing new threats as he reckons with his past and rising national stakes.',
-    starring: ['Cilian Murphy', 'Rebecca Ferguson', 'Barry Keoghan'],
+    starring: ['Cillian Murphy', 'Rebecca Ferguson', 'Barry Keoghan'],
     imdb_id: 'tt15574124',
     role: 'Senior Pipeline TD',
     company: 'One Of Us',
@@ -379,5 +379,16 @@ export const show_metadata = {
     company: 'One Of Us',
     location: 'London',
     credited: true
+  },
+  '034_practical_magic_2.jpg': {
+    title: 'Practical Magic 2',
+    year: '2026',
+    description:
+      'A multi-generational family of witches, cursed to be loveless for centuries, attempts to break the spell by confronting dark secrets and sacrificing for each other.',
+    starring: ['Sandra Bullock', 'Nicole Kidman', 'Dianne Wiest'],
+    imdb_id: 'tt32588798',
+    role: 'Senior Pipeline TD',
+    company: 'One Of Us',
+    location: 'London'
   }
 }
